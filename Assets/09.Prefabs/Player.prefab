@@ -10,7 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4589224271385020981}
   - component: {fileID: 8432698178461367112}
-  - component: {fileID: 317329178020885812}
+  - component: {fileID: -7405650546333924376}
+  - component: {fileID: 3265853324669956131}
+  - component: {fileID: 2573464371268520543}
+  - component: {fileID: -2750526007468227274}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -46,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3634140303
+  GlobalObjectIdHash: 2961234962
   InScenePlacedSourceGlobalObjectIdHash: 2961234962
   DeferredDespawnTick: 0
   Ownership: 1
@@ -59,7 +62,7 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &317329178020885812
+--- !u!114 &-7405650546333924376
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,9 +71,70 @@ MonoBehaviour:
   m_GameObject: {fileID: 1024597560684289293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de1fdb0da19dd7846ab3bc140f293643, type: 3}
+  m_Script: {fileID: 11500000, guid: eb49aefda23237842800f526f4d15c30, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.PlayerManager
+  ShowTopMostFoldoutHeaderGroup: 1
+  characterController: {fileID: 0}
+--- !u!114 &3265853324669956131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024597560684289293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a355d124b73881d4f9eb74034ca9de94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.PlayerNetworkManager
+  ShowTopMostFoldoutHeaderGroup: 1
+  networkPosition:
+    m_InternalValue: {x: 0, y: 0, z: 0}
+  networkPositionVelocity: {x: 0, y: 0, z: 0}
+  networkPositionSmoothTime: 0.1
+--- !u!114 &2573464371268520543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024597560684289293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2d2d8374de77954eb8e88114dd824fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.PlayerLocomotionManager
+  verticalMovement: 0
+  horizontalMovement: 0
+  moveAmount: 0
+  walkingSpeed: 2
+  runningSpeed: 5
+--- !u!143 &-2750526007468227274
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024597560684289293}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 1.8
+  m_Radius: 0.23
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &2850110371322147637
 PrefabInstance:
   m_ObjectHideFlags: 0
