@@ -26,6 +26,30 @@ namespace TSG
             // 움직임 처리
             playerLocomotionManager.HandleAllMovement();
         }
+
+        protected override void LateUpdate()
+        {
+            
+            if (!IsOwner)
+            {
+                return;
+            }
+
+            base.LateUpdate();
+
+            PlayerCamera.instance.HandleAllCameraActions();
+        }
+
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+
+            // 만약 이 플레이어 오브젝트 가 이 클라이언트 쪽 소유물이라면
+            if (IsOwner)
+            {
+                PlayerCamera.instance.player = this;
+            }
+        }
     }
     
 }

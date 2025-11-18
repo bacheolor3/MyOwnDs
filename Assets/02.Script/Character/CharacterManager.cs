@@ -40,6 +40,11 @@ namespace TSG
                     characterNetworkManager.networkRotationSmoothTime);
             }
         }
+    
+        protected virtual void LateUpdate()
+        {
+            
+        }
     }
     
 }

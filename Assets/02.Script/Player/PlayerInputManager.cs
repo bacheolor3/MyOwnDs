@@ -10,10 +10,16 @@ namespace TSG
         // 1. 조이스틱 값을 읽을 수 있는 방법 찾기
         // 2. 캐릭터를 그 값에 따라 움직이기
         PlayerControls playerControls;
+        [Header("플레이어 움직임 입력")]
         [SerializeField] Vector2 movementInput;
         public float verticalInput;
         public float horizontalInput;
         public float moveAmount;
+
+        [Header("카메라 움직임 입력")]
+        [SerializeField] Vector2 cameraInput;
+        public float cameraVerticalInput;
+        public float cameraHorizontalInput;
         private void Awake()
         {
             if (instance == null)
@@ -58,6 +64,7 @@ namespace TSG
                 playerControls = new PlayerControls();
 
                 playerControls.PlayerMovements.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
+                playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
             }
 
             playerControls.Enable();
@@ -88,6 +95,7 @@ namespace TSG
         private void Update()
         {
             HandleMovementInput();
+            HandleCameraMovementInput();
         }
         private void HandleMovementInput()
         {
@@ -107,6 +115,14 @@ namespace TSG
             {
                 moveAmount = 1;
             }
+        }
+    
+        private void HandleCameraMovementInput()
+        {
+            cameraVerticalInput = cameraInput.y;
+            cameraHorizontalInput = cameraInput.x;
+
+            
         }
     }
     
