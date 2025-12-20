@@ -4,7 +4,8 @@ namespace TSG
 {
     public class PlayerManager : CharacterManager
     {
-        PlayerLocomotionManager playerLocomotionManager;
+        [HideInInspector]public PlayerAnimatorManager playerAnimatorManager;
+        [HideInInspector]PlayerLocomotionManager playerLocomotionManager;
 
         protected override void Awake()
         {
@@ -13,6 +14,7 @@ namespace TSG
             // 플레이어만을 위한 기능을 추가할 때 사용
 
             playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
+            playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
         }
 
         protected override void Update()
@@ -48,6 +50,7 @@ namespace TSG
             if (IsOwner)
             {
                 PlayerCamera.instance.player = this;
+                PlayerInputManager.instance.player = this;
             }
         }
     }

@@ -8,5 +8,10 @@ namespace TSG
         {
             
         }
+
+        protected virtual void Update()
+        {
+            
+        }
     }
 }

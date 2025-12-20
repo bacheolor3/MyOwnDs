@@ -6,6 +6,7 @@ namespace TSG
     public class PlayerInputManager : MonoBehaviour
     {
         public static PlayerInputManager instance;  
+        public PlayerManager player;
         // 목표를 하나하나 천천히 생각하기
         // 1. 조이스틱 값을 읽을 수 있는 방법 찾기
         // 2. 캐릭터를 그 값에 따라 움직이기
@@ -94,10 +95,10 @@ namespace TSG
         
         private void Update()
         {
-            HandleMovementInput();
+            HandlePlayerMovementInput();
             HandleCameraMovementInput();
         }
-        private void HandleMovementInput()
+        private void HandlePlayerMovementInput()
         {
             verticalInput = movementInput.y;
             horizontalInput = movementInput.x;
@@ -115,6 +116,18 @@ namespace TSG
             {
                 moveAmount = 1;
             }
+
+            // 왜 수평값을 0으로? = 기본적으로 측면 이동을 하지 않을 때의 애니메이션을 로드해야해서
+            // 측면 이동은 측면으로만 이동하거나 락온 기능 쓸 때에만 적용할것
+
+            // 락온 하지 않았다면, 오로지 움직일 때의 애니메이션만 사용
+            if(player == null)
+            {
+                return;
+            }
+            player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount);
+
+            // 만약 락온을 했다면 측면 이동값도 같이 보낸다
         }
     
         private void HandleCameraMovementInput()

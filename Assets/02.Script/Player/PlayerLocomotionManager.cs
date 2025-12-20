@@ -21,6 +21,27 @@ namespace TSG
             player = GetComponent<PlayerManager>();
         }
 
+        protected override void Update()
+        {
+            base.Update();
+
+            if (player.IsOwner)
+            {
+                player.characterNetworkManager.verticalMovement.Value = verticalMovement;
+                player.characterNetworkManager.horizontalMovement.Value = horizontalMovement;
+                player.characterNetworkManager.moveAmount.Value = moveAmount;
+            }
+            else
+            {
+                verticalMovement = player.characterNetworkManager.verticalMovement.Value;
+                horizontalMovement = player.characterNetworkManager.horizontalMovement.Value;
+                moveAmount = player.characterNetworkManager.moveAmount.Value;
+
+                // 락온 되어 있지 않다면, moveAmount를 전함
+                player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount);
+                // 만약 락온 되어 있다면, 가로세로 움직임을 더함
+            }
+        }
 
         public void HandleAllMovement()
         {
@@ -32,17 +53,17 @@ namespace TSG
             // 낙하
         }
 
-        private void GetVerticalAndHorizontalInputs()
+        private void GetMovementValues()
         {
             verticalMovement = PlayerInputManager.instance.verticalInput;
             horizontalMovement = PlayerInputManager.instance.horizontalInput;
-
+            moveAmount = PlayerInputManager.instance.moveAmount;
             // 움직이는 범위 제한하기
         }
 
         private void HandleGroundedMovement()
         {
-            GetVerticalAndHorizontalInputs();
+            GetMovementValues();
             // 움직임의 방향성은 카메라가 보는 곳과 입력에 달렸다
             moveDirection = PlayerCamera.instance.transform.forward * verticalMovement;
             moveDirection = moveDirection + PlayerCamera.instance.transform.right * horizontalMovement;
