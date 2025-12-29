@@ -31,7 +31,7 @@
                 {
                     "name": "up",
                     "id": "cb2a84e0-c86d-43ab-85fa-de45f331a27b",
-                    "path": "<Keyboard>/w",
+                    "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -42,7 +42,7 @@
                 {
                     "name": "down",
                     "id": "66331bb6-1f68-4c68-9b4a-727445e01383",
-                    "path": "<Keyboard>/s",
+                    "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -53,7 +53,7 @@
                 {
                     "name": "left",
                     "id": "760389ac-099b-4b42-8b36-89e33b439181",
-                    "path": "<Keyboard>/a",
+                    "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -64,7 +64,7 @@
                 {
                     "name": "right",
                     "id": "e28664d4-860c-4dac-a6a0-7a1840b9f81b",
-                    "path": "<Keyboard>/d",
+                    "path": "<Gamepad>/leftStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -126,6 +126,45 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Player Actions",
+            "id": "6302d4dc-1343-4a0f-afdf-78acec0e10a5",
+            "actions": [
+                {
+                    "name": "Dodge",
+                    "type": "Button",
+                    "id": "19b33048-ed8b-4685-954d-361a00d83af9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "fa5ca44d-866d-4e00-ada2-f9270c78c64c",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b5a76d9c-17fc-4718-bc8c-fd04493b86e9",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

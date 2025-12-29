@@ -11,16 +11,24 @@ namespace TSG
         // 1. 조이스틱 값을 읽을 수 있는 방법 찾기
         // 2. 캐릭터를 그 값에 따라 움직이기
         PlayerControls playerControls;
+
+
+        [Header("카메라 움직임 입력")]
+        [SerializeField] Vector2 cameraInput;
+        public float cameraVerticalInput;
+        public float cameraHorizontalInput;
+
         [Header("플레이어 움직임 입력")]
         [SerializeField] Vector2 movementInput;
         public float verticalInput;
         public float horizontalInput;
         public float moveAmount;
 
-        [Header("카메라 움직임 입력")]
-        [SerializeField] Vector2 cameraInput;
-        public float cameraVerticalInput;
-        public float cameraHorizontalInput;
+        [Header("플레이어 액션 입력")]
+        [SerializeField] bool dodgeInput = false;
+
+        
+
         private void Awake()
         {
             if (instance == null)
@@ -66,6 +74,7 @@ namespace TSG
 
                 playerControls.PlayerMovements.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
                 playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
+                playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
             }
 
             playerControls.Enable();
@@ -95,9 +104,17 @@ namespace TSG
         
         private void Update()
         {
+            HandleAllInputs();
+        }
+
+        private void HandleAllInputs()
+        {
             HandlePlayerMovementInput();
             HandleCameraMovementInput();
+            HandleDodgeInput();
         }
+
+        // 이동
         private void HandlePlayerMovementInput()
         {
             verticalInput = movementInput.y;
@@ -136,6 +153,18 @@ namespace TSG
             cameraHorizontalInput = cameraInput.x;
 
             
+        }
+
+        // 액션
+        private void HandleDodgeInput()
+        {
+            if (dodgeInput)
+            {
+                dodgeInput = false;
+                // 미래에 구현 할 것: 메뉴 혹은 UI창이 열려 있을 경우 입력 무시하는 것(RETURN 구현)
+                // 회피 동작 구현
+                player.playerLocomotionManager.AttemptToPerformDodge();
+            }
         }
     }
     

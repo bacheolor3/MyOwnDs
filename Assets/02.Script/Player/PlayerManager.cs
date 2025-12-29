@@ -5,7 +5,7 @@ namespace TSG
     public class PlayerManager : CharacterManager
     {
         [HideInInspector]public PlayerAnimatorManager playerAnimatorManager;
-        [HideInInspector]PlayerLocomotionManager playerLocomotionManager;
+        [HideInInspector]public PlayerLocomotionManager playerLocomotionManager;
 
         protected override void Awake()
         {

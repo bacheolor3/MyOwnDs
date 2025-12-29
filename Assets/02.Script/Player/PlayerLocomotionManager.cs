@@ -5,14 +5,21 @@ namespace TSG
     public class PlayerLocomotionManager : CharacterLocomotionManager
     {
         PlayerManager player;
-        public float verticalMovement;
-        public float horizontalMovement;
-        public float moveAmount;
+
+        [HideInInspector] public float verticalMovement;        
+        [HideInInspector] public float horizontalMovement;
+        [HideInInspector] public float moveAmount;
+
+        [Header("움직임 관련 설정")]
         private Vector3 moveDirection;
         private Vector3 targetRotationDirection;
         [SerializeField] float walkingSpeed = 2;
         [SerializeField] float runningSpeed = 5;
         [SerializeField] float rotationspeed = 15;   
+
+
+        [Header("Dodge")]
+        private Vector3 rollDirection;
 
         protected override void Awake()
         {
@@ -44,7 +51,7 @@ namespace TSG
         }
 
         public void HandleAllMovement()
-        {
+        {            
             HandleGroundedMovement();
             HandleRotation();
             // 땅에서 움직임
@@ -64,6 +71,11 @@ namespace TSG
         private void HandleGroundedMovement()
         {
             GetMovementValues();
+
+            if (!player.canMove)
+            {
+                return;
+            }
             // 움직임의 방향성은 카메라가 보는 곳과 입력에 달렸다
             moveDirection = PlayerCamera.instance.transform.forward * verticalMovement;
             moveDirection = moveDirection + PlayerCamera.instance.transform.right * horizontalMovement;
@@ -84,6 +96,10 @@ namespace TSG
 
         private void HandleRotation()
         {
+            if (!player.canRotate)
+            {
+                return;
+            }
             targetRotationDirection  = Vector3.zero;
             targetRotationDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
             targetRotationDirection = targetRotationDirection + PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
@@ -98,6 +114,34 @@ namespace TSG
             Quaternion newRotation = Quaternion.LookRotation(targetRotationDirection);
             Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationspeed * Time.deltaTime);
             transform.rotation = targetRotation;
+        }
+    
+        public void AttemptToPerformDodge()
+        {
+            if (player.isPerformingAction)
+            {
+                return;
+            }
+            // 만약 움직이는 중에 회피를 실행하려 한다면, 구르기 시전
+            if(PlayerInputManager.instance.moveAmount > 0)
+            {
+                rollDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput; // 마지막에 *verticalMovement로 해도 거의 근사값. 다만 이게 더 확실
+                rollDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
+                rollDirection.y = 0;
+                rollDirection.Normalize();
+
+                Quaternion playerRotation = Quaternion.LookRotation(rollDirection);
+                player.transform.rotation = playerRotation;                
+
+                // 회피(구르기)애니메이션 실행
+                player.playerAnimatorManager.PlayTargetActionAnimation("Roll_Foward_01", true, true);
+            }
+            // 만약 정지되어 있는 상태에서 회피를 실행하려 한다면, 백스텝 실행
+            else
+            {
+                // 뒷걸음(백스텝) 애니메이션
+                player.playerAnimatorManager.PlayTargetActionAnimation("Back_Step_01", true, true);
+            }
         }
     }
     

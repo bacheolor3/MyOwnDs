@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Netcode;
 
 namespace TSG
 {
@@ -71,6 +72,27 @@ namespace TSG
                 snappedVertical = 0;
             }
             #endregion
+        }
+    
+        public virtual void PlayTargetActionAnimation(
+            string targetAnimation, 
+            bool isPerformingAction, 
+            bool applyRootMotion = true, 
+            bool canRotate = false, 
+            bool canMove = false)
+        {
+            character.applyRootMotion = applyRootMotion;
+            character.animator.CrossFade(targetAnimation, 0.2f);
+            // 캐릭터가 새로운 동작을 시도하는 걸 막기 위해 사용
+            // 예: 플레이어가 데미지를 받을 경우, 데미지를 받는 애니메이션을 실행
+            // 이 기준점이 (isPerformingAction) True로 변환
+            // 새로운 동작 및 액션을 취하기 전에 이 기준점을 체크하게 함
+            character.isPerformingAction = isPerformingAction;
+            character.canRotate = canRotate;
+            character.canMove = canMove;
+
+            // 서버/호스트 에게 현시점 서버에 있는 사람에게 이 애니메이션을 실행하라고 해야 함
+            character.characterNetworkManager.NotifyTheServerOfActionAnimationServerRpc(NetworkManager.Singleton.LocalClientId, targetAnimation, applyRootMotion);
         }
     }
     
