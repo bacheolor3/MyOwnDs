@@ -15,6 +15,7 @@ namespace TSG
         private Vector3 targetRotationDirection;
         [SerializeField] float walkingSpeed = 2;
         [SerializeField] float runningSpeed = 5;
+        [SerializeField] float sprintingSpeed = 6.5f;
         [SerializeField] float rotationspeed = 15;   
 
 
@@ -45,7 +46,7 @@ namespace TSG
                 moveAmount = player.characterNetworkManager.moveAmount.Value;
 
                 // 락온 되어 있지 않다면, moveAmount를 전함
-                player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount);
+                player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount, player.playerNetworkManager.isSprinting.Value);
                 // 만약 락온 되어 있다면, 가로세로 움직임을 더함
             }
         }
@@ -82,16 +83,24 @@ namespace TSG
             moveDirection.Normalize();
             moveDirection.y = 0;
 
-            if (PlayerInputManager.instance.moveAmount > 0.5f)
+            if (player.playerNetworkManager.isSprinting.Value)
             {
-                // 달리는 속도로 움직임
-                player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
+                player.characterController.Move(moveDirection * sprintingSpeed * Time.deltaTime);
             }
-            else if (PlayerInputManager.instance.moveAmount <= 0.5f)
+            else
             {
-                // 걷는 속도로 움직임
-                player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
+                if (PlayerInputManager.instance.moveAmount > 0.5f)
+                {
+                    // 달리는 속도로 움직임
+                    player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
+                }
+                else if (PlayerInputManager.instance.moveAmount <= 0.5f)
+                {
+                    // 걷는 속도로 움직임
+                    player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
+                }
             }
+
         }
 
         private void HandleRotation()
@@ -116,6 +125,29 @@ namespace TSG
             transform.rotation = targetRotation;
         }
     
+        public void HandleSprinting()
+        {
+            if (player.isPerformingAction)
+            {
+                // 기본적인 상태에선 질주하지 않는 모양세로
+                player.playerNetworkManager.isSprinting.Value = false;
+            }
+
+            // 스테미나가 충분하지 않다면, 질주를 안 하도록
+
+            // 만약 움직인다면 질주 자세 전환 가능하도록
+            if(moveAmount >= 0.5)
+            {
+                player.playerNetworkManager.isSprinting.Value = true;
+            }
+            // 만약 정지해 있거나 느리게 움직이고 있다면 질주 자세 안 하도록
+            else
+            {
+                player.playerNetworkManager.isSprinting.Value = false;
+            }
+
+        }
+
         public void AttemptToPerformDodge()
         {
             if (player.isPerformingAction)

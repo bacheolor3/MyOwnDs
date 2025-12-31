@@ -4,8 +4,9 @@ namespace TSG
 {
     public class PlayerManager : CharacterManager
     {
-        [HideInInspector]public PlayerAnimatorManager playerAnimatorManager;
-        [HideInInspector]public PlayerLocomotionManager playerLocomotionManager;
+        [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
+        [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
+        [HideInInspector] public PlayerNetworkManager playerNetworkManager;
 
         protected override void Awake()
         {
@@ -15,6 +16,7 @@ namespace TSG
 
             playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
             playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
+            playerNetworkManager = GetComponent<PlayerNetworkManager>();
         }
 
         protected override void Update()
