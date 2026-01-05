@@ -17,10 +17,12 @@ namespace TSG
         [SerializeField] float runningSpeed = 5;
         [SerializeField] float sprintingSpeed = 6.5f;
         [SerializeField] float rotationspeed = 15;   
+        [SerializeField] int sprintingStaminaCost = 2;
 
 
         [Header("Dodge")]
         private Vector3 rollDirection;
+        [SerializeField] float dodgeStaminaCost = 25;
 
         protected override void Awake()
         {
@@ -134,6 +136,11 @@ namespace TSG
             }
 
             // 스테미나가 충분하지 않다면, 질주를 안 하도록
+            if(player.playerNetworkManager.currentStamina.Value <= 0)
+            {
+                player.playerNetworkManager.isSprinting.Value = false;
+                return;
+            }
 
             // 만약 움직인다면 질주 자세 전환 가능하도록
             if(moveAmount >= 0.5)
@@ -146,6 +153,10 @@ namespace TSG
                 player.playerNetworkManager.isSprinting.Value = false;
             }
 
+            if (player.playerNetworkManager.isSprinting.Value)
+            {
+                player.playerNetworkManager.currentStamina.Value -= sprintingStaminaCost * Time.deltaTime;
+            }
         }
 
         public void AttemptToPerformDodge()
@@ -154,6 +165,11 @@ namespace TSG
             {
                 return;
             }
+            if(player.playerNetworkManager.currentStamina.Value <= 0)
+            {
+                return;
+            }
+
             // 만약 움직이는 중에 회피를 실행하려 한다면, 구르기 시전
             if(PlayerInputManager.instance.moveAmount > 0)
             {
@@ -174,6 +190,8 @@ namespace TSG
                 // 뒷걸음(백스텝) 애니메이션
                 player.playerAnimatorManager.PlayTargetActionAnimation("Back_Step_01", true, true);
             }
+
+            player.playerNetworkManager.currentStamina.Value -= dodgeStaminaCost;
         }
     }
     

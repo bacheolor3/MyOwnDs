@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8432698178461367112}
   - component: {fileID: -7405650546333924376}
   - component: {fileID: 3265853324669956131}
+  - component: {fileID: 2582648345933631766}
   - component: {fileID: 2573464371268520543}
   - component: {fileID: -3215274936856437422}
   - component: {fileID: 8324515692100448886}
@@ -75,7 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2961234962
+  GlobalObjectIdHash: 2532386627
   InScenePlacedSourceGlobalObjectIdHash: 2961234962
   DeferredDespawnTick: 0
   Ownership: 1
@@ -110,6 +111,8 @@ MonoBehaviour:
   canMove: 1
   playerAnimatorManager: {fileID: 0}
   playerLocomotionManager: {fileID: 0}
+  playerNetworkManager: {fileID: 0}
+  playerStatsManager: {fileID: 0}
 --- !u!114 &3265853324669956131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,6 +139,26 @@ MonoBehaviour:
     m_InternalValue: 0
   moveAmount:
     m_InternalValue: 0
+  isSprinting:
+    m_InternalValue: 0
+  endurance:
+    m_InternalValue: 10
+  currentStamina:
+    m_InternalValue: 1
+  maxStamina:
+    m_InternalValue: 1
+--- !u!114 &2582648345933631766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024597560684289293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ae58a0313c882488bb88bb77733805, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.PlayerStatManager
 --- !u!114 &2573464371268520543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,7 +176,9 @@ MonoBehaviour:
   moveAmount: 0
   walkingSpeed: 2
   runningSpeed: 5
+  sprintingSpeed: 6.5
   rotationspeed: 15
+  sprintingStaminaCost: 2
 --- !u!114 &-3215274936856437422
 MonoBehaviour:
   m_ObjectHideFlags: 0

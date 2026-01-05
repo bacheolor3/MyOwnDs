@@ -11,6 +11,8 @@ namespace TSG
         [Header("네트워크 참가용")]
         [SerializeField] bool startGameAsClient;
 
+        [HideInInspector] public PlayerUIHudManager playerUIHudManager;
+
         private void Awake()
         {
             if (instance == null)
@@ -21,6 +23,8 @@ namespace TSG
             {
                 Destroy(gameObject);
             }
+
+            playerUIHudManager = GetComponentInChildren<PlayerUIHudManager>();
         }
 
         private void Start()

@@ -7,6 +7,7 @@ namespace TSG
         [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
         [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
         [HideInInspector] public PlayerNetworkManager playerNetworkManager;
+        [HideInInspector] public PlayerStatsManager playerStatsManager;
 
         protected override void Awake()
         {
@@ -17,6 +18,7 @@ namespace TSG
             playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
             playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
             playerNetworkManager = GetComponent<PlayerNetworkManager>();
+            playerStatsManager = GetComponent<PlayerStatsManager>();
         }
 
         protected override void Update()
@@ -29,6 +31,9 @@ namespace TSG
             }
             // 움직임 처리
             playerLocomotionManager.HandleAllMovement();
+
+            // 스테미나 재생
+            playerStatsManager.RegenerateStamina();
         }
 
         protected override void LateUpdate()
@@ -53,6 +58,14 @@ namespace TSG
             {
                 PlayerCamera.instance.player = this;
                 PlayerInputManager.instance.player = this;
+
+                playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue;
+                playerNetworkManager.currentStamina.OnValueChanged += playerStatsManager.ResetStaminaRegenTimer;
+
+                // 세이브 혹은 로딩중에 추가되면 없어짐
+                playerNetworkManager.maxStamina.Value = playerStatsManager.CalculateStatminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value);
+                playerNetworkManager.currentStamina.Value = playerStatsManager.CalculateStatminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value);
+                PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
             }
         }
     }
