@@ -7,7 +7,32 @@ namespace TSG
     public class WorldSaveGameManager : MonoBehaviour
     {
         public static WorldSaveGameManager instance;
+
+        private PlayerManager player;
+
+        [Header("씬 번호(Index)")]
         [SerializeField] int worldSceneIndex = 1;
+
+        [Header("세이브 파일 작성")]
+        private SaveFileDataWriter saveFileDataWriter;
+
+        [Header("현재 사용되기 있는 캐릭터 슬롯")]
+        public CharacterSlot currentCharacterSlotBeingUsed;
+        public CharacterSaveData currentCharacterData;
+        private string saveFileName;
+
+        [Header("캐릭터 슬롯들")]
+        public CharacterSaveData characterSlot01;
+        // public CharacterSaveData characterSlot02;
+        // public CharacterSaveData characterSlot03;
+        // public CharacterSaveData characterSlot04;
+        // public CharacterSaveData characterSlot05;
+        // public CharacterSaveData characterSlot06;
+        // public CharacterSaveData characterSlot07;
+        // public CharacterSaveData characterSlot08;
+        // public CharacterSaveData characterSlot09;
+        // public CharacterSaveData characterSlot10;
+
 
         private void Awake()
         {
@@ -27,7 +52,83 @@ namespace TSG
 
         }
 
-        public IEnumerator LoadNewGame()
+        private void DecideCharacterFileNameBasedOnCharacterSlotBeingUsed()
+        {
+            // switch문구에 알아서 case 들 추가하기 => switch 에 변수명 넣은 다음 커서 올리고 Ctrl+. ->Add missing case
+            switch (currentCharacterSlotBeingUsed)
+            {
+                case CharacterSlot.CharacterSlot_01:
+                    saveFileName = "CharacterSlot_01";
+                    break;
+                case CharacterSlot.CharacterSlot_02:
+                    saveFileName = "CharacterSlot_02";
+                    break;
+                case CharacterSlot.CharacterSlot_03:
+                    saveFileName = "CharacterSlot_03";
+                    break;
+                case CharacterSlot.CharacterSlot_04:
+                    saveFileName = "CharacterSlot_04";
+                    break;
+                case CharacterSlot.CharacterSlot_05:
+                    saveFileName = "CharacterSlot_05";
+                    break;
+                case CharacterSlot.CharacterSlot_06:
+                    saveFileName = "CharacterSlot_06";
+                    break;
+                case CharacterSlot.CharacterSlot_07:
+                    saveFileName = "CharacterSlot_07";
+                    break;
+                case CharacterSlot.CharacterSlot_08:
+                    saveFileName = "CharacterSlot_08";
+                    break;
+                case CharacterSlot.CharacterSlot_09:
+                    saveFileName = "CharacterSlot_09";
+                    break;
+                case CharacterSlot.CharacterSlot_10:
+                    saveFileName = "CharacterSlot_10";
+                    break;
+            }
+        }
+        
+        public void CreateNewGame()
+        {
+            // 새로운 파일 생성, 파일명은 사용하는 슬롯을 따라감
+            DecideCharacterFileNameBasedOnCharacterSlotBeingUsed();
+
+            currentCharacterData = new CharacterSaveData();
+        }
+
+        public void LoadGame()
+        {
+            // 기존 파일 불러옴. 파일명은 사용하는 슬롯을 따라감
+            DecideCharacterFileNameBasedOnCharacterSlotBeingUsed();
+
+            saveFileDataWriter = new SaveFileDataWriter();
+            // 기본적으로 어지간한 운영체제(컴퓨터, 안드로이드, iOS등)에서 돌아감
+            saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
+            saveFileDataWriter.saveFileName = saveFileName;
+            currentCharacterData = saveFileDataWriter.LoadSaveFile();
+
+            StartCoroutine(LoadWorldScene());
+        }
+
+        public void SaveGame()
+        {
+            // 현시점 사용하는 파일을 사용하는 슬롯 명에 따라 저장함
+            DecideCharacterFileNameBasedOnCharacterSlotBeingUsed();
+
+            saveFileDataWriter = new SaveFileDataWriter();
+            // 기본적으로 어지간한 운영체제(컴퓨터, 안드로이드, iOS등)에서 돌아감
+            saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
+            saveFileDataWriter.saveFileName = saveFileName;
+
+            // 세이브 파일에서 플레이어 정보를 받아와 게임에 반영
+
+            // 받아온 정보를 JSON화 해 이 운영체제에 저장
+            saveFileDataWriter.CreateNewCharacterSaveFile(currentCharacterData);
+        }
+
+        public IEnumerator LoadWorldScene()
         {
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
 
@@ -39,5 +140,5 @@ namespace TSG
             return worldSceneIndex;
         }
     }
-    
+
 }

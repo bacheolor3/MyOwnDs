@@ -12,7 +12,7 @@ namespace TSG
 
         public void StartNewGame()
         {
-            StartCoroutine(WorldSaveGameManager.instance.LoadNewGame());
+            StartCoroutine(WorldSaveGameManager.instance.LoadWorldScene());
         }
     }
     
