@@ -8,7 +8,11 @@ namespace TSG
     {
         public static WorldSaveGameManager instance;
 
-        private PlayerManager player;
+        [SerializeField] PlayerManager player;
+
+        [Header("SAVE/LOAD")]
+        [SerializeField] bool saveGame;
+        [SerializeField] bool loadGame;
 
         [Header("씬 번호(Index)")]
         [SerializeField] int worldSceneIndex = 1;
@@ -49,7 +53,22 @@ namespace TSG
 
         private void Start()
         {
+            DontDestroyOnLoad(gameObject);
+        }
 
+        private void Update()
+        {
+            if (saveGame)
+            {
+                saveGame = false;
+                SaveGame();
+            }
+
+            if (loadGame)
+            {
+                loadGame = false;
+                LoadGame();
+            }
         }
 
         private void DecideCharacterFileNameBasedOnCharacterSlotBeingUsed()
@@ -123,6 +142,7 @@ namespace TSG
             saveFileDataWriter.saveFileName = saveFileName;
 
             // 세이브 파일에서 플레이어 정보를 받아와 게임에 반영
+            player.SaveGameDataToCurrentCharacterData(ref currentCharacterData);
 
             // 받아온 정보를 JSON화 해 이 운영체제에 저장
             saveFileDataWriter.CreateNewCharacterSaveFile(currentCharacterData);
