@@ -7,8 +7,7 @@ namespace TSG
     public class WorldSaveGameManager : MonoBehaviour
     {
         public static WorldSaveGameManager instance;
-
-        [SerializeField] PlayerManager player;
+        public PlayerManager player;
 
         [Header("SAVE/LOAD")]
         [SerializeField] bool saveGame;
@@ -115,12 +114,37 @@ namespace TSG
             return fileName;
         }
         
-        public void CreateNewGame()
-        {
-            // 새로운 파일 생성, 파일명은 사용하는 슬롯을 따라감
-            saveFileName =  DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(currentCharacterSlotBeingUsed);
+        public void AttemptToCreateNewGame()
+        {            
+            saveFileDataWriter = new SaveFileDataWriter();
+            // 새로운 세이브 파일을 만들 수 있는지 체크 (다른 파일들의 존재 유무 확인 먼저)
+            saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_01);
 
-            currentCharacterData = new CharacterSaveData();
+            //  만약 이 프로필 슬롯이 비어있다면, 이 슬롯의 자리를 차지한다
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
+                currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_01;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+           
+            // 새로운 세이브 파일을 만들 수 있는지 체크 (다른 파일들의 존재 유무 확인 먼저)
+            saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_02);
+
+            //  만약 이 프로필 슬롯이 비어있다면, 이 슬롯의 자리를 차지한다
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
+                currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_02;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+
+            // 충분한 슬롯이 없다면, 플레이어에게 알릴것
+            TitleScreenManager.Instance.DisplayNoFreeCharacterSlotsPopUp();
         }
 
         public void LoadGame()
@@ -194,6 +218,8 @@ namespace TSG
         public IEnumerator LoadWorldScene()
         {
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
+
+            player.LoadGameDataFromCurrentCharacterData(ref currentCharacterData);
 
             yield return null;
         }

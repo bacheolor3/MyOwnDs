@@ -7,12 +7,28 @@ namespace TSG
 {
     public class TitleScreenManager : MonoBehaviour
     {
+        public static TitleScreenManager Instance;
         [Header("메뉴")]
         [SerializeField] GameObject titleScreenMainMenu;
         [SerializeField] GameObject titleScreenLoadMenu;
         [Header("버튼들")]
         [SerializeField] Button loadMenuReturnButton;
         [SerializeField] Button mainMenuLoadGameButton;
+        [Header("팝업창들")]
+        [SerializeField] GameObject noCharacterSlotsPopUp;
+        [SerializeField] Button nocharacterSlotsOkayButton;
+
+        private void Awake()
+        {
+            if(Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         public void StartNetworkAsHost()
         {
@@ -21,8 +37,7 @@ namespace TSG
 
         public void StartNewGame()
         {
-            WorldSaveGameManager.instance.CreateNewGame();
-            StartCoroutine(WorldSaveGameManager.instance.LoadWorldScene());
+            WorldSaveGameManager.instance.AttemptToCreateNewGame();            
         }
     
         public void OpenLoadGameMenu()
@@ -47,6 +62,12 @@ namespace TSG
 
             // 로드 버튼 선택
             mainMenuLoadGameButton.Select();
+        }
+    
+        public void DisplayNoFreeCharacterSlotsPopUp()
+        {
+            noCharacterSlotsPopUp.SetActive(true);
+            nocharacterSlotsOkayButton.Select();
         }
     }    
 }

@@ -212,5 +212,11 @@ namespace TSG
             // }
             //강사는 이 상황에서는 IF문을 선호한다고 함. 하나하나 뜯어보기 수월하다고...
         }
+    
+        public void LoadGameFromCharacterSlot()
+        {
+            WorldSaveGameManager.instance.currentCharacterSlotBeingUsed = characterSlot;
+            WorldSaveGameManager.instance.LoadGame();
+        }
     }    
 }
