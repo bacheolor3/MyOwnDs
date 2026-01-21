@@ -115,11 +115,12 @@ namespace TSG
         }
         
         public void AttemptToCreateNewGame()
-        {            
+        {
+            Debug.Log("세이브 찐빠 확인용");
             saveFileDataWriter = new SaveFileDataWriter();
+            saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
             // 새로운 세이브 파일을 만들 수 있는지 체크 (다른 파일들의 존재 유무 확인 먼저)
-            saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_01);
-
+            saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_01);
             //  만약 이 프로필 슬롯이 비어있다면, 이 슬롯의 자리를 차지한다
             if (!saveFileDataWriter.CheckToSeeIfFileExists())
             {
@@ -131,7 +132,7 @@ namespace TSG
             }
            
             // 새로운 세이브 파일을 만들 수 있는지 체크 (다른 파일들의 존재 유무 확인 먼저)
-            saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_02);
+            saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_02);
 
             //  만약 이 프로필 슬롯이 비어있다면, 이 슬롯의 자리를 차지한다
             if (!saveFileDataWriter.CheckToSeeIfFileExists())

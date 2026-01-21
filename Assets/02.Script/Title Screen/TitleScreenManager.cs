@@ -12,6 +12,7 @@ namespace TSG
         [SerializeField] GameObject titleScreenMainMenu;
         [SerializeField] GameObject titleScreenLoadMenu;
         [Header("버튼들")]
+        [SerializeField] Button mainMenuNewGameButton;
         [SerializeField] Button loadMenuReturnButton;
         [SerializeField] Button mainMenuLoadGameButton;
         [Header("팝업창들")]
@@ -68,6 +69,12 @@ namespace TSG
         {
             noCharacterSlotsPopUp.SetActive(true);
             nocharacterSlotsOkayButton.Select();
+        }
+
+        public void CloseNoFreeCharcterSlotsPopUp()
+        {
+            noCharacterSlotsPopUp.SetActive(false);
+            mainMenuNewGameButton.Select();
         }
     }    
 }
