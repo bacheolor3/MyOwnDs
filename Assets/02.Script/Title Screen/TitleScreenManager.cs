@@ -1,6 +1,5 @@
 using Unity.Netcode;
 using UnityEngine;
-using Unity.Netcode;
 using UnityEngine.UI;
 
 namespace TSG
@@ -15,9 +14,15 @@ namespace TSG
         [SerializeField] Button mainMenuNewGameButton;
         [SerializeField] Button loadMenuReturnButton;
         [SerializeField] Button mainMenuLoadGameButton;
+        [SerializeField] Button deleteCharacterPopUpConfirmButton;
+
         [Header("팝업창들")]
         [SerializeField] GameObject noCharacterSlotsPopUp;
         [SerializeField] Button nocharacterSlotsOkayButton;
+        [SerializeField] GameObject deleteCharacterSlotPopUp;
+
+        [Header("캐릭터 슬롯 관련")]
+        public CharacterSlot currentSelectedSlot = CharacterSlot.NO_SLOT;
 
         private void Awake()
         {
@@ -75,6 +80,44 @@ namespace TSG
         {
             noCharacterSlotsPopUp.SetActive(false);
             mainMenuNewGameButton.Select();
+        }
+    
+        // 캐릭터 슬롯 관련
+        public void SelectCharacterSlot(CharacterSlot characterSlot)
+        {
+            currentSelectedSlot = characterSlot;
+        }
+    
+        public void SelectNoSlot()
+        {
+            currentSelectedSlot = CharacterSlot.NO_SLOT;
+        }
+
+        public void AttemptToDeleteCharacterSlot()
+        {
+            if(currentSelectedSlot != CharacterSlot.NO_SLOT)
+            {
+                deleteCharacterSlotPopUp.SetActive(true);           
+                deleteCharacterPopUpConfirmButton.Select();
+            }
+        }
+
+        public void DeleteCharacterSlot()
+        {
+            deleteCharacterSlotPopUp.SetActive(false);
+            WorldSaveGameManager.instance.DeleteGame(currentSelectedSlot);
+
+            // 불러오기 화면을 한번 해제했대가 다시 불러오기 해서 지운 슬롯들은 안보이게
+            titleScreenLoadMenu.SetActive(false);
+            titleScreenLoadMenu.SetActive(true);
+
+            loadMenuReturnButton.Select();
+        }
+
+        public void CloseDeleteCharacterPopUp()
+        {
+            deleteCharacterSlotPopUp.SetActive(false);
+            loadMenuReturnButton.Select();
         }
     }    
 }

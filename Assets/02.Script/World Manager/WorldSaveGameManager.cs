@@ -144,6 +144,110 @@ namespace TSG
                 return;
             }
 
+            // 새로운 세이브 파일을 만들 수 있는지 체크 (다른 파일들의 존재 유무 확인 먼저)
+            saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_03);
+
+            //  만약 이 프로필 슬롯이 비어있다면, 이 슬롯의 자리를 차지한다
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
+                currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_03;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+
+            // 새로운 세이브 파일을 만들 수 있는지 체크 (다른 파일들의 존재 유무 확인 먼저)
+            saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_04);
+
+            //  만약 이 프로필 슬롯이 비어있다면, 이 슬롯의 자리를 차지한다
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
+                currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_04;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+
+            // 새로운 세이브 파일을 만들 수 있는지 체크 (다른 파일들의 존재 유무 확인 먼저)
+            saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_05);
+
+            //  만약 이 프로필 슬롯이 비어있다면, 이 슬롯의 자리를 차지한다
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
+                currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_05;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+
+            // 새로운 세이브 파일을 만들 수 있는지 체크 (다른 파일들의 존재 유무 확인 먼저)
+            saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_06);
+
+            //  만약 이 프로필 슬롯이 비어있다면, 이 슬롯의 자리를 차지한다
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
+                currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_06;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+
+            // 새로운 세이브 파일을 만들 수 있는지 체크 (다른 파일들의 존재 유무 확인 먼저)
+            saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_07);
+
+            //  만약 이 프로필 슬롯이 비어있다면, 이 슬롯의 자리를 차지한다
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
+                currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_07;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+
+            // 새로운 세이브 파일을 만들 수 있는지 체크 (다른 파일들의 존재 유무 확인 먼저)
+            saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_08);
+
+            //  만약 이 프로필 슬롯이 비어있다면, 이 슬롯의 자리를 차지한다
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
+                currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_08;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+
+            // 새로운 세이브 파일을 만들 수 있는지 체크 (다른 파일들의 존재 유무 확인 먼저)
+            saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_09);
+
+            //  만약 이 프로필 슬롯이 비어있다면, 이 슬롯의 자리를 차지한다
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
+                currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_09;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+
+            // 새로운 세이브 파일을 만들 수 있는지 체크 (다른 파일들의 존재 유무 확인 먼저)
+            saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_10);
+
+            //  만약 이 프로필 슬롯이 비어있다면, 이 슬롯의 자리를 차지한다
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
+                currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_10;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+
             // 충분한 슬롯이 없다면, 플레이어에게 알릴것
             TitleScreenManager.Instance.DisplayNoFreeCharacterSlotsPopUp();
         }
@@ -177,6 +281,16 @@ namespace TSG
 
             // 받아온 정보를 JSON화 해 이 운영체제에 저장
             saveFileDataWriter.CreateNewCharacterSaveFile(currentCharacterData);
+        }
+
+        public void DeleteGame(CharacterSlot characterSlot)
+        {
+            // 이름 기반해 파일 찾기
+            saveFileDataWriter = new SaveFileDataWriter();
+            saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
+            saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(characterSlot);
+
+            saveFileDataWriter.DeleteSaveFile();
         }
 
         // 게임 시작할 때, 모든 캐릭터의 정보를 기기에 불러오도록 설정
@@ -218,13 +332,23 @@ namespace TSG
 
         public IEnumerator LoadWorldScene()
         {
+            // 그냥 씬 1개만 쓴다면 이걸 쓸 것
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
+
+            // 다른 레벨마다 다른 신을 불러오고 싶다면 이걸 쓸 것
+            // AsyncOperation loadOperation = SceneManager.LoadSceneAsync(currentCharacterData.sceneIndex);
 
             player.LoadGameDataFromCurrentCharacterData(ref currentCharacterData);
 
             yield return null;
         }
-    
+
+        // 다수의 씬을 설정하고 싶다면 쓸 것. 새 캐릭터에겐 현시점 씬의 인덱스가 없다.
+        // private IEnumerator LoadWorldSceneNewGame()
+        // {
+            
+        // }
+
         public int GetWorldSceneIndex()
         {
             return worldSceneIndex;
