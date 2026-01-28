@@ -23,6 +23,7 @@ namespace TSG
         [Header("Dodge")]
         private Vector3 rollDirection;
         [SerializeField] float dodgeStaminaCost = 25;
+        [SerializeField] float jumpStaminaCost = 25;
 
         protected override void Awake()
         {
@@ -192,6 +193,45 @@ namespace TSG
             }
 
             player.playerNetworkManager.currentStamina.Value -= dodgeStaminaCost;
+        }
+    
+        public void AttemptToPerformJump()
+        {
+            // 액션을 다른 걸 행하는 중이라면, 점프가 되지 않게 설정(전투 애니메이션 실행중이라던지...)
+            if (player.isPerformingAction)
+            {
+                return;
+            }
+
+            // 스테미나가 없다면 점프할 수 없도록 설정
+            if(player.playerNetworkManager.currentStamina.Value <= 0)
+            {
+                return;
+            }
+
+            // 이미 점프중이라면, 현재 점프가 끝나기 전엔 점프가 안 되게 설정
+            if (player.isJumping)
+            {
+                return;
+            }
+
+            // 만약 땅에 있는 게 아니라면, 점프를 하게 허가하지 않음
+            if (player.isGrounded)
+            {
+                return;
+            }
+
+            // 만약 두손 무기를 들 고 있다면, 두손 무기를 든 채 점프하는 모션, 아니라면 한손으로 애니메이션 실행
+            player.playerAnimatorManager.PlayTargetActionAnimation("Main_Jump_01", false);
+
+            player.isJumping = true;
+
+            player.playerNetworkManager.currentStamina.Value -= jumpStaminaCost;
+        }
+    
+        public void ApplyJumpingVelocity()
+        {
+            // 
         }
     }
     

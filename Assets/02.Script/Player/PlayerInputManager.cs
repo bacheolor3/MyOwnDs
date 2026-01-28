@@ -27,7 +27,7 @@ namespace TSG
         [Header("플레이어 액션 입력")]
         [SerializeField] bool dodgeInput = false;
         [SerializeField] bool sprintInput = false;
-
+        [SerializeField] bool jumpInput = false;
         
 
         private void Awake()
@@ -76,6 +76,7 @@ namespace TSG
                 playerControls.PlayerMovements.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
                 playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
                 playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
+                playerControls.PlayerActions.Dodge.performed += i => jumpInput = true;
 
                 // 설정된 버튼을 누르고 있으면(여기서는 L Shift, 패드라면) bool값을 true로
                 playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
@@ -118,7 +119,7 @@ namespace TSG
             HandlePlayerMovementInput();
             HandleCameraMovementInput();
             HandleDodgeInput();
-            HandleSprinting();
+            HandleSprintInput();
         }
 
         // 이동
@@ -174,7 +175,7 @@ namespace TSG
             }
         }
 
-        private void HandleSprinting()
+        private void HandleSprintInput()
         {
             if (sprintInput)
             {
@@ -184,6 +185,19 @@ namespace TSG
             else
             {
                 player.playerNetworkManager.isSprinting.Value = false;
+            }
+        }
+
+        private void HandleJumpInput()
+        {
+            if (jumpInput)
+            {
+                jumpInput = false;
+
+                // 만약 UI 창이 열려있다면, 아무것도 하지 않게 설정
+
+                // 점프 하려고 시도
+                player.playerLocomotionManager.AttemptToPerformJump();
             }
         }
     }
