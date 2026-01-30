@@ -76,7 +76,7 @@ namespace TSG
                 playerControls.PlayerMovements.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
                 playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
                 playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
-                playerControls.PlayerActions.Dodge.performed += i => jumpInput = true;
+                playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
 
                 // 설정된 버튼을 누르고 있으면(여기서는 L Shift, 패드라면) bool값을 true로
                 playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
@@ -120,6 +120,7 @@ namespace TSG
             HandleCameraMovementInput();
             HandleDodgeInput();
             HandleSprintInput();
+            HandleJumpInput();
         }
 
         // 이동

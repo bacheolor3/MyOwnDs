@@ -7,7 +7,7 @@ namespace TSG
         CharacterManager character;
 
         [Header("지면 확인 & 점프")]
-        [SerializeField] float gravityForce = -5.55f;
+        [SerializeField] protected float gravityForce = -5.55f;
         [SerializeField] LayerMask groundLayer;
         [SerializeField] float groundCheckSphereRadius = 1;
         [SerializeField] protected Vector3 yVelocity;   // 캐릭터를 위 혹은 아래로 끌어당길 힘(점프를 하거나 떨어지거나)
@@ -27,7 +27,7 @@ namespace TSG
             if (character.isGrounded)
             {
                 // 만약 점프를 시도하지 않거나 움직이는 중이라면
-                if(yVelocity.y < 0)
+                if(!character.isJumping && yVelocity.y < 0)
                 {
                     inAirTimer = 0;
                     fallingVelocityHasBeenSet = false;
@@ -37,7 +37,7 @@ namespace TSG
             else
             {
                 // 만약 점프중도 아니고, 떨어지는 힘도 받고 있지 않다면
-                if(character.isJumping && !fallingVelocityHasBeenSet)
+                if(!character.isJumping && !fallingVelocityHasBeenSet)
                 {
                     fallingVelocityHasBeenSet = true;
                     yVelocity.y = fallStartYVelocity;

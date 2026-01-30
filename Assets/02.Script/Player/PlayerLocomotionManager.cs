@@ -19,11 +19,17 @@ namespace TSG
         [SerializeField] float rotationspeed = 15;   
         [SerializeField] int sprintingStaminaCost = 2;
 
+        [Header("Jump")]
+        [SerializeField] float jumpStaminaCost = 25;
+        [SerializeField] float jumpHeight = 4;
+        [SerializeField] float jumpFowardSpeed = 5;
+        [SerializeField] float freeFallSpeed = 2;
+        private Vector3 jumpDirection;
+
 
         [Header("Dodge")]
         private Vector3 rollDirection;
         [SerializeField] float dodgeStaminaCost = 25;
-        [SerializeField] float jumpStaminaCost = 25;
 
         protected override void Awake()
         {
@@ -58,6 +64,8 @@ namespace TSG
         {            
             HandleGroundedMovement();
             HandleRotation();
+            HandleJumpingMovement();
+            HandleFreeFallMoveMent();
             // 땅에서 움직임
             // 점프 움직임
             // 회전
@@ -106,6 +114,27 @@ namespace TSG
 
         }
 
+        private void HandleJumpingMovement()
+        {
+            if (player.isJumping)
+            {
+                player.characterController.Move(jumpDirection * jumpFowardSpeed * Time.deltaTime);
+            }
+        }
+
+        private void HandleFreeFallMoveMent()
+        {
+            if (!player.isGrounded)
+            {
+                Vector3 freeFallDirection;
+
+                freeFallDirection = PlayerCamera.instance.transform.forward * PlayerInputManager.instance.verticalInput;
+                freeFallDirection = freeFallDirection + PlayerCamera.instance.transform.right * PlayerInputManager.instance.horizontalInput;
+                freeFallDirection.y = 0;
+
+                player.characterController.Move(freeFallDirection * freeFallSpeed * Time.deltaTime);
+            }
+        }
         private void HandleRotation()
         {
             if (!player.canRotate)
@@ -216,7 +245,7 @@ namespace TSG
             }
 
             // 만약 땅에 있는 게 아니라면, 점프를 하게 허가하지 않음
-            if (player.isGrounded)
+            if (!player.isGrounded)
             {
                 return;
             }
@@ -227,11 +256,35 @@ namespace TSG
             player.isJumping = true;
 
             player.playerNetworkManager.currentStamina.Value -= jumpStaminaCost;
+
+            jumpDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
+            jumpDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
+            jumpDirection.y = 0;
+
+            if(jumpDirection != Vector3.zero)
+            {
+                // 질주 중이면, 점프하는 방향으로 최대로 뜀
+                if (player.playerNetworkManager.isSprinting.Value)
+                {
+                    jumpDirection *= 1;
+                }
+                // 달리는 중이면, 점프하는 방향으로 절반정도 뜀
+                else if(PlayerInputManager.instance.moveAmount > 0.5)
+                {
+                    jumpDirection *= 0.5f;
+                }
+                // 걷는 중이면, 점프하는 방향으로 4분의1정도로 뜀
+                else if(PlayerInputManager.instance.moveAmount <= 0.5)
+                {
+                    jumpDirection *= 0.25f;
+                }                
+            }
         }
     
         public void ApplyJumpingVelocity()
         {
-            // 
+            // 위로 올라가는 힘을 적용
+            yVelocity.y = Mathf.Sqrt(jumpHeight * -2 * gravityForce);
         }
     }
     

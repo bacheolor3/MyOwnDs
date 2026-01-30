@@ -272,8 +272,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e7c81898-a9e3-41ec-9d00-72d80725d09d"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""id"": ""2ff4e6dc-30e8-4334-93ef-c92e6821e40e"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -283,8 +283,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""2ff4e6dc-30e8-4334-93ef-c92e6821e40e"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""id"": ""e7c81898-a9e3-41ec-9d00-72d80725d09d"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

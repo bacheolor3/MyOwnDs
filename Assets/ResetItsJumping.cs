@@ -1,27 +1,20 @@
+using TSG;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 namespace TSG
 {
-    public class ResetActionFlag : StateMachineBehaviour
+    public class ResetItsJumping : StateMachineBehaviour
     {
         CharacterManager character;
-
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-        // 지정된 상태(State)에 들어갈 시 항상 이 로직을 실행한다는 뜻
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-           if(character == null)
-            {
-                character = animator.GetComponent<CharacterManager>();
-            }
+            if(character == null)
+                {
+                    character = animator.GetComponent<CharacterManager>();
+                }
 
-            // 액션이 끝나면 이 기준점을 리셋
-            character.isPerformingAction = false;
-            character.applyRootMotion = false;
-            character.canRotate = true;
-            character.canMove = true;
-            character.isJumping = false;
+                character.isJumping = false;
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
