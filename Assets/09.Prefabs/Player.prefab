@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 8324515692100448886}
   - component: {fileID: -2750526007468227274}
   - component: {fileID: -7746632246154447937}
+  - component: {fileID: -8561608089015002178}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -260,8 +261,11 @@ MonoBehaviour:
   sprintingSpeed: 6.5
   rotationspeed: 15
   sprintingStaminaCost: 2
-  dodgeStaminaCost: 25
   jumpStaminaCost: 25
+  jumpHeight: 4
+  jumpFowardSpeed: 5
+  freeFallSpeed: 2
+  dodgeStaminaCost: 25
 --- !u!114 &-3215274936856437422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,6 +412,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-8561608089015002178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024597560684289293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c18d731a5a12774d90550f72bdcaad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.PlayerEffectsManager
+  effectToTest: {fileID: 11400000, guid: 241fa988ff636f049a1b512984110875, type: 2}
+  processEffect: 0
 --- !u!1001 &2850110371322147637
 PrefabInstance:
   m_ObjectHideFlags: 0
