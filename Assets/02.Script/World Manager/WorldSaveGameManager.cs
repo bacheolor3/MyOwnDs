@@ -127,7 +127,7 @@ namespace TSG
                 // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_01;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
            
@@ -140,7 +140,7 @@ namespace TSG
                 // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_02;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
@@ -153,7 +153,7 @@ namespace TSG
                 // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_03;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
@@ -166,7 +166,7 @@ namespace TSG
                 // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_04;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
@@ -179,7 +179,7 @@ namespace TSG
                 // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_05;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
@@ -192,7 +192,7 @@ namespace TSG
                 // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_06;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
@@ -205,7 +205,7 @@ namespace TSG
                 // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_07;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
@@ -218,7 +218,7 @@ namespace TSG
                 // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_08;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
@@ -231,7 +231,7 @@ namespace TSG
                 // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_09;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
@@ -244,12 +244,19 @@ namespace TSG
                 // 만약 이 프로필 슬롯이 비어있지 않다면, 이 슬롯을 쓰는 새로운 걸 만듬
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_10;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
             // 충분한 슬롯이 없다면, 플레이어에게 알릴것
             TitleScreenManager.Instance.DisplayNoFreeCharacterSlotsPopUp();
+        }
+
+        private void NewGame()
+        {
+            // 새로 만들어진 캐릭터의 스탯과 아이템을 저장(캐릭터 생성씬이 추가된다면)
+            SaveGame();
+            StartCoroutine(LoadWorldScene());
         }
 
         public void LoadGame()

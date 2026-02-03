@@ -17,6 +17,11 @@ namespace TSG
             character = GetComponent<CharacterManager>();
         }
 
+        protected virtual void Start()
+        {
+            
+        }
+
         public int CalculateStatminaBasedOnEnduranceLevel(int endurance)
         {
             float stamina = 0;
@@ -28,6 +33,13 @@ namespace TSG
             return Mathf.RoundToInt(stamina);
         }
 
+        public int CalculateHealthBasedOnVitalityLevel(int vitality)
+        {
+            float health = 0;
+            health = vitality * 10;
+
+            return Mathf.RoundToInt(health);
+        }
         public virtual void RegenerateStamina()
         {
             // 오로지 서버의 주인만이 네트워크 변수를 편집할 수 있다

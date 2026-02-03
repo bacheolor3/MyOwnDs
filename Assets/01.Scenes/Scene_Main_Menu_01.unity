@@ -5023,6 +5023,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 463149654395803221, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 463149654395803221, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092040605462995984, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092040605462995984, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092040605462995984, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092040605462995984, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1563066686076996945, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
       propertyPath: m_Name
       value: Player UI Manager
@@ -5081,6 +5105,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000511057745198145, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530435661687743576, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530435661687743576, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530435661687743576, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8583859364926727286, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
