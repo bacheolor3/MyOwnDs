@@ -7,6 +7,10 @@ namespace TSG
     public class WorldCharacterEffectsManager : MonoBehaviour
     {
         public static WorldCharacterEffectsManager instance;
+
+        [Header("데미지")]
+        public TakeDamageEffect takeDamageEffect;
+        
         [SerializeField] List<InstantCharacterEffect> instantEffects;
 
         private void Awake()

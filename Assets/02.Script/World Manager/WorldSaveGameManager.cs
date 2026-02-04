@@ -255,6 +255,9 @@ namespace TSG
         private void NewGame()
         {
             // 새로 만들어진 캐릭터의 스탯과 아이템을 저장(캐릭터 생성씬이 추가된다면)
+            player.playerNetworkManager.vitality.Value = 10;
+            player.playerNetworkManager.endurance.Value = 10;
+
             SaveGame();
             StartCoroutine(LoadWorldScene());
         }

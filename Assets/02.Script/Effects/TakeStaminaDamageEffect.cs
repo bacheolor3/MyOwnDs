@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace TSG
 {
-    [CreateAssetMenu(menuName = "Character EFfects/Instant Effect/Take STamina Damage")]
+    [CreateAssetMenu(menuName = "Character Effects/Instant Effect/Take Stamina Damage")]
     public class TakeStaminaDamageEffect : InstantCharacterEffect
     {
         public float staminaDamage;
