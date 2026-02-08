@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.TextCore.Text;
+using System.Collections;
 
 namespace TSG
 {
@@ -13,6 +14,7 @@ namespace TSG
 
         [HideInInspector]public CharacterNetworkManager characterNetworkManager;
         [HideInInspector]public CharacterEffectManager characterEffectManager;
+        [HideInInspector]public CharacterAnimatorManager characterAnimatorManager;
 
         [Header("기준점")]
         public bool isPerformingAction = false;
@@ -28,8 +30,10 @@ namespace TSG
 
             characterController = GetComponent<CharacterController>();
             animator = GetComponent<Animator>();
+
             characterNetworkManager = GetComponent<CharacterNetworkManager>();
             characterEffectManager = GetComponent<CharacterEffectManager>();
+            characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
         }
 
         protected virtual void Update()
@@ -62,7 +66,35 @@ namespace TSG
         {
             
         }
-    
-    }
-    
+
+        public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
+        {
+            if (IsOwner)
+            {
+                characterNetworkManager.currentHealth.Value = 0;
+                isDead.Value = true;
+
+                // 필요한 모든 요소들 여기서 다 리셋할것
+                // 아직은 없음
+
+                // 만약 우리가 땅에 있는 게 아니라면, 공중 사망 애니메이션을 적용할 것
+                if (!manuallySelectDeathAnimation)
+                {
+                    characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true);
+                }
+            }
+            // 사망할 때의 효과들 재생
+
+            yield return new WaitForSeconds(5);
+
+            // 플레이어에게 룬으로 보상 제공
+
+            // 캐릭터 삭제(Disable)
+        }
+
+        public virtual void ReviveCharacter()
+        {
+            
+        }
+    }    
 }

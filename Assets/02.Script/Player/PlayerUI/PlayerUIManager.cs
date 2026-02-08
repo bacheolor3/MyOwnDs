@@ -11,6 +11,7 @@ namespace TSG
         [Header("네트워크 참가용")]
         [SerializeField] bool startGameAsClient;
         [HideInInspector] public PlayerUIHudManager playerUIHudManager;
+        [HideInInspector] public PlayerUIPopUpManager playerUIPopUpManager;
 
         private void Awake()
         {
@@ -24,6 +25,7 @@ namespace TSG
             }
 
             playerUIHudManager = GetComponentInChildren<PlayerUIHudManager>();
+            playerUIPopUpManager = GetComponentInChildren<PlayerUIPopUpManager>();
         }
 
         private void Start()
