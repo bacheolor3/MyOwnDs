@@ -22,4 +22,13 @@ namespace TSG
         
         NO_SLOT
     }
+
+    public enum WeaponModelSlot
+    {
+        RightHand,
+        LeftHand,
+        // Right Hips
+        // Left Hips
+        // Back
+    }
 }

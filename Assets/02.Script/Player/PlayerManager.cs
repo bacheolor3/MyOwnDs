@@ -14,6 +14,7 @@ namespace TSG
         [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
         [HideInInspector] public PlayerNetworkManager playerNetworkManager;
         [HideInInspector] public PlayerStatsManager playerStatsManager;
+        [HideInInspector] public PlayerInventoryManager playerInventoryManager;
 
         protected override void Awake()
         {
@@ -25,6 +26,7 @@ namespace TSG
             playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
             playerNetworkManager = GetComponent<PlayerNetworkManager>();
             playerStatsManager = GetComponent<PlayerStatsManager>();
+            playerInventoryManager = GetComponent<PlayerInventoryManager>();
         }
 
         protected override void Update()

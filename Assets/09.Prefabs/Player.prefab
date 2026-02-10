@@ -20,6 +20,8 @@ GameObject:
   - component: {fileID: -2750526007468227274}
   - component: {fileID: -7746632246154447937}
   - component: {fileID: -8561608089015002178}
+  - component: {fileID: 6621890930031092029}
+  - component: {fileID: 938350538470549404}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -103,19 +105,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TSG.PlayerManager
   ShowTopMostFoldoutHeaderGroup: 1
+  isDead:
+    m_InternalValue: 0
   characterController: {fileID: 0}
   animator: {fileID: 0}
   characterNetworkManager: {fileID: 0}
+  characterEffectManager: {fileID: 0}
+  characterAnimatorManager: {fileID: 0}
   isPerformingAction: 0
   isJumping: 0
   isGrounded: 1
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
+  respawnCharacter: 0
   playerAnimatorManager: {fileID: 0}
   playerLocomotionManager: {fileID: 0}
   playerNetworkManager: {fileID: 0}
   playerStatsManager: {fileID: 0}
+  playerInventoryManager: {fileID: 0}
 --- !u!114 &3265853324669956131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,11 +152,17 @@ MonoBehaviour:
     m_InternalValue: 0
   isSprinting:
     m_InternalValue: 0
-  endurance:
-    m_InternalValue: 10
+  currentHealth:
+    m_InternalValue: 0
+  maxHealth:
+    m_InternalValue: 0
   currentStamina:
     m_InternalValue: 1
   maxStamina:
+    m_InternalValue: 1
+  endurance:
+    m_InternalValue: 10
+  vitality:
     m_InternalValue: 1
   characterName:
     m_InternalValue:
@@ -426,6 +440,82 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TSG.PlayerEffectsManager
   effectToTest: {fileID: 11400000, guid: 241fa988ff636f049a1b512984110875, type: 2}
   processEffect: 0
+--- !u!114 &6621890930031092029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024597560684289293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 767662e41e513f64a914ff635cd58bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  currentRightHandWeapon: {fileID: 11400000, guid: d2907d26b902b9745bdf143c7f93c119, type: 2}
+  currentLeftHandWeapon: {fileID: 11400000, guid: d2907d26b902b9745bdf143c7f93c119, type: 2}
+--- !u!114 &938350538470549404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024597560684289293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 445632d4d5773d44a83ade168015e6d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  rightHandSlot: {fileID: 0}
+  leftHandSlot: {fileID: 0}
+  rightHandWeaponModel: {fileID: 0}
+  leftHandWeaponModel: {fileID: 0}
+--- !u!1 &7526648224303286931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8295026797952619140}
+  - component: {fileID: 3679990016065707377}
+  m_Layer: 7
+  m_Name: Weapon Instantiation Slot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8295026797952619140
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526648224303286931}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.9544583, y: 0.0019852435, z: 0.29794815, w: 0.015245428}
+  m_LocalPosition: {x: -0.168, y: -0.011, z: 0.003}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1438226725864044756}
+  m_LocalEulerAnglesHint: {x: 178.4, y: -34.682983, z: -0.7380066}
+--- !u!114 &3679990016065707377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526648224303286931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7d7dae6bae74414e8739cccdee38581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.WeaponModelInstantiationSlot
+  weaponSlot: 1
+  currentWeaponModel: {fileID: 0}
 --- !u!1001 &2850110371322147637
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -724,11 +814,41 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3780837713738550241, guid: facedc965d4e2ef4db4c5a872fdb290b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8295026797952619140}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6392886965815168175, guid: facedc965d4e2ef4db4c5a872fdb290b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7006944825864124001}
   m_SourcePrefab: {fileID: 100100000, guid: facedc965d4e2ef4db4c5a872fdb290b, type: 3}
+--- !u!4 &1438226725864044756 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3780837713738550241, guid: facedc965d4e2ef4db4c5a872fdb290b, type: 3}
+  m_PrefabInstance: {fileID: 2850110371322147637}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2307841050614256862 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: facedc965d4e2ef4db4c5a872fdb290b, type: 3}
   m_PrefabInstance: {fileID: 2850110371322147637}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &9166435593313550234 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6392886965815168175, guid: facedc965d4e2ef4db4c5a872fdb290b, type: 3}
+  m_PrefabInstance: {fileID: 2850110371322147637}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7006944825864124001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9166435593313550234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7d7dae6bae74414e8739cccdee38581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.WeaponModelInstantiationSlot
+  weaponSlot: 0
+  currentWeaponModel: {fileID: 0}

@@ -4985,9 +4985,41 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1092040605462995984, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092040605462995984, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092040605462995984, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092040605462995984, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1563066686076996945, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
       propertyPath: m_Name
       value: Player UI Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3668337484555671321, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3668337484555671321, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3668337484555671321, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3668337484555671321, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000511057745198145, guid: 5bb3c2891c45b5d4c8c328a8da848d15, type: 3}
       propertyPath: m_LocalPosition.x
