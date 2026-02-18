@@ -5,6 +5,9 @@ namespace TSG
 {
     public class DamageCollider : MonoBehaviour
     {
+        [Header("충돌판정")]
+        protected Collider damageCollider;
+
         [Header("데미지")]
         public float physicalDamage = 0;    // (미래에는 "기본", "충격", "참격" 그리고 "관통"으로 나눌 것)
         public float magicDamage = 0;
@@ -65,6 +68,16 @@ namespace TSG
 
             damageTarget.characterEffectManager.ProcessInstantEffect(damageEffect);
         }
-    }
-    
+
+        public virtual void EnableDamageCollider()
+        {
+            damageCollider.enabled = true;
+        }
+
+        public virtual void DisableDamageCollider()
+        {
+            damageCollider.enabled = false;
+            charactersDamaged.Clear();      // 캐릭터가 공격받을 때, 충돌 판정을 리셋함과 동시에 캐릭터도 리셋함. 그래야 다시 공격할 수 있으니까
+        }
+    }    
 }

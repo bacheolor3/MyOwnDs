@@ -25,8 +25,8 @@ namespace TSG
                 return;
             }
 
-            currentWeaponModel = Instantiate(weaponModel);
-            // currentWeaponModel = weaponModel;
+            // currentWeaponModel = Instantiate(weaponModel);
+            currentWeaponModel = weaponModel;
             if(currentWeaponModel != null)
             {
                 currentWeaponModel.transform.parent = transform;

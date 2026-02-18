@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8c9b439cfbe68e34489a56cf1e82666d, type: 3}
-  m_Name: Straight Sword
+  m_Name: BroadSword
   m_EditorClassIdentifier: Assembly-CSharp::TSG.MeleeWeaponItem
-  itemName: Straight Sword
-  itemIcon: {fileID: 21300000, guid: af6cdb04b2574454895b73f6f072284d, type: 3}
-  itemDescription: A Straight Sword(For Test)
-  itemID: 0
+  itemName: Broadsword
+  itemIcon: {fileID: 21300000, guid: 0910d3e798564614eada2fc2eaeb8379, type: 3}
+  itemDescription: A BroadSword(For Test)
+  itemID: 2
   weaponModel: {fileID: 6727175630073510730, guid: 82a9ed493b84a78499bef17e916d8c6a, type: 3}
   strengthREQ: 10
   dexREQ: 10
