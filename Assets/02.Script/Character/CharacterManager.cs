@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.TextCore.Text;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace TSG
 {
@@ -34,6 +35,11 @@ namespace TSG
             characterNetworkManager = GetComponent<CharacterNetworkManager>();
             characterEffectManager = GetComponent<CharacterEffectManager>();
             characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
+        }
+
+        protected virtual void Start()
+        {
+            IgnoreMyOwnColliders();
         }
 
         protected virtual void Update()
@@ -95,6 +101,31 @@ namespace TSG
         public virtual void ReviveCharacter()
         {
             
+        }
+
+        protected virtual void IgnoreMyOwnColliders()
+        {
+            Collider characterControllerCollider = GetComponent<Collider>();
+            Collider[] damageableCharacterColliders = GetComponentsInChildren<Collider>();
+            List<Collider> ignoreColliders = new List<Collider>();
+
+            // 내 캐릭터가 가지고 있는 모든 충돌 판정용 콜라이더는 리스트에 넣고, 서로 무시하게 될 것
+            foreach(var collider in damageableCharacterColliders)
+            {
+                ignoreColliders.Add(collider);
+            }
+
+            // 캐릭터 컨트롤러 콜라이더를 리스트에 추가해 충돌 무시에 쓰도록 할 것
+            ignoreColliders.Add(characterControllerCollider);
+
+            // 리스트에 있는 모든 콜라이더를 지나가며, 서로간의 충돌을 무시할 것
+            foreach(var collider in ignoreColliders)
+            {
+                foreach(var otherCollder in ignoreColliders)
+                {
+                    Physics.IgnoreCollision(collider, otherCollder, true);
+                }
+            }
         }
     }    
 }

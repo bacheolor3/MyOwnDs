@@ -24,7 +24,13 @@ namespace TSG
         private void OnTriggerEnter(Collider other)
         {
             Debug.Log($"{other.gameObject.name}와 충돌함!"); // 이 로그조차 안 찍히면 물리 설정 문제
-            CharacterManager damageTarget = other.GetComponent<CharacterManager>();
+            CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
+            // 만약 데미지를 줄 수 있는 캐릭터 콜라이더와 캐릭터 콜라이더를 전부 확인해보고 싶다면
+            // if(damageTarget == null)
+            // {
+            //     damageTarget = other.GetComponent<CharacterManager>();
+            // }
+
             // 충돌하는 오브젝트가 캐릭터인지 확인
             // if(other.gameObject.layer == LayerMask.NameToLayer("Character"))
             // {
