@@ -61,6 +61,10 @@ namespace TSG
         // 씬에서 바닥 확인용 구체를 그려줌
         protected void OnDrawGizmosSelected()
         {
+            if(character == null)
+            {
+                return;
+            }
             Gizmos.DrawSphere(character.transform.position, groundCheckSphereRadius);
         }
     }
