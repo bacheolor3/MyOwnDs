@@ -27,7 +27,7 @@ namespace TSG
             if (character.isGrounded)
             {
                 // 만약 점프를 시도하지 않거나 움직이는 중이라면
-                if(!character.isJumping && yVelocity.y < 0)
+                if(yVelocity.y < 0)
                 {
                     inAirTimer = 0;
                     fallingVelocityHasBeenSet = false;
@@ -37,7 +37,7 @@ namespace TSG
             else
             {
                 // 만약 점프중도 아니고, 떨어지는 힘도 받고 있지 않다면
-                if(!character.isJumping && !fallingVelocityHasBeenSet)
+                if(!character.characterNetworkManager.isJumping.Value&& !fallingVelocityHasBeenSet)
                 {
                     fallingVelocityHasBeenSet = true;
                     yVelocity.y = fallStartYVelocity;

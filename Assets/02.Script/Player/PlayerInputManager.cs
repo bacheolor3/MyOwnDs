@@ -50,6 +50,12 @@ namespace TSG
             SceneManager.activeSceneChanged += OnSceneChange;
 
             instance.enabled = false;
+
+            if(playerControls != null)
+            {
+                playerControls.Disable();                
+            }
+
         }
                 
         private void OnSceneChange(Scene oldScene, Scene newScene)
@@ -58,12 +64,22 @@ namespace TSG
             if (newScene.buildIndex == WorldSaveGameManager.instance.GetWorldSceneIndex())
             {
                 instance.enabled = true;
+
+                if(playerControls != null)
+                {
+                    playerControls.Enable();
+                }
             }
             // 아니면 플레이어 컨트롤러는 반드시 비활성화 이어야 한다
             // 이는 우리가 미래에 캐릭터 크리에이션 씬 같은 걸 만들때 쓰인다
             else
             {
                 instance.enabled = false;
+
+                if(playerControls != null)
+                {
+                    playerControls.Disable();                
+                }
             }
         }
 

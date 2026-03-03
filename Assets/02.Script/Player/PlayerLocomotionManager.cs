@@ -116,7 +116,7 @@ namespace TSG
 
         private void HandleJumpingMovement()
         {
-            if (player.isJumping)
+            if (player.playerNetworkManager.isJumping.Value)
             {
                 player.characterController.Move(jumpDirection * jumpFowardSpeed * Time.deltaTime);
             }
@@ -239,7 +239,7 @@ namespace TSG
             }
 
             // 이미 점프중이라면, 현재 점프가 끝나기 전엔 점프가 안 되게 설정
-            if (player.isJumping)
+            if (player.playerNetworkManager.isJumping.Value)
             {
                 return;
             }
@@ -253,7 +253,7 @@ namespace TSG
             // 만약 두손 무기를 들 고 있다면, 두손 무기를 든 채 점프하는 모션, 아니라면 한손으로 애니메이션 실행
             player.playerAnimatorManager.PlayTargetActionAnimation("Main_Jump_01", false);
 
-            player.isJumping = true;
+            player.playerNetworkManager.isJumping.Value = true;
 
             player.playerNetworkManager.currentStamina.Value -= jumpStaminaCost;
 
