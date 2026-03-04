@@ -17,6 +17,7 @@ namespace TSG
         [HideInInspector] public PlayerStatsManager playerStatsManager;
         [HideInInspector] public PlayerInventoryManager playerInventoryManager;
         [HideInInspector] public PlayerEquipmentManager playerEquipmentManager;
+        [HideInInspector] public PlayerCombatManager playerCombatManager;
 
         protected override void Awake()
         {
@@ -30,6 +31,7 @@ namespace TSG
             playerStatsManager = GetComponent<PlayerStatsManager>();
             playerInventoryManager = GetComponent<PlayerInventoryManager>();
             playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
+            playerCombatManager = GetComponent<PlayerCombatManager>();
         }
 
         protected override void Update()
@@ -88,6 +90,7 @@ namespace TSG
             // 장비
             playerNetworkManager.currentRightHandWeaponID.OnValueChanged += playerNetworkManager.OnCurrentRightHandWeaponIDChange;
             playerNetworkManager.currentLeftHandWeaponID.OnValueChanged += playerNetworkManager.OnCurrentLeftHandWeaponIDChange;
+            playerNetworkManager.currentWeaponBeingUsed.OnValueChanged += playerNetworkManager.OnCurrentWeaponBeingUsedIDChange;
 
             // 연결할때, 세이브 속 캐릭터의 오너가 우리지만, 서버의 오너는 우리가 아닐 때, 캐릭터의 데이터를 다시 로드해서 인스턴시에이트하기
             // 우리가 서버오너일땐 이걸 실행하지 않음. 왜냐하면 서버 오너인 시점에서 이미 우리가 데이터를 로드 다 한 상태니까

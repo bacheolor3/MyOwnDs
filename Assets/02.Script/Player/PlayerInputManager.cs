@@ -28,7 +28,7 @@ namespace TSG
         [SerializeField] bool dodgeInput = false;
         [SerializeField] bool sprintInput = false;
         [SerializeField] bool jumpInput = false;
-        
+        [SerializeField] bool RB_Input = false;
 
         private void Awake()
         {
@@ -93,6 +93,7 @@ namespace TSG
                 playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
                 playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
                 playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
+                playerControls.PlayerActions.RB.performed += i => RB_Input = true;
 
                 // 설정된 버튼을 누르고 있으면(여기서는 L Shift, 패드라면) bool값을 true로
                 playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
@@ -137,6 +138,7 @@ namespace TSG
             HandleDodgeInput();
             HandleSprintInput();
             HandleJumpInput();
+            HandleRBInput();
         }
 
         // 이동
@@ -217,6 +219,20 @@ namespace TSG
                 player.playerLocomotionManager.AttemptToPerformJump();
             }
         }
-    }
-    
+
+        private void HandleRBInput()
+        {
+            if (RB_Input)
+            {
+                RB_Input = false;
+
+                // 해야할 거: 나중에 ui창 열려있으면, 돌아오고 아무것도 안되어야함
+                player.playerNetworkManager.SetCharacterActionHand(true);
+
+                // 해야할 거: 만약 우리가 양손무기를 들고 있다면 양손무기 모션 적용
+
+                player.playerCombatManager.PerformWeaponBasedAction(player.playerInventoryManager.currentRightHandWeapon.oh_RB_Action, player.playerInventoryManager.currentRightHandWeapon);
+            }
+        }
+    }    
 }

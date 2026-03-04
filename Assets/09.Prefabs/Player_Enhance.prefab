@@ -2090,6 +2090,7 @@ GameObject:
   - component: {fileID: 8219566404814155283}
   - component: {fileID: 6783124784448561095}
   - component: {fileID: 8104644644115352951}
+  - component: {fileID: -3180437014329324570}
   - component: {fileID: 6461616509562712943}
   - component: {fileID: 5535167247569968784}
   - component: {fileID: 4679476987399735164}
@@ -2194,7 +2195,6 @@ MonoBehaviour:
   characterEffectManager: {fileID: 0}
   characterAnimatorManager: {fileID: 0}
   isPerformingAction: 0
-  isJumping: 0
   isGrounded: 1
   applyRootMotion: 0
   canRotate: 1
@@ -2207,6 +2207,20 @@ MonoBehaviour:
   playerStatsManager: {fileID: 0}
   playerInventoryManager: {fileID: 0}
   playerEquipmentManager: {fileID: 0}
+  playerCombatManager: {fileID: 0}
+--- !u!114 &-3180437014329324570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915770479797903334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d83f283f054d61749bb6559f38e99ebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.PlayerCombatManager
+  currentWeaponBeingUsed: {fileID: 0}
 --- !u!114 &6461616509562712943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2234,6 +2248,8 @@ MonoBehaviour:
   moveAmount:
     m_InternalValue: 0
   isSprinting:
+    m_InternalValue: 0
+  isJumping:
     m_InternalValue: 0
   currentHealth:
     m_InternalValue: 0
@@ -2316,9 +2332,15 @@ MonoBehaviour:
         byte0059: 0
         byte0060: 0
         byte0061: 0
+  currentWeaponBeingUsed:
+    m_InternalValue: 0
   currentRightHandWeaponID:
     m_InternalValue: 0
   currentLeftHandWeaponID:
+    m_InternalValue: 0
+  isUsingRightHand:
+    m_InternalValue: 0
+  isUsingLeftHand:
     m_InternalValue: 0
 --- !u!114 &5535167247569968784
 MonoBehaviour:

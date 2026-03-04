@@ -40,6 +40,8 @@ namespace TSG
         // 강공격 스테미나 소모도 등
         
         // 아이템 기반 액션(RB, RT, LB, LT)
+        [Header("액션")]
+        public WeaponItemAction oh_RB_Action;   // One Hand Right Bumper Action
 
         // 전장의 재(보스룸 연기 말하는거..)
 
