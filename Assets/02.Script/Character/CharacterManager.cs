@@ -100,7 +100,12 @@ namespace TSG
 
         public virtual void ReviveCharacter()
         {
-            
+            if (IsOwner)
+            {
+                isDead.Value = false;
+                isPerformingAction = false; // 액션 고정 해제
+                // 필요한 경우 콜라이더나 리지드바디 복구 로직 추가
+            }
         }
 
         protected virtual void IgnoreMyOwnColliders()

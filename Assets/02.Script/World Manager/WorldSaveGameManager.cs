@@ -304,7 +304,7 @@ namespace TSG
         }
 
         // 게임 시작할 때, 모든 캐릭터의 정보를 기기에 불러오도록 설정
-        private void LoadAllCharacterProfiles()
+        public void LoadAllCharacterProfiles()
         {
             saveFileDataWriter = new SaveFileDataWriter();
             saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;

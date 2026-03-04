@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
+using System.Collections;
 
 namespace TSG
 {
@@ -37,15 +38,30 @@ namespace TSG
             if (startGameAsClient)
             {
                 startGameAsClient = false;
+                StartCoroutine(RestartAsClientCoroutine());
                 // 일단 매니저를 셧다운 시켜야 함. 왜냐하면 타이틀 스크린에선 모두 호스트취급
-                NetworkManager.Singleton.Shutdown();
+                //NetworkManager.Singleton.Shutdown();
                 // 그리고 다시 시작, 이번엔 클라이언트로서
-                NetworkManager.Singleton.StartClient();
+                //NetworkManager.Singleton.StartClient();
 
             }
         }
+        
+        private IEnumerator RestartAsClientCoroutine()
+        {
+            NetworkManager.Singleton.Shutdown();
 
+            while (NetworkManager.Singleton.IsListening)
+            {
+                yield return null;
+            }
 
+            WorldSaveGameManager.instance.LoadAllCharacterProfiles();
+
+            yield return new WaitForSeconds(1f);
+
+            NetworkManager.Singleton.StartClient();
+        }
     }
     
 }

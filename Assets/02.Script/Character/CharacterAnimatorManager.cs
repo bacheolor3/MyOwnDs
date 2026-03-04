@@ -105,6 +105,29 @@ namespace TSG
             // 서버/호스트 에게 현시점 서버에 있는 사람에게 이 애니메이션을 실행하라고 해야 함
             character.characterNetworkManager.NotifyTheServerOfActionAnimationServerRpc(NetworkManager.Singleton.LocalClientId, targetAnimation, applyRootMotion);
         }
+
+        public virtual void PlayTargetAttackActionAnimation(
+            string targetAnimation, 
+            bool isPerformingAction, 
+            bool applyRootMotion = true, 
+            bool canRotate = false, 
+            bool canMove = false)
+        {
+            // 마지막으로 실행한 공격을 확인(콤보를 위해)
+            // 지금 시전하는 공격 타입을 확인 (약공, 강공, 그외)
+            // 지금 무기에 맞는 애니메이션으로 업데이트
+            // 우리 공격이 패링 가능한지 아닌지 확인
+            // 네트워크에 우리가 "공격 중"이라는 플래그(신호)를 보냄(카운터 데미지등 처리위해)
+            
+            character.applyRootMotion = applyRootMotion;
+            character.animator.CrossFade(targetAnimation, 0.2f);
+            character.isPerformingAction = isPerformingAction;
+            character.canRotate = canRotate;
+            character.canMove = canMove;
+
+            // 서버/호스트 에게 현시점 서버에 있는 사람에게 이 애니메이션을 실행하라고 해야 함
+            character.characterNetworkManager.NotifyTheServerOfAttackActionAnimationServerRpc(NetworkManager.Singleton.LocalClientId, targetAnimation, applyRootMotion);
+        }
     }
     
 }

@@ -82,5 +82,33 @@ namespace TSG
             character.applyRootMotion = applyRootMotion;
             character.animator.CrossFade(animationID, 0.2f);
         }
+
+        // ServerRpc는 클라이언트에게서 서버로 하는 호출(여기의 경우엔 호스트에게)
+        [ServerRpc]
+        public void NotifyTheServerOfAttackActionAnimationServerRpc(ulong clientID, string animationID, bool applyRootMotion)
+        {
+            // 만약 이 캐릭터가 호스트/서버라면, ClientRpc를 실행
+            if (IsServer)
+            {
+                PlayAttackActionAnimationForAllClientsClientRpc(clientID, animationID, applyRootMotion);
+            }
+        }
+
+        // ClientRpc 는 현재 클라이언트의 상태를 서버에서 보내는 것
+        [ClientRpc]
+        public void PlayAttackActionAnimationForAllClientsClientRpc(ulong clientID, string animationID, bool applyRootMotion)
+        {
+            // 이 기능을 요청을 보낸 캐릭터에서 실행되지 않게 해야 함(안 그러면 애니메이션이 두번 실행됨)
+            if(clientID != NetworkManager.Singleton.LocalClientId)
+            {
+                PerformAttackActionAnimationFromServer(animationID, applyRootMotion);
+            }
+        }
+
+        private void PerformAttackActionAnimationFromServer(string animationID, bool applyRootMotion)
+        {
+            character.applyRootMotion = applyRootMotion;
+            character.animator.CrossFade(animationID, 0.2f);
+        }
     }
 }

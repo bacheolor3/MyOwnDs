@@ -71,6 +71,19 @@ namespace TSG
             // 만약 이 플레이어 오브젝트 가 이 클라이언트 쪽 소유물이라면
             if (IsOwner)
             {
+               // 1. 클라이언트라면 세이브 데이터를 먼저 로드하되, 데이터가 있는지 확인
+                // if (!IsServer)
+                // {
+                //     var data = WorldSaveGameManager.instance.currentCharacterData;
+
+                //     LoadGameDataFromCurrentCharacterData(ref data);
+                // }
+
+                // StartCoroutine(InitUIAndStats());
+                
+                // playerNetworkManager.SetNewMaxHealthValue(0, playerNetworkManager.vitality.Value);
+                // playerNetworkManager.SetNewMaxStaminaValue(0, playerNetworkManager.endurance.Value);
+
                 PlayerCamera.instance.player = this;
                 PlayerInputManager.instance.player = this;
                 WorldSaveGameManager.instance.player = this;
@@ -94,10 +107,20 @@ namespace TSG
 
             // 연결할때, 세이브 속 캐릭터의 오너가 우리지만, 서버의 오너는 우리가 아닐 때, 캐릭터의 데이터를 다시 로드해서 인스턴시에이트하기
             // 우리가 서버오너일땐 이걸 실행하지 않음. 왜냐하면 서버 오너인 시점에서 이미 우리가 데이터를 로드 다 한 상태니까
+            // UPON CONNECTING, IF WE ARE THE OWNER OF THIS CHARACTER, BUT WE ARE NOT THE SERVER, RELOAD OUR CHARACTER DATA TO THIS NEWLY INSTANTIATED CHARACTER
+            // WE DONT RUN THIS IF WE ARE THE SERVER, BECAUSE SINCE THEY ARE THE HOST, THEY ARE ALREADY LOADED IN AND DON'T NEED TO RELOAD THEIR DATA
             if(IsOwner && !IsServer)
             {
                 LoadGameDataFromCurrentCharacterData(ref WorldSaveGameManager.instance.currentCharacterData);
-            }
+            }            
+        }
+
+        private IEnumerator InitUIAndStats()
+        {
+            yield return null;
+
+            playerNetworkManager.SetNewMaxHealthValue(0, playerNetworkManager.vitality.Value);
+            playerNetworkManager.SetNewMaxStaminaValue(0, playerNetworkManager.endurance.Value);            
         }
 
         public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
@@ -121,7 +144,11 @@ namespace TSG
                 // 집중 포인트 복구
 
                 // 재생 효과 재생
-                playerAnimatorManager.PlayTargetActionAnimation("Empty", false);
+                playerAnimatorManager.PlayTargetActionAnimation("Idle", false);
+                
+                applyRootMotion = false;
+                canMove = true;
+                canRotate = true;
             }
         }
 
