@@ -6,7 +6,7 @@ namespace TSG
     public class DamageCollider : MonoBehaviour
     {
         [Header("충돌판정")]
-        protected Collider damageCollider;
+        [SerializeField] protected Collider damageCollider;
 
         [Header("데미지")]
         public float physicalDamage = 0;    // (미래에는 "기본", "충격", "참격" 그리고 "관통"으로 나눌 것)
@@ -16,12 +16,17 @@ namespace TSG
         public float holyDamage = 0;
 
         [Header("충돌 지점")]
-        private Vector3 contactPoint;
+        public Vector3 contactPoint;
 
         [Header("데미지를 받고 있는 캐릭터")]
         protected List<CharacterManager> charactersDamaged = new List<CharacterManager>();
 
-        private void OnTriggerEnter(Collider other)
+        protected virtual void Awake()
+        {
+            
+        }
+
+        protected virtual void OnTriggerEnter(Collider other)
         {
             Debug.Log($"{other.gameObject.name}와 충돌함!"); // 이 로그조차 안 찍히면 물리 설정 문제
             CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();

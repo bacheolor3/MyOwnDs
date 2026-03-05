@@ -30,11 +30,14 @@ namespace TSG
 
         // 무기 보정치
         // 약공격 보정
+        [Header("공격 보정치")]
+        public float light_Attack_01_Modifier = 1.1f;
         // 강공격 보정
         // 치명타 공격 보정 등
 
         [Header("스테미나 소모도")]
         public int baseStaminaCost = 20;
+        public float lightAttackStaminaCostMultiplier = 0.9f;
         // 달리기 공격 스테미나 소모도
         // 약공격 스테미나 소모도
         // 강공격 스테미나 소모도 등

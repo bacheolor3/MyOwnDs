@@ -83,7 +83,7 @@ namespace TSG
             character.animator.CrossFade(animationID, 0.2f);
         }
 
-        // ServerRpc는 클라이언트에게서 서버로 하는 호출(여기의 경우엔 호스트에게)
+        // 공격 애니메이션
         [ServerRpc]
         public void NotifyTheServerOfAttackActionAnimationServerRpc(ulong clientID, string animationID, bool applyRootMotion)
         {
@@ -94,7 +94,7 @@ namespace TSG
             }
         }
 
-        // ClientRpc 는 현재 클라이언트의 상태를 서버에서 보내는 것
+        
         [ClientRpc]
         public void PlayAttackActionAnimationForAllClientsClientRpc(ulong clientID, string animationID, bool applyRootMotion)
         {
@@ -109,6 +109,78 @@ namespace TSG
         {
             character.applyRootMotion = applyRootMotion;
             character.animator.CrossFade(animationID, 0.2f);
+        }
+
+        // 데미지
+        //[ServerRpc(RequireOwnership = false)]
+        [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+        public void NotifyTheServerOfCharacterDamageServerRpc(
+            ulong damagedCharacterID,
+            ulong characterCausingDamageID, 
+            float physicalDamage,
+            float magicDamage,
+            float fireDamage,
+            float lightningDamage,
+            float holyDamage,
+            float poiseDamage,
+            float angleHitFrom,
+            float contactPointX,
+            float contactPointY,
+            float contactPointZ)
+        {
+            if (IsServer)
+            {
+                NotifyTheServerOfCharacterDamageClientRpc(damagedCharacterID,characterCausingDamageID, physicalDamage, magicDamage, fireDamage, lightningDamage, holyDamage, poiseDamage, angleHitFrom, contactPointX, contactPointY, contactPointZ);
+            }
+        }
+
+        [ClientRpc]
+        public void NotifyTheServerOfCharacterDamageClientRpc(
+            ulong damagedCharacterID, 
+            ulong characterCausingDamageID, 
+            float physicalDamage,
+            float magicDamage,
+            float fireDamage,
+            float lightningDamage,
+            float holyDamage,
+            float poiseDamage,
+            float angleHitFrom,
+            float contactPointX,
+            float contactPointY,
+            float contactPointZ)
+        {
+            ProcessCharacterDamageFromServer(damagedCharacterID, characterCausingDamageID, physicalDamage, magicDamage, fireDamage, lightningDamage, holyDamage, poiseDamage, angleHitFrom, contactPointX, contactPointY, contactPointZ);
+        }
+
+        public void ProcessCharacterDamageFromServer(
+            ulong damagedCharacterID, 
+            ulong characterCausingDamageID,
+            float physicalDamage,
+            float magicDamage,
+            float fireDamage,
+            float lightningDamage,
+            float holyDamage,
+            float poiseDamage,
+            float angleHitFrom,
+            float contactPointX,
+            float contactPointY,
+            float contactPointZ)
+        {
+            CharacterManager damagedCharacter = NetworkManager.Singleton.SpawnManager.SpawnedObjects[damagedCharacterID].gameObject.GetComponent<CharacterManager>();
+            CharacterManager characterCausingDamage = NetworkManager.Singleton.SpawnManager.SpawnedObjects[characterCausingDamageID].gameObject.GetComponent<CharacterManager>();
+            TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeDamageEffect);
+
+            damageEffect.physicalDamage = physicalDamage;
+            damageEffect.magicDamage = magicDamage;
+            damageEffect.fireDamage = fireDamage;
+            damageEffect.lightningDamage =lightningDamage;
+            damageEffect.holyDamage = holyDamage;
+            damageEffect.poiseDamage = poiseDamage;
+            damageEffect.angleHitFrom = angleHitFrom;
+            damageEffect.contactPoint = new Vector3(contactPointX, contactPointY, contactPointZ);
+            damageEffect.characterCausingDamage = characterCausingDamage;
+
+            damagedCharacter.characterEffectManager.ProcessInstantEffect(damageEffect);
         }
     }
 }

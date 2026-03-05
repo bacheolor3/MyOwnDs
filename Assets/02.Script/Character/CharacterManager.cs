@@ -10,12 +10,13 @@ namespace TSG
     {
         [Header("상태")]
         public NetworkVariable<bool> isDead = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-        [HideInInspector]public CharacterController characterController;
-        [HideInInspector]public Animator animator;
+        [HideInInspector] public CharacterController characterController;
+        [HideInInspector] public Animator animator;
 
-        [HideInInspector]public CharacterNetworkManager characterNetworkManager;
-        [HideInInspector]public CharacterEffectManager characterEffectManager;
-        [HideInInspector]public CharacterAnimatorManager characterAnimatorManager;
+        [HideInInspector] public CharacterNetworkManager characterNetworkManager;
+        [HideInInspector] public CharacterEffectManager characterEffectManager;
+        [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
+        [HideInInspector] public CharacterCombatManager characterCombatManager;
 
         [Header("기준점")]
         public bool isPerformingAction = false;
@@ -35,6 +36,7 @@ namespace TSG
             characterNetworkManager = GetComponent<CharacterNetworkManager>();
             characterEffectManager = GetComponent<CharacterEffectManager>();
             characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
+            characterCombatManager = GetComponent<CharacterCombatManager>();
         }
 
         protected virtual void Start()

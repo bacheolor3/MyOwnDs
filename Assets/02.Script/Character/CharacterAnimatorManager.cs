@@ -106,7 +106,7 @@ namespace TSG
             character.characterNetworkManager.NotifyTheServerOfActionAnimationServerRpc(NetworkManager.Singleton.LocalClientId, targetAnimation, applyRootMotion);
         }
 
-        public virtual void PlayTargetAttackActionAnimation(
+        public virtual void PlayTargetAttackActionAnimation(AttackType attackType,
             string targetAnimation, 
             bool isPerformingAction, 
             bool applyRootMotion = true, 
@@ -119,6 +119,7 @@ namespace TSG
             // 우리 공격이 패링 가능한지 아닌지 확인
             // 네트워크에 우리가 "공격 중"이라는 플래그(신호)를 보냄(카운터 데미지등 처리위해)
             
+            character.characterCombatManager.currentAttackType = attackType;
             character.applyRootMotion = applyRootMotion;
             character.animator.CrossFade(targetAnimation, 0.2f);
             character.isPerformingAction = isPerformingAction;

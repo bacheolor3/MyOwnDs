@@ -205,5 +205,36 @@ namespace TSG
                 }
             }
         }
+    
+        // 데미지 충돌 판정
+        public void OpenDamageCollider()
+        {
+            // 오른손 무기의 충돌 판정 활성화
+            if (player.playerNetworkManager.isUsingRightHand.Value)
+            {
+                rightWeaponManagaer.meleeDamageCollider.EnableDamageCollider();
+            }
+            // 왼손 무기의 충돌 판정 활성화
+            else if (player.playerNetworkManager.isUsingLeftHand.Value)
+            {
+                leftWeaponManagaer.meleeDamageCollider.EnableDamageCollider();
+            }
+
+            // 무기 이펙트 재생
+        }
+
+        public void CloseDamageCollider()
+        {
+            // 오른손 무기의 충돌 판정 활성화
+            if (player.playerNetworkManager.isUsingRightHand.Value)
+            {
+                rightWeaponManagaer.meleeDamageCollider.DisableDamageCollider();
+            }
+            // 왼손 무기의 충돌 판정 활성화
+            else if (player.playerNetworkManager.isUsingLeftHand.Value)
+            {
+                leftWeaponManagaer.meleeDamageCollider.DisableDamageCollider();
+            }
+        }
     }    
 }

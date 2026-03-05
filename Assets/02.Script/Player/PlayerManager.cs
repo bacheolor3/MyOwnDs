@@ -71,19 +71,6 @@ namespace TSG
             // 만약 이 플레이어 오브젝트 가 이 클라이언트 쪽 소유물이라면
             if (IsOwner)
             {
-               // 1. 클라이언트라면 세이브 데이터를 먼저 로드하되, 데이터가 있는지 확인
-                // if (!IsServer)
-                // {
-                //     var data = WorldSaveGameManager.instance.currentCharacterData;
-
-                //     LoadGameDataFromCurrentCharacterData(ref data);
-                // }
-
-                // StartCoroutine(InitUIAndStats());
-                
-                // playerNetworkManager.SetNewMaxHealthValue(0, playerNetworkManager.vitality.Value);
-                // playerNetworkManager.SetNewMaxStaminaValue(0, playerNetworkManager.endurance.Value);
-
                 PlayerCamera.instance.player = this;
                 PlayerInputManager.instance.player = this;
                 WorldSaveGameManager.instance.player = this;
@@ -170,6 +157,7 @@ namespace TSG
 
         public void LoadGameDataFromCurrentCharacterData(ref CharacterSaveData currentCharacterData)
         {
+            Debug.Log("Loading Data for Client: " + currentCharacterData.characterName);
             playerNetworkManager.characterName.Value = currentCharacterData.characterName;
             Vector3 myPosition = new Vector3(currentCharacterData.xPosition, currentCharacterData.yPosition, currentCharacterData.zPosition);
             transform.position = myPosition;
@@ -180,9 +168,10 @@ namespace TSG
             // 세이브 혹은 로딩중에 추가되면 없어짐
             playerNetworkManager.maxHealth.Value = playerStatsManager.CalculateHealthBasedOnVitalityLevel(currentCharacterData.vitality);
             playerNetworkManager.maxStamina.Value = playerStatsManager.CalculateStatminaBasedOnEnduranceLevel(currentCharacterData.endurance);
+            PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
+            PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(playerNetworkManager.maxHealth.Value);
             playerNetworkManager.currentHealth.Value = currentCharacterData.currentHealth;
             playerNetworkManager.currentStamina.Value = currentCharacterData.currentStamina;
-            PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
         }
     
         // 디버그 메뉴..나중에 지울것

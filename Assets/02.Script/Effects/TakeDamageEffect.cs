@@ -64,6 +64,10 @@ namespace TSG
 
         private void CalculateDamage(CharacterManager character)
         {
+            Debug.Log($"[1] CalculateDamage 호출됨. 대상: {character.name}");
+
+            Debug.Log($"[2] 권한 확인 - IsOwner: {character.IsOwner}, IsServer: {character.IsServer}");
+
             if (!character.IsOwner)
             {
                 return;
@@ -88,7 +92,7 @@ namespace TSG
 
             Debug.Log("최종 데미지 : " + finalDamageDealt);
             character.characterNetworkManager.currentHealth.Value -= finalDamageDealt;
-
+            Debug.Log($"[4] 최종 체력 차감 완료. 현재 체력: {character.characterNetworkManager.currentHealth.Value}");
             // 캐릭터가 스턴 걸릴지 말지를 확인하기 위해 강인도 계산
         }
     }    
