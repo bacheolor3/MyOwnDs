@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 namespace TSG
 {
@@ -56,8 +57,8 @@ namespace TSG
             // 데미지 받는 방향 계산
             // 데미지 애니메이션 재생
             // 빌드업 계산(독, 출혈 등)
-            // 데미지 사운드 재생
-            // 데미지 효과(VFX)(피 등) 재생
+            PlayDamageSFX(character);
+            PlayDamageVFX(character);
 
             // 캐릭터가 AI인 경우, 데미지를 가한 캐릭터가 존재한다면 새로운 타겟으로 설정할지 확인
         }
@@ -94,6 +95,21 @@ namespace TSG
             character.characterNetworkManager.currentHealth.Value -= finalDamageDealt;
             Debug.Log($"[4] 최종 체력 차감 완료. 현재 체력: {character.characterNetworkManager.currentHealth.Value}");
             // 캐릭터가 스턴 걸릴지 말지를 확인하기 위해 강인도 계산
+        }
+    
+        private void PlayDamageVFX(CharacterManager character)
+        {
+            // 만약 우리가 화염 데미지를 준다면, 화염 파티클을 먼저
+            // 번개 데미지라면, 번개 파티클 등등
+
+            character.characterEffectManager.PlayBloodSplatterVFX(contactPoint);
+        }
+    
+        private void PlayDamageSFX(CharacterManager character)
+        {
+            AudioClip physicalDamageSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.PhysicalDamageSFX);
+
+            character.characterSoundFXManager.PlaySoundFX(physicalDamageSFX);
         }
     }    
 }

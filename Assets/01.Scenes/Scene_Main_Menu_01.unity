@@ -5343,6 +5343,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: World Character Effects Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 4439753726904110167, guid: 8bff8f2eaea07894da301add89599722, type: 3}
+      propertyPath: bloodSplatterVFX
+      value: 
+      objectReference: {fileID: 5163741830955363013, guid: 1756822815f1bd34092c5df415a3e180, type: 3}
     - target: {fileID: 9072100336510855154, guid: 8bff8f2eaea07894da301add89599722, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5400,10 +5404,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: World Network Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 4007874110098489656, guid: 8d0cba401c638ae449c9b617c9f3c9c1, type: 3}
-      propertyPath: ConnectionData.Port
-      value: 7777
-      objectReference: {fileID: 0}
     - target: {fileID: 8122158636861067630, guid: 8d0cba401c638ae449c9b617c9f3c9c1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.58147
@@ -5444,10 +5444,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8518847394186891647, guid: 8d0cba401c638ae449c9b617c9f3c9c1, type: 3}
-      propertyPath: NetworkConfig.PlayerPrefab
-      value: 
-      objectReference: {fileID: 915770479797903334, guid: 4ef28082a68824e44b5eb9327bc10d8f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5681,6 +5677,22 @@ PrefabInstance:
       propertyPath: rollSFX
       value: 
       objectReference: {fileID: 8300000, guid: e65df7dbd2088ee4685b0080c963d10b, type: 3}
+    - target: {fileID: 8807793940735792515, guid: e78167eb4a37ba34ca70b6a49c3804fc, type: 3}
+      propertyPath: PhysicalDamageSFX.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8807793940735792515, guid: e78167eb4a37ba34ca70b6a49c3804fc, type: 3}
+      propertyPath: 'PhysicalDamageSFX.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 90cf99528a65406488176faccb390305, type: 3}
+    - target: {fileID: 8807793940735792515, guid: e78167eb4a37ba34ca70b6a49c3804fc, type: 3}
+      propertyPath: 'PhysicalDamageSFX.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 2a478f8da9871e74c95aa861401a90c8, type: 3}
+    - target: {fileID: 8807793940735792515, guid: e78167eb4a37ba34ca70b6a49c3804fc, type: 3}
+      propertyPath: 'PhysicalDamageSFX.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f537c8189cb27c941a0025281dc7d019, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

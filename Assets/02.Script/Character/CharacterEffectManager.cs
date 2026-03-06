@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 
@@ -13,6 +14,9 @@ namespace TSG
 
         CharacterManager character;
 
+        [Header("VFX")]
+        [SerializeField] GameObject bloodSplatterVFX;
+
         protected virtual void Awake()
         {
             character = GetComponent<CharacterManager>();
@@ -23,6 +27,20 @@ namespace TSG
             // 효과를 받고
             // 실행시킴
             effect.ProcessEffect(character);
+        }
+    
+        public void PlayBloodSplatterVFX(Vector3 contactPoint)
+        {
+            // 만약 우리가 수동으로 이 모델에 출혈 효과를 넣을거면 이대로
+            if(bloodSplatterVFX != null)
+            {
+                GameObject bloodSplatter = Instantiate(bloodSplatterVFX, contactPoint, Quaternion.identity);
+            }
+            // 아니면 다른 디폴트 버전으로 사용
+            else
+            {
+                GameObject bloodSplatter = Instantiate(WorldCharacterEffectsManager.instance.bloodSplatterVFX, contactPoint, Quaternion.identity);
+            }
         }
     }    
 }

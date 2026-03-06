@@ -38,7 +38,7 @@ namespace TSG
             if (startGameAsClient)
             {
                 startGameAsClient = false;
-                StartCoroutine(RestartAsClientCoroutine());
+                 StartCoroutine(RestartAsClientCoroutine());
                 
                 // 일단 매니저를 셧다운 시켜야 함. 왜냐하면 타이틀 스크린에선 모두 호스트취급
                 //NetworkManager.Singleton.Shutdown();

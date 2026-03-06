@@ -6,6 +6,9 @@ namespace TSG
     {
         public static WorldSoundFXManager instance;
 
+        [Header("데미지 사운드")]
+        public AudioClip[] PhysicalDamageSFX;
+
         [Header("액션 사운드")]
         public AudioClip rollSFX;
 
@@ -24,7 +27,12 @@ namespace TSG
         {
             DontDestroyOnLoad(gameObject);
         }
-    }
-
     
+        public AudioClip ChooseRandomSFXFromArray(AudioClip[] array)
+        {
+            int index = Random.Range(0, array.Length);
+
+            return array[index];
+        }
+    }
 }

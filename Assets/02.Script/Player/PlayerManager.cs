@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
 
 namespace TSG
 {
@@ -68,6 +69,10 @@ namespace TSG
         {
             base.OnNetworkSpawn();
 
+            Debug.Log($"[Spawn 체크] 이름: {gameObject.name}, 소유주(IsOwner): {IsOwner}, 서버(IsServer): {IsServer}");
+
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
+
             // 만약 이 플레이어 오브젝트 가 이 클라이언트 쪽 소유물이라면
             if (IsOwner)
             {
@@ -100,6 +105,25 @@ namespace TSG
             {
                 LoadGameDataFromCurrentCharacterData(ref WorldSaveGameManager.instance.currentCharacterData);
             }            
+        }
+
+        private void OnClientConnectedCallback(ulong clientID)
+        {
+            // 현재 게임 내에서 움직이는 플레이어 체크
+            WorldGameSessionManager.instance.AddPlayerToActivePlayersList(this);
+
+            // 만약 우리가 서버고 호스트면 다른 플레이어들을 다시 불러서 싱크 맞출 필요없음
+            // 이미 존재하는 방이나 게임에 참여할 때에만 다른 플레이어들 로드해서 싱크 맞추면 됨
+            if(!IsServer && IsOwner)
+            {
+                foreach(var player in WorldGameSessionManager.instance.players)
+                {
+                    if(player != this)
+                    {
+                        player.LoadOtherPlayerCharacterWhenJoiningServer();
+                    }
+                }
+            }
         }
 
         private IEnumerator InitUIAndStats()
@@ -172,8 +196,18 @@ namespace TSG
             PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(playerNetworkManager.maxHealth.Value);
             playerNetworkManager.currentHealth.Value = currentCharacterData.currentHealth;
             playerNetworkManager.currentStamina.Value = currentCharacterData.currentStamina;
+            Debug.Log(myPosition);
         }
-    
+
+        public void LoadOtherPlayerCharacterWhenJoiningServer()
+        {
+            // 무기 싱크 맞추기
+            playerNetworkManager.OnCurrentRightHandWeaponIDChange(0, playerNetworkManager.currentRightHandWeaponID.Value);
+            playerNetworkManager.OnCurrentLeftHandWeaponIDChange(0, playerNetworkManager.currentLeftHandWeaponID.Value);
+
+            // 갑옷
+        }
+
         // 디버그 메뉴..나중에 지울것
         private void DebugMenu()
         {
@@ -190,5 +224,4 @@ namespace TSG
             }
         }
     }
-    
 }

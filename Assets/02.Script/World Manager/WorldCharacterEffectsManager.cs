@@ -8,10 +8,15 @@ namespace TSG
     {
         public static WorldCharacterEffectsManager instance;
 
+        
+        [Header("VFX")]
+        public GameObject bloodSplatterVFX;
+
         [Header("데미지")]
         public TakeDamageEffect takeDamageEffect;
         
         [SerializeField] List<InstantCharacterEffect> instantEffects;
+        
 
         private void Awake()
         {
