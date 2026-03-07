@@ -1,3 +1,5 @@
+using System;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 namespace TSG
@@ -28,6 +30,12 @@ namespace TSG
         [SerializeField] float upAndDownLookAngle;
         private float cameraZPosition;    // 카메라 충돌을 위한 값
         private float targetCameraZPosition;     // 카메라 충돌을 위한 값
+
+        [Header("락 온")]
+        [SerializeField] float lockOnRadius = 20;
+        [SerializeField] float minimumViewableAngle = -50;
+        [SerializeField] float maximumViewableAngle = 50;
+        [SerializeField] float maximumLockOnDistance = 20;
 
         private void Awake()
         {
@@ -124,6 +132,65 @@ namespace TSG
             // z축 위치를 부드럽게 이동 (Lerp)
             cameraObjectPosition.z = Mathf.Lerp(cameraObject.transform.localPosition.z, targetCameraZPosition, 0.2f);
             cameraObject.transform.localPosition = cameraObjectPosition;
+        }
+    
+        public void HandleLocatingLockOnTargets()
+        {
+            float shortestDistance = Mathf.Infinity;   // 플레이어와 가까운 타겟 고르는 데 쓸 것
+            float shortestDistanceOfRightTarget = Mathf.Infinity;  //오른쪽 축에서 가장 가까운 타겟을 찾기 위한 것(현재 타겟에서 가장 가까운 오른쪽 타겟)
+            float shortestDistanceOfLeftTarget = -Mathf.Infinity;   //왼쪽 축에서 가장 가까운 타겟을 찾기 위한 것(현재 타겟에서 가장 가까운 왼쪽 타겟)
+
+            // 해야할 거: Layermask를 쓸것
+            Collider[] colliders = Physics.OverlapSphere(player.transform.position, lockOnRadius, WorldUtilityManager.Instance.GetCharacterLayers());
+
+            for(int i = 0; i < colliders.Length; i++)
+            {
+                CharacterManager lockOnTarget = colliders[i].GetComponent<CharacterManager>();
+
+                if(lockOnTarget != null)
+                {
+                    // 현재 시야 필드에 있나 없나 확인
+                    Vector3 lockOnTargetsDirection = lockOnTarget.transform.position - player.transform.position;
+                    float distanceFromTarget = Vector3.Distance(player.transform.position, lockOnTarget.transform.position);
+                    float viewableAngle = Vector3.Angle(lockOnTargetsDirection, cameraObject.transform.forward);
+
+                    // 타겟이 죽었으면, 다음 타겟을 바로 추적
+                    if (lockOnTarget.isDead.Value)
+                    {
+                        continue;
+                    }
+
+                    // 타겟이 우리라면, 바로 다음 타겟을 찾기
+                    if(lockOnTarget.transform.root == player.transform.root)
+                    {
+                        continue;
+                    }
+
+                    // 타겟이 너무 멀면, 다음 잠재적 타겟을 찾을것
+                    if(distanceFromTarget > maximumLockOnDistance)
+                    {
+                        continue;
+                    }
+
+                    if(viewableAngle > minimumViewableAngle && viewableAngle < maximumViewableAngle)
+                    {
+                        RaycastHit hit;
+
+                        // 해야할 거: Enviro Layer를 위한 Layer Mask 추가하기
+                        if(Physics.Linecast(player.playerCombatManager.lockOnTransform.position,
+                         lockOnTarget.characterCombatManager.lockOnTransform.position,
+                          out hit, WorldUtilityManager.Instance.GetEnviroLayers()))
+                        {
+                            // 우리가 뭔가를 공격했다면, 우리가 락온 한 대상을 볼 수 없게
+                            continue;
+                        }
+                        else
+                        {
+                            Debug.Log("락 온 성공!");
+                        }
+                    }
+                }
+            }
         }
     }
 }

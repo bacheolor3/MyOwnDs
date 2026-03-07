@@ -2103,7 +2103,7 @@ GameObject:
   - component: {fileID: 5660693650230759077}
   - component: {fileID: 6829219224751278444}
   m_Layer: 7
-  m_Name: Player_Enhance
+  m_Name: Player_Enhance_Dummy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2161,7 +2161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 4239119918
+  GlobalObjectIdHash: 1984283814
   InScenePlacedSourceGlobalObjectIdHash: 683067793
   DeferredDespawnTick: 0
   Ownership: 1
@@ -2222,9 +2222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d83f283f054d61749bb6559f38e99ebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TSG.PlayerCombatManager
-  currentTarget: {fileID: 0}
   currentAttackType: 0
-  lockOnTransform: {fileID: 5540180621829624639}
   currentWeaponBeingUsed: {fileID: 0}
 --- !u!114 &6461616509562712943
 MonoBehaviour:
@@ -2251,8 +2249,6 @@ MonoBehaviour:
   verticalMovement:
     m_InternalValue: 0
   moveAmount:
-    m_InternalValue: 0
-  isLockedOn:
     m_InternalValue: 0
   isSprinting:
     m_InternalValue: 0
@@ -2370,7 +2366,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915770479797903334}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2d2d8374de77954eb8e88114dd824fe, type: 3}
   m_Name: 
@@ -2449,7 +2445,7 @@ CharacterController:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Height: 2.2
   m_Radius: 0.23
@@ -10382,37 +10378,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2335726978044829930}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4678068276703365677
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5540180621829624639}
-  m_Layer: 8
-  m_Name: Lock On Target
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5540180621829624639
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4678068276703365677}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.324, y: 0, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8248209455550985775}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4693218062955604084
 GameObject:
   m_ObjectHideFlags: 0
@@ -16912,7 +16877,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1255531093045220844}
-  - {fileID: 5540180621829624639}
   m_Father: {fileID: 8805337210254546573}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &2762666541824640324

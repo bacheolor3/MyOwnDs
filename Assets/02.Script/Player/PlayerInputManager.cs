@@ -18,6 +18,9 @@ namespace TSG
         public float cameraVerticalInput;
         public float cameraHorizontalInput;
 
+        [Header("락온 입력")]
+        [SerializeField] bool lockOn_Input;
+
         [Header("플레이어 움직임 입력")]
         [SerializeField] Vector2 movementInput;
         public float verticalInput;
@@ -25,9 +28,9 @@ namespace TSG
         public float moveAmount;
 
         [Header("플레이어 액션 입력")]
-        [SerializeField] bool dodgeInput = false;
-        [SerializeField] bool sprintInput = false;
-        [SerializeField] bool jumpInput = false;
+        [SerializeField] bool dodge_Input = false;
+        [SerializeField] bool sprint_Input = false;
+        [SerializeField] bool jump_Input = false;
         [SerializeField] bool RB_Input = false;
 
         private void Awake()
@@ -91,14 +94,17 @@ namespace TSG
 
                 playerControls.PlayerMovements.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
                 playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
-                playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
-                playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
+                playerControls.PlayerActions.Dodge.performed += i => dodge_Input = true;
+                playerControls.PlayerActions.Jump.performed += i => jump_Input = true;
                 playerControls.PlayerActions.RB.performed += i => RB_Input = true;
 
+                // 락온 
+                playerControls.PlayerActions.LockOn.performed += i => lockOn_Input = true;
+
                 // 설정된 버튼을 누르고 있으면(여기서는 L Shift, 패드라면) bool값을 true로
-                playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
+                playerControls.PlayerActions.Sprint.performed += i => sprint_Input = true;
                 // 누르던 버튼을 뗀다면, bool 값을 false로
-                playerControls.PlayerActions.Sprint.canceled += i => sprintInput = false;
+                playerControls.PlayerActions.Sprint.canceled += i => sprint_Input = false;
             }
 
             playerControls.Enable();
@@ -133,12 +139,50 @@ namespace TSG
 
         private void HandleAllInputs()
         {
+            HandleLockOnInput();
             HandlePlayerMovementInput();
             HandleCameraMovementInput();
             HandleDodgeInput();
             HandleSprintInput();
             HandleJumpInput();
             HandleRBInput();
+        }
+
+        // 락온
+
+        private void HandleLockOnInput()
+        {
+            // 죽은 타겟들을 확인
+            if (player.playerNetworkManager.isLockedOn.Value)
+            {
+                if(player.playerCombatManager.currentTarget != null)
+                {
+                    if(player.playerCombatManager.currentTarget != null)
+                    {
+                        
+                    }
+                    if (player.playerCombatManager.currentTarget.isDead.Value)
+                    {
+                        player.playerNetworkManager.isLockedOn.Value = false;
+                    }
+                }
+            }
+
+            if (lockOn_Input && player.playerNetworkManager.isLockedOn.Value)
+            {
+                lockOn_Input = false;
+                // 락온 불가능
+                return;
+            }
+
+            if (lockOn_Input && !player.playerNetworkManager.isLockedOn.Value)
+            {
+                lockOn_Input = false;
+
+                // 만약 원거리 무기로 조준징이라면 돌아옴(락온 상태로 조준을 허용하지 않음)
+
+                PlayerCamera.instance.HandleLocatingLockOnTargets();
+            }
         }
 
         // 이동
@@ -185,9 +229,9 @@ namespace TSG
         // 액션
         private void HandleDodgeInput()
         {
-            if (dodgeInput)
+            if (dodge_Input)
             {
-                dodgeInput = false;
+                dodge_Input = false;
                 // 미래에 구현 할 것: 메뉴 혹은 UI창이 열려 있을 경우 입력 무시하는 것(RETURN 구현)
                 // 회피 동작 구현
                 player.playerLocomotionManager.AttemptToPerformDodge();
@@ -196,7 +240,7 @@ namespace TSG
 
         private void HandleSprintInput()
         {
-            if (sprintInput)
+            if (sprint_Input)
             {
                 // 질주
                 player.playerLocomotionManager.HandleSprinting();
@@ -209,9 +253,9 @@ namespace TSG
 
         private void HandleJumpInput()
         {
-            if (jumpInput)
+            if (jump_Input)
             {
-                jumpInput = false;
+                jump_Input = false;
 
                 // 만약 UI 창이 열려있다면, 아무것도 하지 않게 설정
 

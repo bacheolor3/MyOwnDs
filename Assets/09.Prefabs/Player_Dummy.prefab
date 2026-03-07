@@ -11,21 +11,21 @@ GameObject:
   - component: {fileID: 4589224271385020981}
   - component: {fileID: 8968831365591569340}
   - component: {fileID: 8432698178461367112}
-  - component: {fileID: -7405650546333924376}
-  - component: {fileID: -2836593960398081411}
-  - component: {fileID: 3265853324669956131}
-  - component: {fileID: 2582648345933631766}
-  - component: {fileID: 2573464371268520543}
-  - component: {fileID: -3215274936856437422}
-  - component: {fileID: 8324515692100448886}
+  - component: {fileID: 468791404998200557}
+  - component: {fileID: 3446695407550455133}
+  - component: {fileID: 8796462313431606965}
+  - component: {fileID: 4983099805538698299}
   - component: {fileID: -2750526007468227274}
   - component: {fileID: -6108718094430883360}
   - component: {fileID: -7746632246154447937}
-  - component: {fileID: -8561608089015002178}
-  - component: {fileID: 6621890930031092029}
-  - component: {fileID: 938350538470549404}
+  - component: {fileID: 2855449694179962170}
+  - component: {fileID: 7684797556018029407}
+  - component: {fileID: 2639766134645905032}
+  - component: {fileID: 6295231852945341974}
+  - component: {fileID: 8892202613630187629}
+  - component: {fileID: 4519372497567051172}
   m_Layer: 7
-  m_Name: Player
+  m_Name: Player_Dummy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,8 +81,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2961234962
-  InScenePlacedSourceGlobalObjectIdHash: 2961234962
+  GlobalObjectIdHash: 880593220
+  InScenePlacedSourceGlobalObjectIdHash: 880593220
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &-7405650546333924376
+--- !u!114 &468791404998200557
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,9 +103,53 @@ MonoBehaviour:
   m_GameObject: {fileID: 1024597560684289293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb49aefda23237842800f526f4d15c30, type: 3}
+  m_Script: {fileID: 11500000, guid: d3ef39876a43c2c4da15ab04e1affdb2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TSG.PlayerManager
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.CharacterNetworkManager
+  ShowTopMostFoldoutHeaderGroup: 1
+  networkPosition:
+    m_InternalValue: {x: 0, y: 0, z: 0}
+  networkRotation:
+    m_InternalValue: {x: 0, y: 0, z: 0, w: 1}
+  networkPositionVelocity: {x: 0, y: 0, z: 0}
+  networkPositionSmoothTime: 0.1
+  networkRotationSmoothTime: 0.1
+  horizontalMovement:
+    m_InternalValue: 0
+  verticalMovement:
+    m_InternalValue: 0
+  moveAmount:
+    m_InternalValue: 0
+  isLockedOn:
+    m_InternalValue: 0
+  isSprinting:
+    m_InternalValue: 0
+  isJumping:
+    m_InternalValue: 0
+  currentHealth:
+    m_InternalValue: 0
+  maxHealth:
+    m_InternalValue: 0
+  currentStamina:
+    m_InternalValue: 0
+  maxStamina:
+    m_InternalValue: 0
+  endurance:
+    m_InternalValue: 1
+  vitality:
+    m_InternalValue: 1
+--- !u!114 &3446695407550455133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024597560684289293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de1fdb0da19dd7846ab3bc140f293643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.CharacterManager
   ShowTopMostFoldoutHeaderGroup: 1
   isDead:
     m_InternalValue: 0
@@ -121,16 +165,7 @@ MonoBehaviour:
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
-  respawnCharacter: 0
-  switchRightWeapon: 0
-  playerAnimatorManager: {fileID: 0}
-  playerLocomotionManager: {fileID: 0}
-  playerNetworkManager: {fileID: 0}
-  playerStatsManager: {fileID: 0}
-  playerInventoryManager: {fileID: 0}
-  playerEquipmentManager: {fileID: 0}
-  playerCombatManager: {fileID: 0}
---- !u!114 &-2836593960398081411
+--- !u!114 &8796462313431606965
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,12 +174,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1024597560684289293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d83f283f054d61749bb6559f38e99ebf, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c89e7e2705f1684181e62558ceccf1e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TSG.PlayerCombatManager
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.CharacterCombatManager
+  currentTarget: {fileID: 0}
   currentAttackType: 0
-  currentWeaponBeingUsed: {fileID: 0}
---- !u!114 &3265853324669956131
+  lockOnTransform: {fileID: 6053043919739602885}
+--- !u!114 &4983099805538698299
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,202 +189,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1024597560684289293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a355d124b73881d4f9eb74034ca9de94, type: 3}
+  m_Script: {fileID: 11500000, guid: 69cd115e30d715a4a92c422fc71b6ef0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TSG.PlayerNetworkManager
-  ShowTopMostFoldoutHeaderGroup: 1
-  networkPosition:
-    m_InternalValue: {x: 0, y: 0, z: 0}
-  networkRotation:
-    m_InternalValue: {x: 0, y: 0, z: 0, w: 1}
-  networkPositionVelocity: {x: 0, y: 0, z: 0}
-  networkPositionSmoothTime: 0.1
-  networkRotationSmoothTime: 0.1
-  horizontalMovement:
-    m_InternalValue: 0
-  verticalMovement:
-    m_InternalValue: 0
-  moveAmount:
-    m_InternalValue: 0
-  isSprinting:
-    m_InternalValue: 0
-  isJumping:
-    m_InternalValue: 0
-  currentHealth:
-    m_InternalValue: 0
-  maxHealth:
-    m_InternalValue: 0
-  currentStamina:
-    m_InternalValue: 1
-  maxStamina:
-    m_InternalValue: 1
-  endurance:
-    m_InternalValue: 10
-  vitality:
-    m_InternalValue: 1
-  characterName:
-    m_InternalValue:
-      utf8LengthInBytes: 9
-      bytes:
-        offset0000:
-          byte0000: 67
-          byte0001: 104
-          byte0002: 97
-          byte0003: 114
-          byte0004: 97
-          byte0005: 99
-          byte0006: 116
-          byte0007: 101
-          byte0008: 114
-          byte0009: 0
-          byte0010: 0
-          byte0011: 0
-          byte0012: 0
-          byte0013: 0
-          byte0014: 0
-          byte0015: 0
-        offset0016:
-          byte0000: 0
-          byte0001: 0
-          byte0002: 0
-          byte0003: 0
-          byte0004: 0
-          byte0005: 0
-          byte0006: 0
-          byte0007: 0
-          byte0008: 0
-          byte0009: 0
-          byte0010: 0
-          byte0011: 0
-          byte0012: 0
-          byte0013: 0
-          byte0014: 0
-          byte0015: 0
-        offset0032:
-          byte0000: 0
-          byte0001: 0
-          byte0002: 0
-          byte0003: 0
-          byte0004: 0
-          byte0005: 0
-          byte0006: 0
-          byte0007: 0
-          byte0008: 0
-          byte0009: 0
-          byte0010: 0
-          byte0011: 0
-          byte0012: 0
-          byte0013: 0
-          byte0014: 0
-          byte0015: 0
-        byte0048: 0
-        byte0049: 0
-        byte0050: 0
-        byte0051: 0
-        byte0052: 0
-        byte0053: 0
-        byte0054: 0
-        byte0055: 0
-        byte0056: 0
-        byte0057: 0
-        byte0058: 0
-        byte0059: 0
-        byte0060: 0
-        byte0061: 0
-  currentWeaponBeingUsed:
-    m_InternalValue: 0
-  currentRightHandWeaponID:
-    m_InternalValue: 0
-  currentLeftHandWeaponID:
-    m_InternalValue: 0
-  isUsingRightHand:
-    m_InternalValue: 0
-  isUsingLeftHand:
-    m_InternalValue: 0
---- !u!114 &2582648345933631766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1024597560684289293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95ae58a0313c882488bb88bb77733805, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TSG.PlayerStatManager
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.CharacterStatManager
   staminaRegenerationDelay: 2
   staminaRegenrationAmount: 2
---- !u!114 &2573464371268520543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1024597560684289293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2d2d8374de77954eb8e88114dd824fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TSG.PlayerLocomotionManager
-  gravityForce: -40
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 1
-  groundCheckSphereRadius: 0.3
-  yVelocity: {x: 0, y: 0, z: 0}
-  groundedYVelocity: -20
-  fallStartYVelocity: -5
-  verticalMovement: 0
-  horizontalMovement: 0
-  moveAmount: 0
-  walkingSpeed: 2
-  runningSpeed: 5
-  sprintingSpeed: 6.5
-  rotationspeed: 15
-  sprintingStaminaCost: 2
-  jumpStaminaCost: 25
-  jumpHeight: 4
-  jumpFowardSpeed: 5
-  freeFallSpeed: 2
-  dodgeStaminaCost: 25
---- !u!114 &-3215274936856437422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1024597560684289293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 559076a8af8380e4494c524b12ce2c4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TSG.PlayerSoundFXManager
---- !u!114 &8324515692100448886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1024597560684289293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4aae1b2ad1acd8640a530838e86ba224, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  lastDamageAnimationPlayed: 
-  hit_Forward_Medium_01: Hit_Forward_Medium_01
-  hit_Forward_Medium_02: Hit_Forward_Medium_02
-  hit_Backward_Medium_01: Hit_Backward_Medium_01
-  hit_Backward_Medium_02: Hit_Backward_Medium_02
-  hit_Left_Medium_01: Hit_Left_Medium_01
-  hit_Left_Medium_02: Hit_Left_Medium_02
-  hit_Right_Medium_01: Hit_Right_Medium_01
-  hit_Right_Medium_02: Hit_Right_Medium_02
-  forward_Medium_Damage: []
-  backward_Medium_Damage: []
-  left_Medium_Damage: []
-  right_Medium_Damage: []
 --- !u!143 &-2750526007468227274
 CharacterController:
   m_ObjectHideFlags: 0
@@ -498,7 +343,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-8561608089015002178
+--- !u!114 &2855449694179962170
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -507,13 +352,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1024597560684289293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c18d731a5a12774d90550f72bdcaad0, type: 3}
+  m_Script: {fileID: 11500000, guid: 120754b154bd13a449276dbd6c5b0903, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TSG.PlayerEffectsManager
-  bloodSplatterVFX: {fileID: 0}
-  effectToTest: {fileID: 11400000, guid: 241fa988ff636f049a1b512984110875, type: 2}
-  processEffect: 0
---- !u!114 &6621890930031092029
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.CharacterLocomotionManager
+  gravityForce: -5.55
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  groundCheckSphereRadius: 0.3
+  yVelocity: {x: 0, y: 0, z: 0}
+  groundedYVelocity: -20
+  fallStartYVelocity: -5
+--- !u!114 &7684797556018029407
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -522,22 +372,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1024597560684289293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 767662e41e513f64a914ff635cd58bba, type: 3}
+  m_Script: {fileID: 11500000, guid: 006601f429dae9746a700cb29e65d597, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
-  currentRightHandWeapon: {fileID: 11400000, guid: f1243f3e851d74241a9ce0b9f98402ed, type: 2}
-  currentLeftHandWeapon: {fileID: 11400000, guid: f1243f3e851d74241a9ce0b9f98402ed, type: 2}
-  weaponsInRightHandSlots:
-  - {fileID: 11400000, guid: f1243f3e851d74241a9ce0b9f98402ed, type: 2}
-  - {fileID: 11400000, guid: f1243f3e851d74241a9ce0b9f98402ed, type: 2}
-  - {fileID: 11400000, guid: f1243f3e851d74241a9ce0b9f98402ed, type: 2}
-  rightHandWeaponIndex: 0
-  weaponsInLeftHandSlots:
-  - {fileID: 11400000, guid: f1243f3e851d74241a9ce0b9f98402ed, type: 2}
-  - {fileID: 11400000, guid: f1243f3e851d74241a9ce0b9f98402ed, type: 2}
-  - {fileID: 11400000, guid: f1243f3e851d74241a9ce0b9f98402ed, type: 2}
-  leftHandWeaponIndex: 0
---- !u!114 &938350538470549404
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.CharacterInventoryManager
+--- !u!114 &2639766134645905032
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -546,15 +384,90 @@ MonoBehaviour:
   m_GameObject: {fileID: 1024597560684289293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 445632d4d5773d44a83ade168015e6d0, type: 3}
+  m_Script: {fileID: 11500000, guid: 32d545f9f81eeec4aa3f364b2ef7a9d9, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
-  rightHandSlot: {fileID: 0}
-  leftHandSlot: {fileID: 0}
-  rightWeaponManagaer: {fileID: 0}
-  leftWeaponManagaer: {fileID: 0}
-  rightHandWeaponModel: {fileID: 0}
-  leftHandWeaponModel: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.CharacterEffectManager
+  bloodSplatterVFX: {fileID: 5163741830955363013, guid: 1756822815f1bd34092c5df415a3e180, type: 3}
+--- !u!114 &6295231852945341974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024597560684289293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ce5ab61cec7504889f472b4ee4fa7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.CharacterEquipmentManager
+--- !u!114 &8892202613630187629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024597560684289293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e02c447acae58d242949abf3c763dfe6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.CharacterSoundFXManager
+--- !u!114 &4519372497567051172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024597560684289293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23df82761de6414c9f5e2bfb4e54e50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.CharacterAnimatorManager
+  lastDamageAnimationPlayed: 
+  hit_Forward_Medium_01: Hit_Forward_Medium_01
+  hit_Forward_Medium_02: Hit_Forward_Medium_02
+  hit_Backward_Medium_01: Hit_Backward_Medium_01
+  hit_Backward_Medium_02: Hit_Backward_Medium_02
+  hit_Left_Medium_01: Hit_Left_Medium_01
+  hit_Left_Medium_02: Hit_Left_Medium_02
+  hit_Right_Medium_01: Hit_Right_Medium_01
+  hit_Right_Medium_02: Hit_Right_Medium_02
+  forward_Medium_Damage: []
+  backward_Medium_Damage: []
+  left_Medium_Damage: []
+  right_Medium_Damage: []
+--- !u!1 &3024137107734351492
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6053043919739602885}
+  m_Layer: 8
+  m_Name: Lock On Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6053043919739602885
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3024137107734351492}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4125097048257635459}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7526648224303286931
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,6 +614,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: -3279003018169450748, guid: facedc965d4e2ef4db4c5a872fdb290b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9b475a7f648bcab40bf1d4452871700a, type: 2}
     - target: {fileID: -3091424283633995617, guid: facedc965d4e2ef4db4c5a872fdb290b, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -900,6 +817,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -7011284792763705418, guid: facedc965d4e2ef4db4c5a872fdb290b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6053043919739602885}
     - targetCorrespondingSourceObject: {fileID: 3780837713738550241, guid: facedc965d4e2ef4db4c5a872fdb290b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8295026797952619140}
@@ -983,6 +903,11 @@ CapsuleCollider:
   m_Height: 0.4
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &4125097048257635459 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -7011284792763705418, guid: facedc965d4e2ef4db4c5a872fdb290b, type: 3}
+  m_PrefabInstance: {fileID: 2850110371322147637}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8191670194146974845 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3016557516338679992, guid: facedc965d4e2ef4db4c5a872fdb290b, type: 3}

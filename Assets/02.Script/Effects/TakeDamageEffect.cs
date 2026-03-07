@@ -43,7 +43,8 @@ namespace TSG
         public override void ProcessEffect(CharacterManager character)
         {
             base.ProcessEffect(character);
-            
+            Debug.Log("캐릭터 상태: "+character.isDead.Value);
+
             // 캐릭터가 죽었다면, 더는 그 어떤 데미지 효과도 진행하지 말 것
             if (character.isDead.Value)
             {
@@ -54,7 +55,7 @@ namespace TSG
 
             // 데미지 계산
             CalculateDamage(character);
-            // 데미지 받는 방향 계산
+            PlayDirectionalBasedDamageAnimation(character);
             // 데미지 애니메이션 재생
             // 빌드업 계산(독, 출혈 등)
             PlayDamageSFX(character);
@@ -65,11 +66,7 @@ namespace TSG
 
         private void CalculateDamage(CharacterManager character)
         {
-            Debug.Log($"[1] CalculateDamage 호출됨. 대상: {character.name}");
-
-            Debug.Log($"[2] 권한 확인 - IsOwner: {character.IsOwner}, IsServer: {character.IsServer}");
-
-            if (!character.IsOwner)
+            if (character.IsSpawned && !character.IsOwner)
             {
                 return;
             }
@@ -110,6 +107,50 @@ namespace TSG
             AudioClip physicalDamageSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.PhysicalDamageSFX);
 
             character.characterSoundFXManager.PlaySoundFX(physicalDamageSFX);
+        }
+    
+        private void PlayDirectionalBasedDamageAnimation(CharacterManager character)
+        {
+            if (!character.IsOwner)
+            {
+                return;
+            }
+
+            // 해야할 거 : 만약 강인도가 부서졌으면 계산할것
+            poiseIsBroken = true;
+
+            if(angleHitFrom >= 145 && angleHitFrom <= 180)
+            {
+                // 정면 애니메이션
+                damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.forward_Medium_Damage);
+            }
+            else if (angleHitFrom <= -145 && angleHitFrom >= -180)
+            {
+                // 정면 애니메이션
+                damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.forward_Medium_Damage);
+            }
+            else if(angleHitFrom >= -45 && angleHitFrom <= 45)
+            {
+                // 후면 애니메이션
+                damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.backward_Medium_Damage);
+            }
+            else if(angleHitFrom >= -144 && angleHitFrom <= -45)
+            {
+                // 죄측 애니메이션
+                damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.left_Medium_Damage);
+            }
+            else if(angleHitFrom >= 45 && angleHitFrom <= 144)
+            {
+                // 우측 애니메이션
+                damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.right_Medium_Damage);
+            }
+
+            // 만약 강인도가 부서졌다면, 데미지에 무너지는 애니메이션 재생
+            if (poiseIsBroken)
+            {
+                character.characterAnimatorManager.lastDamageAnimationPlayed = damageAnimation;
+                character.characterAnimatorManager.PlayTargetActionAnimation(damageAnimation, true);
+            }
         }
     }    
 }
