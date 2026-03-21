@@ -12,6 +12,7 @@ namespace TSG
 
             player = GetComponent<PlayerManager>();
         }
+        
         private void OnAnimatorMove()
         {
             if (player.applyRootMotion)
@@ -21,6 +22,24 @@ namespace TSG
                 player.transform.rotation *= player.animator.deltaRotation;
             }
         }
+
+        // 애니메이션 이벤트 호출하기
+        public override void EnableCanDoCombo()
+        {
+            if (player.playerNetworkManager.isUsingRightHand.Value)
+            {
+                player.playerCombatManager.canComboWithMainHandWeapon = true;
+            }
+            else
+            {
+                // 맨손 콤보 활성화 해두기
+            }
+        }
+
+        public override void DisableCanDoCombo()
+        {
+            player.playerCombatManager.canComboWithMainHandWeapon = false;
+            // player.playerCombatManager.canComboWithOffHandWeapon = false;
+        }
     }
-    
 }

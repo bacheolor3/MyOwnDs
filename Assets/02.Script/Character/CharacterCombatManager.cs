@@ -7,6 +7,9 @@ namespace TSG
     {
         CharacterManager character;
 
+        [Header("마지막에 재생된 공격 애니메이션")]
+        public string lastAttackAnimationPerformed;
+
         [Header("공격 타겟")]
         public CharacterManager currentTarget;
 

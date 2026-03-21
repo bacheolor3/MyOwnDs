@@ -31,9 +31,12 @@ namespace TSG
         // 무기 보정치
         // 약공격 보정
         [Header("공격 보정치")]
-        public float light_Attack_01_Modifier = 1.1f;
+        public float light_Attack_01_Modifier = 1.0f;
+        public float light_Attack_02_Modifier = 1.2f;
         public float heavy_Attack_01_Modifier = 1.4f;
+        public float heavy_Attack_02_Modifier = 1.6f;
         public float charge_Attack_01_Modifier = 2.0f;
+        public float charge_Attack_02_Modifier = 2.2f;
         // 강공격 보정
         // 치명타 공격 보정 등
 

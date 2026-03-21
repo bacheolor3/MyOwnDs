@@ -200,6 +200,7 @@ namespace TSG
             // 네트워크에 우리가 "공격 중"이라는 플래그(신호)를 보냄(카운터 데미지등 처리위해)
             
             character.characterCombatManager.currentAttackType = attackType;
+            character.characterCombatManager.lastAttackAnimationPerformed = targetAnimation;
             character.applyRootMotion = applyRootMotion;
             character.animator.CrossFade(targetAnimation, 0.2f);
             character.isPerformingAction = isPerformingAction;
@@ -209,6 +210,15 @@ namespace TSG
             // 서버/호스트 에게 현시점 서버에 있는 사람에게 이 애니메이션을 실행하라고 해야 함
             character.characterNetworkManager.NotifyTheServerOfAttackActionAnimationServerRpc(NetworkManager.Singleton.LocalClientId, targetAnimation, applyRootMotion);
         }
+
+        public virtual void EnableCanDoCombo()
+        {
+            
+        }
+
+        public virtual void DisableCanDoCombo()
+        {
+            
+        }
     }
-    
 }

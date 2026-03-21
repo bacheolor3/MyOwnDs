@@ -7,7 +7,11 @@ namespace TSG
     {
         PlayerManager player;
 
-        public WeaponItem currentWeaponBeingUsed;        
+        public WeaponItem currentWeaponBeingUsed;
+
+        [Header("Flags")]
+        public bool canComboWithMainHandWeapon = false;
+        // public bool canComboWithOffHandleWeapon = false;
 
         protected override void Awake()
         {
@@ -63,5 +67,6 @@ namespace TSG
                 PlayerCamera.instance.SetLockCameraHeight();
             }
         }
+    
     }
 }
