@@ -249,19 +249,19 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""RT"",
                     ""type"": ""Button"",
-                    ""id"": ""b90aec6e-1199-444c-9532-6d54e48c9426"",
+                    ""id"": ""038adf8a-ccb8-49a3-aad5-5ba21e57a491"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Tap"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Hold RT"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""038adf8a-ccb8-49a3-aad5-5ba21e57a491"",
-                    ""expectedControlType"": ""Button"",
+                    ""id"": ""ec0e8440-cf79-4a24-81f8-538044a19ca4"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold(duration=0.4,pressPoint=0.1)"",
+                    ""interactions"": ""Hold(pressPoint=0.1)"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -432,7 +432,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3f766845-18ea-4f71-aab5-a48c4c6fb2ff"",
+                    ""id"": ""208fb2fd-ed39-4bfd-bbd1-de7fc3f39282"",
                     ""path"": ""<Keyboard>/g"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -443,7 +443,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""647115ba-17cf-47f2-a525-a023dfed06fb"",
+                    ""id"": ""62c57827-fcb1-4c2c-8dcd-050d2e1d4f19"",
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -454,7 +454,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""208fb2fd-ed39-4bfd-bbd1-de7fc3f39282"",
+                    ""id"": ""40a1ab18-03c4-4dff-b2a2-cce1e717790f"",
                     ""path"": ""<Keyboard>/g"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -465,7 +465,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""62c57827-fcb1-4c2c-8dcd-050d2e1d4f19"",
+                    ""id"": ""c8cc62af-f010-4b2a-a565-24baafdd04da"",
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
