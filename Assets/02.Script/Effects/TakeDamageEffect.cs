@@ -116,6 +116,11 @@ namespace TSG
                 return;
             }
 
+            if (character.isDead.Value)
+            {
+                return;
+            }
+
             // 해야할 거 : 만약 강인도가 부서졌으면 계산할것
             poiseIsBroken = true;
 

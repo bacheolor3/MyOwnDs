@@ -15,6 +15,10 @@ namespace TSG
         [SerializeField] protected float fallStartYVelocity = -5;   // 캐릭터가 작하하는중이면 받는 중력의 힘(지속적으로 올라감)
         protected bool fallingVelocityHasBeenSet = false;
         protected float inAirTimer = 0;
+
+        [Header("플래그들")]
+        public bool isRolling = false;
+        
         protected virtual void Awake()
         {
             character = GetComponent<CharacterManager>();

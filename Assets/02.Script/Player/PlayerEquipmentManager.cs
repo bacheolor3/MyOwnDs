@@ -79,7 +79,7 @@ namespace TSG
                 return;
             }
 
-            player.playerAnimatorManager.PlayTargetActionAnimation("Swap_Right_Weapon_01", false, true, true, true);
+            player.playerAnimatorManager.PlayTargetActionAnimation("Swap_Right_Weapon_01", false, false, true, true);
 
             // 엘든링 무기 스왑 시스템
             // 1. 기본으로 들고 있는 무기 말고 다른 무기가 있는지 확인하기. 만약 있다면, '절대로' 맨손으로 바꾸지 않음. 무조건 무기끼리만 바뀔 것
@@ -136,11 +136,13 @@ namespace TSG
             {
                 // 이 무기가 "맨손 무기"가 아닌지 확인
                 // 만약 다음에 올 무기가 맨손무기가 아니라면 진행
-                if(player.playerInventoryManager.weaponsInRightHandSlots[player.playerInventoryManager.rightHandWeaponIndex].itemID != WorldItemDatabase.Instance.unarmedWeapon.itemID)
+                if(player.playerInventoryManager.weaponsInRightHandSlots[player.playerInventoryManager.rightHandWeaponIndex].itemID != 
+                WorldItemDatabase.Instance.unarmedWeapon.itemID)
                 {
                     selectedWeapon = player.playerInventoryManager.weaponsInRightHandSlots[player.playerInventoryManager.rightHandWeaponIndex];
                     // 네트워크에 무기 ID 를 할당해 연결된 모든 접속자들도 무기 바꾸는 게 보이게 설정
-                    player.playerNetworkManager.currentRightHandWeaponID.Value = player.playerInventoryManager.weaponsInRightHandSlots[player.playerInventoryManager.rightHandWeaponIndex].itemID;
+                    player.playerNetworkManager.currentRightHandWeaponID.Value = 
+                    player.playerInventoryManager.weaponsInRightHandSlots[player.playerInventoryManager.rightHandWeaponIndex].itemID;
                     return;
                 }
             }
@@ -173,7 +175,7 @@ namespace TSG
                 return;
             }
 
-            player.playerAnimatorManager.PlayTargetActionAnimation("Swap_Left_Weapon_01", false);
+            player.playerAnimatorManager.PlayTargetActionAnimation("Swap_Left_Weapon_01", false, false, true, true);
 
             // 엘든링 무기 스왑 시스템
             // 1. 기본으로 들고 있는 무기 말고 다른 무기가 있는지 확인하기. 만약 있다면, '절대로' 맨손으로 바꾸지 않음. 무조건 무기끼리만 바뀔 것
@@ -191,19 +193,59 @@ namespace TSG
             if(player.playerInventoryManager.leftHandWeaponIndex < 0 || player.playerInventoryManager.leftHandWeaponIndex > 2)
             {
                 player.playerInventoryManager.leftHandWeaponIndex = 0;
+
+                // 무기를 하나 이상 들고 있는지 확인
+                float weaponCount = 0;
+                WeaponItem firstWeapon = null;
+                int fisrtWeaponPosition = 0;
+
+                for(int i = 0; i < player.playerInventoryManager.weaponsInLeftHandSlots.Length; i++)
+                {
+                    if(player.playerInventoryManager.weaponsInLeftHandSlots[i].itemID != WorldItemDatabase.Instance.unarmedWeapon.itemID)
+                    {
+                        weaponCount += 1;
+
+                        if(firstWeapon == null)
+                        {
+                            firstWeapon = player.playerInventoryManager.weaponsInLeftHandSlots[i];
+                            fisrtWeaponPosition = i;
+                        }
+                    }
+                }
+
+                if(weaponCount <= 1)
+                {
+                    player.playerInventoryManager.leftHandWeaponIndex= -1;
+                    selectedWeapon = WorldItemDatabase.Instance.unarmedWeapon;
+                    player.playerNetworkManager.currentLeftHandWeaponID.Value = selectedWeapon.itemID;
+                }
+                else
+                {
+                    player.playerInventoryManager.leftHandWeaponIndex = fisrtWeaponPosition;
+                    player.playerNetworkManager.currentLeftHandWeaponID.Value = firstWeapon.itemID;
+                }
+
+                return;
             }
 
             foreach(WeaponItem weapon in player.playerInventoryManager.weaponsInLeftHandSlots)
             {
                 // 이 무기가 "맨손 무기"가 아닌지 확인
                 // 만약 다음에 올 무기가 맨손무기가 아니라면 진행
-                if(player.playerInventoryManager.weaponsInLeftHandSlots[player.playerInventoryManager.leftHandWeaponIndex].itemID != WorldItemDatabase.Instance.unarmedWeapon.itemID)
+                if(player.playerInventoryManager.weaponsInLeftHandSlots[player.playerInventoryManager.leftHandWeaponIndex].itemID !=
+                     WorldItemDatabase.Instance.unarmedWeapon.itemID)
                 {
                     selectedWeapon = player.playerInventoryManager.weaponsInLeftHandSlots[player.playerInventoryManager.leftHandWeaponIndex];
                     // 네트워크에 무기 ID 를 할당해 연결된 모든 접속자들도 무기 바꾸는 게 보이게 설정
-                    player.playerNetworkManager.currentLeftHandWeaponID.Value = player.playerInventoryManager.weaponsInLeftHandSlots[player.playerInventoryManager.leftHandWeaponIndex].itemID;
+                    player.playerNetworkManager.currentLeftHandWeaponID.Value = 
+                    player.playerInventoryManager.weaponsInLeftHandSlots[player.playerInventoryManager.leftHandWeaponIndex].itemID;
                 }
             }
+
+            if(selectedWeapon == null && player.playerInventoryManager.leftHandWeaponIndex <= 2)
+            {
+                SwitchLeftWeapon();
+            }   
         }
     
         // 데미지 충돌 판정

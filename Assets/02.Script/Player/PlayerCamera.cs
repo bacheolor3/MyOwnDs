@@ -1,6 +1,9 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 namespace TSG
 {
@@ -35,7 +38,21 @@ namespace TSG
         [SerializeField] float lockOnRadius = 20;
         [SerializeField] float minimumViewableAngle = -50;
         [SerializeField] float maximumViewableAngle = 50;
-        [SerializeField] float maximumLockOnDistance = 20;
+        [SerializeField] float lockOnTargetFollowSpeed = 0.2f;
+        [SerializeField] float setCameraHeightSpeed = 1;
+        [SerializeField] float unlockedCameraHeight = 1.65f;
+        [SerializeField] float lockedCameraHeight = 2.0f;
+        private Coroutine cameraLockOnHeihtCoroutine;
+        private List<CharacterManager> availableTargets = new List<CharacterManager>();
+        public CharacterManager nearestLockOnTarget;
+        public CharacterManager leftLockOnTarget;
+        public CharacterManager rightLockOnTarget;
+
+        [Header("시네마틱 연출 설정")]
+        [SerializeField] float cinematicZoomFOV = 35f;
+        [SerializeField] float focusSpeed = 5f;
+        private float defaultFov;
+        private bool isCinematicFocusing = false;
 
         private void Awake()
         {
@@ -79,30 +96,56 @@ namespace TSG
     
         private void HandleRotation()
         {
-            // 만약 특정 대상을 락온 한다면, 그 특정 대상 주변으로 회전
-            // 그 외의 상황에선 일상적으로 회전할것
+            // 락온이 되면, 강제로 타겟을 향해 회전을 하도록 만들었다.
+            if (player.playerNetworkManager.isLockedOn.Value)
+            {
+                // 이 게임 오브젝트를 회전시킨다
+                Vector3 rotationDirection = player.playerCombatManager.currentTarget.characterCombatManager.lockOnTransform.position - transform.position;
+                rotationDirection.Normalize();
+                rotationDirection.y = 0;
 
-            // 일반적인 회전
-            // 왼쪽과 오른쪽 회전은 기본적으로 오른쪽 조이스틱의 수평 움직임에 따라 달렸다
-            leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed) * Time.deltaTime;
-            // 위아래 회전은 오른쪽 조이스틱의 직선 움직임에 따라 달렸다
-            upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * Time.deltaTime;
-            // 위아래의 값의 최대치를 맞춰준다
-            upAndDownLookAngle = Mathf.Clamp(upAndDownLookAngle, minimumPivot, maximumPivot);
+                Quaternion targetRotation = Quaternion.LookRotation(rotationDirection);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lockOnTargetFollowSpeed);
 
-            Vector3 cameraRotation = Vector3.zero;
-            Quaternion targetRotation;
+                // 이게 물체의 좌표를 회전시킨다
+                rotationDirection = player.playerCombatManager.currentTarget.characterCombatManager.lockOnTransform.position - cameraPivotTransform.position;
+                rotationDirection.Normalize();
 
-            // 지정된 게임 오브젝트를 좌측/우측으로 회전
-            cameraRotation.y = leftAndRightLookAngle;
-            targetRotation = Quaternion.Euler(cameraRotation);
-            transform.rotation = targetRotation;
-            
-            // 게임 오브젝트의 위아래 시점을 회전
-            cameraRotation = Vector3.zero;
-            cameraRotation.x = upAndDownLookAngle;
-            targetRotation =Quaternion.Euler(cameraRotation);
-            cameraPivotTransform.localRotation = targetRotation;
+                targetRotation = Quaternion.LookRotation(rotationDirection);
+                cameraPivotTransform.transform.rotation = Quaternion.Slerp(cameraPivotTransform.rotation, targetRotation, lockOnTargetFollowSpeed);
+
+                // 회전률을 고정해서 각도를 보고, 멀리가지 않게 만들기
+                leftAndRightLookAngle = transform.eulerAngles.y;
+                upAndDownLookAngle = transform.eulerAngles.x;
+            }
+            // 아니면 일반적인 것처럼 굴러가게
+            else
+            {
+                // 만약 특정 대상을 락온 한다면, 그 특정 대상 주변으로 회전
+                // 그 외의 상황에선 일상적으로 회전할것
+
+                // 일반적인 회전
+                // 왼쪽과 오른쪽 회전은 기본적으로 오른쪽 조이스틱의 수평 움직임에 따라 달렸다
+                leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed) * Time.deltaTime;
+                // 위아래 회전은 오른쪽 조이스틱의 직선 움직임에 따라 달렸다
+                upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * Time.deltaTime;
+                // 위아래의 값의 최대치를 맞춰준다
+                upAndDownLookAngle = Mathf.Clamp(upAndDownLookAngle, minimumPivot, maximumPivot);
+
+                Vector3 cameraRotation = Vector3.zero;
+                Quaternion targetRotation;
+
+                // 지정된 게임 오브젝트를 좌측/우측으로 회전
+                cameraRotation.y = leftAndRightLookAngle;
+                targetRotation = Quaternion.Euler(cameraRotation);
+                transform.rotation = targetRotation;
+                
+                // 게임 오브젝트의 위아래 시점을 회전
+                cameraRotation = Vector3.zero;
+                cameraRotation.x = upAndDownLookAngle;
+                targetRotation =Quaternion.Euler(cameraRotation);
+                cameraPivotTransform.localRotation = targetRotation;
+            }            
         }
     
         private void HandleCollisions()
@@ -166,12 +209,7 @@ namespace TSG
                         continue;
                     }
 
-                    // 타겟이 너무 멀면, 다음 잠재적 타겟을 찾을것
-                    if(distanceFromTarget > maximumLockOnDistance)
-                    {
-                        continue;
-                    }
-
+                    // 마지막으로 만약 타겟이 시야에서 벗어나거나 환경에 막혔다면, 다음 예비 타겟을 찾아라
                     if(viewableAngle > minimumViewableAngle && viewableAngle < maximumViewableAngle)
                     {
                         RaycastHit hit;
@@ -186,11 +224,192 @@ namespace TSG
                         }
                         else
                         {
-                            Debug.Log("락 온 성공!");
+                            // 아니면, 잠정적 타겟 리스트에 추가
+                            availableTargets.Add(lockOnTarget);
                         }
                     }
                 }
             }
+
+            // 잠재적인 타겟들 목록 사이에서 뭘 먼저 타겟 삼을지 정하기
+            for(int k = 0; k < availableTargets.Count ; k++)
+            {
+                if(availableTargets[k] != null)
+                {
+                    float distanceFromTarget = Vector3.Distance(player.transform.position, availableTargets[k].transform.position);
+                    Vector3 lockTargetsDirection = availableTargets[k].transform.position - player.transform.position;
+
+                    if(distanceFromTarget < shortestDistance)
+                    {
+                        shortestDistance = distanceFromTarget;
+                        nearestLockOnTarget = availableTargets[k];
+                    }
+
+                    // 만약 타겟을 찾는 중에 이미 락온 된 상태라면, 가장 가까운 좌/우 타겟을 확인
+                    if (player.playerNetworkManager.isLockedOn.Value)
+                    {
+                        Vector3 relativeEnemyPosition = player.transform.InverseTransformPoint(availableTargets[k].transform.position);
+
+                        var distanceFromLeftTarget = relativeEnemyPosition.x;
+                        var distanceFromRightTarget = relativeEnemyPosition.x;
+
+                        if(availableTargets[k] != player.playerCombatManager.currentTarget)
+                        {
+                            continue;
+                        }
+
+                        // 타겟의 왼쪽 면을 확인
+                        if(relativeEnemyPosition.x <= 0.00 && distanceFromLeftTarget > shortestDistanceOfLeftTarget)
+                        {
+                            shortestDistanceOfLeftTarget = distanceFromLeftTarget;
+                            leftLockOnTarget = availableTargets[k];
+                        }
+                        // 타겟의 오른쪽 면을 확인
+                        else if(relativeEnemyPosition.x >= 0.00 && distanceFromRightTarget < shortestDistanceOfRightTarget)
+                        {
+                            shortestDistanceOfRightTarget = distanceFromRightTarget;
+                            rightLockOnTarget = availableTargets[k];
+                        }
+                    }
+                }
+                else
+                {
+                    ClearLockOnTargets();
+                    player.playerNetworkManager.isLockedOn.Value = false;
+                }
+            }
+        }
+    
+        public void SetLockCameraHeight()
+        {
+            if(cameraLockOnHeihtCoroutine != null)
+            {
+                StopCoroutine(cameraLockOnHeihtCoroutine);
+            }
+
+            cameraLockOnHeihtCoroutine = StartCoroutine(SetCameraHeight());
+        }
+
+        public void ClearLockOnTargets()
+        {
+            nearestLockOnTarget = null;
+            leftLockOnTarget = null;
+            rightLockOnTarget = null;
+            availableTargets.Clear();
+        }
+    
+        public IEnumerator WaitThenFindNewTarget()
+        {
+            while (player.isPerformingAction)
+            {
+                yield return null;
+            }
+
+            ClearLockOnTargets();
+            HandleLocatingLockOnTargets();
+
+            if(nearestLockOnTarget != null)
+            {
+                player.playerCombatManager.SetTarget(nearestLockOnTarget);
+                player.playerNetworkManager.isLockedOn.Value = true;
+            }
+
+            yield return null;
+        }
+    
+        private IEnumerator SetCameraHeight()
+        {
+            float duration = 1;
+            float timer = 0;
+
+            Vector3 velocity = Vector3.zero;
+            Vector3 newLockedCameraHeight = new Vector3(cameraPivotTransform.transform.localPosition.x, lockedCameraHeight);
+            Vector3 newUnlockedCameraHeight = new Vector3(cameraPivotTransform.transform.localPosition.x, unlockedCameraHeight);
+
+            while(timer < duration)
+            {
+                timer += Time.deltaTime;
+
+                if(player != null)
+                {
+                    if(player.playerCombatManager.currentTarget != null)
+                    {
+                        cameraPivotTransform.transform.localPosition = 
+                            Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newLockedCameraHeight, ref velocity, setCameraHeightSpeed);
+                        cameraPivotTransform.transform.localRotation =
+                            Quaternion.Slerp(cameraPivotTransform.transform.localRotation, Quaternion.Euler(0, 0, 0), lockOnTargetFollowSpeed);
+                    }
+                    else
+                    {
+                        cameraPivotTransform.transform.localPosition = 
+                            Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newUnlockedCameraHeight, ref velocity, setCameraHeightSpeed);
+                    }
+                }
+
+                yield return null;
+            }
+
+            if(player != null)
+            {
+                 if(player.playerCombatManager.currentTarget != null)
+                    {
+                        cameraPivotTransform.transform.localPosition = newLockedCameraHeight;
+                        cameraPivotTransform.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                }
+                else
+                {
+                    cameraPivotTransform.transform.localPosition = newUnlockedCameraHeight;
+                }
+            }
+
+            yield return null;
+        }
+    
+        public void TriggerCinematicFocus(Transform targetTransform, float duration)
+        {
+            if (!isCinematicFocusing)
+            {
+                StartCoroutine(CinematicFocusCoroutine(targetTransform, duration));
+            }
+        }
+
+        private IEnumerator CinematicFocusCoroutine(Transform targetTransform, float duration)
+        {
+            isCinematicFocusing = true;
+            float elapsed = 0;
+            defaultFov = cameraObject.fieldOfView;
+
+            while(elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+        
+                if (targetTransform != null)
+                {
+                    // 플레이어와 보스의 중간 지점 계산
+                    Vector3 midPoint = (player.transform.position + targetTransform.position) / 2f;
+                    midPoint.y += 1.2f; // 캐릭터 가슴 높이 정도로 보정
+
+                    // FOV 줌인
+                    cameraObject.fieldOfView = Mathf.Lerp(cameraObject.fieldOfView, cinematicZoomFOV, Time.deltaTime * focusSpeed);
+                    
+                    // 카메라가 중간 지점을 부드럽게 바라보게 함
+                    Vector3 relativePos = midPoint - cameraObject.transform.position;
+                    Quaternion targetRotation = Quaternion.LookRotation(relativePos);
+                    cameraObject.transform.rotation = Quaternion.Slerp(cameraObject.transform.rotation, targetRotation, Time.deltaTime * focusSpeed);
+                }
+                yield return null;
+            }
+
+            // FOV 원래대로 복구
+            float recoveryElapsed = 0;
+            while (recoveryElapsed < 0.3f)
+            {
+                recoveryElapsed += Time.deltaTime;
+                cameraObject.fieldOfView = Mathf.Lerp(cameraObject.fieldOfView, defaultFov, recoveryElapsed / 0.3f);
+                yield return null;
+            }
+            
+            isCinematicFocusing = false;
         }
     }
 }

@@ -32,6 +32,8 @@ namespace TSG
         // 약공격 보정
         [Header("공격 보정치")]
         public float light_Attack_01_Modifier = 1.1f;
+        public float heavy_Attack_01_Modifier = 1.4f;
+        public float charge_Attack_01_Modifier = 2.0f;
         // 강공격 보정
         // 치명타 공격 보정 등
 
@@ -45,6 +47,7 @@ namespace TSG
         // 아이템 기반 액션(RB, RT, LB, LT)
         [Header("액션")]
         public WeaponItemAction oh_RB_Action;   // One Hand Right Bumper Action
+        public WeaponItemAction oh_RT_Action;   // One Hand Right Trigger Action
 
         // 전장의 재(보스룸 연기 말하는거..)
 

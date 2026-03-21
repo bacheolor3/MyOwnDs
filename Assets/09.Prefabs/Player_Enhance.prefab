@@ -2161,7 +2161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 4239119918
+  GlobalObjectIdHash: 683067793
   InScenePlacedSourceGlobalObjectIdHash: 683067793
   DeferredDespawnTick: 0
   Ownership: 1
@@ -2196,13 +2196,12 @@ MonoBehaviour:
   characterAnimatorManager: {fileID: 0}
   characterCombatManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
+  characterLocomotionManager: {fileID: 0}
   isPerformingAction: 0
   isGrounded: 1
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
-  respawnCharacter: 0
-  switchRightWeapon: 0
   playerAnimatorManager: {fileID: 0}
   playerLocomotionManager: {fileID: 0}
   playerNetworkManager: {fileID: 0}
@@ -2222,6 +2221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d83f283f054d61749bb6559f38e99ebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TSG.PlayerCombatManager
+  ShowTopMostFoldoutHeaderGroup: 1
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 5540180621829624639}
@@ -2252,11 +2252,15 @@ MonoBehaviour:
     m_InternalValue: 0
   moveAmount:
     m_InternalValue: 0
+  currentTargetNetworkObjectID:
+    m_InternalValue: 0
   isLockedOn:
     m_InternalValue: 0
   isSprinting:
     m_InternalValue: 0
   isJumping:
+    m_InternalValue: 0
+  isChargingAttack:
     m_InternalValue: 0
   currentHealth:
     m_InternalValue: 0
@@ -2383,13 +2387,14 @@ MonoBehaviour:
   yVelocity: {x: 0, y: 0, z: 0}
   groundedYVelocity: -20
   fallStartYVelocity: -5
+  isRolling: 0
   verticalMovement: 0
   horizontalMovement: 0
   moveAmount: 0
   walkingSpeed: 2
   runningSpeed: 5
   sprintingSpeed: 6.5
-  rotationspeed: 15
+  rotationSpeed: 15
   sprintingStaminaCost: 2
   jumpStaminaCost: 25
   jumpHeight: 4
@@ -12728,7 +12733,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6113035302418356401}
   serializedVersion: 2
-  m_LocalRotation: {x: -2.1068194e-16, y: -1.9014969e-16, z: 0.000000059604645, w: 1}
+  m_LocalRotation: {x: -0.20656125, y: 0.92200005, z: -0.058987908, w: 0.32213166}
   m_LocalPosition: {x: 0.047892477, y: 0.023780268, z: 0.2991357}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

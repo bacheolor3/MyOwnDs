@@ -36,10 +36,29 @@ namespace TSG
             if (playerPerformingAction.playerNetworkManager.isUsingRightHand.Value)
             {
                 playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightAttack01, light_Attack_01, true);
+
+                CheckForCinematicFocus(playerPerformingAction);
             }
             if (playerPerformingAction.playerNetworkManager.isUsingLeftHand.Value)
             {
                 
+            }
+        }
+
+        private void CheckForCinematicFocus(PlayerManager player)
+        {
+            if(player.playerCombatManager.currentTarget != null)
+            {
+                if (player.playerCombatManager.currentTarget.CompareTag("Boss"))
+                {
+                    if(UnityEngine.Random.value <= 0.5f)
+                    {
+                        if(PlayerCamera.instance != null)
+                        {
+                            PlayerCamera.instance.TriggerCinematicFocus(player.playerCombatManager.currentTarget.transform, 0.4f);
+                        }
+                    }
+                }
             }
         }
     }    

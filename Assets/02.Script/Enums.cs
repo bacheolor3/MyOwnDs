@@ -32,8 +32,13 @@ namespace TSG
         // Back
     }
 
+    // 공격 타입에 따른 데미지 계산을 위한 것
     public enum AttackType
     {
-        LightAttack01
+        LightAttack01,
+        LightATtack02,
+        HeavyAttack01,
+        ChargedAttack01,
+        ChargedAttack02
     }
 }

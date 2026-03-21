@@ -1,9 +1,12 @@
 using UnityEngine;
+using Unity.Netcode;
 
 namespace TSG
 {
-    public class CharacterCombatManager : MonoBehaviour
+    public class CharacterCombatManager : NetworkBehaviour
     {
+        CharacterManager character;
+
         [Header("공격 타겟")]
         public CharacterManager currentTarget;
 
@@ -14,7 +17,22 @@ namespace TSG
         public Transform lockOnTransform;
         protected virtual void Awake()
         {
-            
+            character = GetComponent<CharacterManager>();
+        }
+        public virtual void SetTarget(CharacterManager newTarget)
+        {
+            if (character.IsOwner)
+            {
+                if(newTarget != null)
+                {
+                    currentTarget = newTarget;
+                    character.characterNetworkManager.currentTargetNetworkObjectID.Value = newTarget.GetComponent<NetworkObject>().NetworkObjectId;
+                }
+                else
+                {
+                    currentTarget = null;
+                }
+            }
         }
     }    
 }
