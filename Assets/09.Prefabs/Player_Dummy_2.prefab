@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8968831365591569340}
   - component: {fileID: 8432698178461367112}
   - component: {fileID: 468791404998200557}
-  - component: {fileID: 3446695407550455133}
+  - component: {fileID: -6314704900826499606}
   - component: {fileID: 8796462313431606965}
   - component: {fileID: 4983099805538698299}
   - component: {fileID: -2750526007468227274}
@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 8892202613630187629}
   - component: {fileID: 4519372497567051172}
   m_Layer: 7
-  m_Name: Player_Dummy
+  m_Name: Player_Dummy_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,14 +39,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1024597560684289293}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0.6187997, z: -0, w: 0.7855488}
+  m_LocalPosition: {x: -0.91309977, y: -1.1200001, z: 0.7976351}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2307841050614256862}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 76.457, z: 0}
 --- !u!95 &8968831365591569340
 Animator:
   serializedVersion: 7
@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 880593220
+  GlobalObjectIdHash: 2248334103
   InScenePlacedSourceGlobalObjectIdHash: 880593220
   DeferredDespawnTick: 0
   Ownership: 1
@@ -128,6 +128,8 @@ MonoBehaviour:
     m_InternalValue: 0
   isJumping:
     m_InternalValue: 0
+  isChargingAttack:
+    m_InternalValue: 0
   currentHealth:
     m_InternalValue: 0
   maxHealth:
@@ -140,7 +142,7 @@ MonoBehaviour:
     m_InternalValue: 1
   vitality:
     m_InternalValue: 1
---- !u!114 &3446695407550455133
+--- !u!114 &-6314704900826499606
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,9 +151,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1024597560684289293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de1fdb0da19dd7846ab3bc140f293643, type: 3}
+  m_Script: {fileID: 11500000, guid: 78ceade7d2fdd374582573d4a91463e4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TSG.CharacterManager
+  m_EditorClassIdentifier: '::'
   ShowTopMostFoldoutHeaderGroup: 1
   isDead:
     m_InternalValue: 0
@@ -162,6 +164,7 @@ MonoBehaviour:
   characterAnimatorManager: {fileID: 0}
   characterCombatManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
+  characterLocomotionManager: {fileID: 0}
   isPerformingAction: 0
   isGrounded: 1
   applyRootMotion: 0
@@ -180,6 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TSG.CharacterCombatManager
   ShowTopMostFoldoutHeaderGroup: 1
+  lastAttackAnimationPerformed: 
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 6053043919739602885}
@@ -366,6 +370,7 @@ MonoBehaviour:
   yVelocity: {x: 0, y: 0, z: 0}
   groundedYVelocity: -20
   fallStartYVelocity: -5
+  isRolling: 0
 --- !u!114 &7684797556018029407
 MonoBehaviour:
   m_ObjectHideFlags: 0
