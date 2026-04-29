@@ -74,6 +74,11 @@ namespace TSG
             }
         }
     
+        protected virtual void FixedUpdate()
+        {
+            
+        }
+        
         protected virtual void LateUpdate()
         {
             
