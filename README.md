@@ -5,7 +5,7 @@
 * **New Input System:** 유니티의 신규 인풋 시스템을 적용하여 확장성 있는 키 바인딩 구조 설계
 
 ### 2. Combat System (전투 시스템)
-* **Weapon & Hit Detection:** 애니메이션 이벤트(Animation Event) 기반의 정밀한 공격 판정 및 무기 스왑 시스템
+* **Weapon & Hit Detection:** 애니메이션 이벤트(Animation Event) 기반 공격 판정 및 무기 스왑 시스템
 * **Camera Lock-on:** 시네머신(Cinemachine)과 타겟 그룹을 활용한 소울라이크 스타일의 록온 카메라 시스템
 
 ### 3. Enemy AI (몬스터 AI) — *공부 및 진행 중*
