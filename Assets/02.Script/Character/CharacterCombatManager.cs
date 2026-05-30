@@ -5,7 +5,7 @@ namespace TSG
 {
     public class CharacterCombatManager : NetworkBehaviour
     {
-        CharacterManager character;
+        protected CharacterManager character;
 
         [Header("마지막에 재생된 공격 애니메이션")]
         public string lastAttackAnimationPerformed;

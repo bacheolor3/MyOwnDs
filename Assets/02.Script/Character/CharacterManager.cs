@@ -20,6 +20,9 @@ namespace TSG
         [HideInInspector] public CharacterSoundFXManager characterSoundFXManager;
         [HideInInspector] public CharacterLocomotionManager characterLocomotionManager;
 
+        [Header("캐릭터 그룹")]
+        public CharacterGroup characterGroup;
+
         [Header("기준점")]
         public bool isPerformingAction = false;
         

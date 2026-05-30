@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 8432698178461367112}
   - component: {fileID: 468791404998200557}
   - component: {fileID: -6314704900826499606}
-  - component: {fileID: 8796462313431606965}
   - component: {fileID: 4983099805538698299}
   - component: {fileID: -2750526007468227274}
   - component: {fileID: -6108718094430883360}
@@ -24,6 +23,7 @@ GameObject:
   - component: {fileID: 6295231852945341974}
   - component: {fileID: 8892202613630187629}
   - component: {fileID: 4519372497567051172}
+  - component: {fileID: 4275671341562981952}
   m_Layer: 7
   m_Name: Player_Dummy_2
   m_TagString: Untagged
@@ -40,7 +40,7 @@ Transform:
   m_GameObject: {fileID: 1024597560684289293}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.6187997, z: -0, w: 0.7855488}
-  m_LocalPosition: {x: -0.91309977, y: -1.1200001, z: 0.7976351}
+  m_LocalPosition: {x: -0.91309977, y: 0, z: 0.7976351}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -165,28 +165,14 @@ MonoBehaviour:
   characterCombatManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
   characterLocomotionManager: {fileID: 0}
+  characterGroup: 1
   isPerformingAction: 0
   isGrounded: 1
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
---- !u!114 &8796462313431606965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1024597560684289293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c89e7e2705f1684181e62558ceccf1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TSG.CharacterCombatManager
-  ShowTopMostFoldoutHeaderGroup: 1
-  lastAttackAnimationPerformed: 
-  currentTarget: {fileID: 0}
-  currentAttackType: 0
-  lockOnTransform: {fileID: 6053043919739602885}
+  aiCharacterCombatManager: {fileID: 0}
+  currentState: {fileID: 11400000, guid: 9c5cd41994292e2439579e51b200308c, type: 2}
 --- !u!114 &4983099805538698299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,6 +431,26 @@ MonoBehaviour:
   backward_Medium_Damage: []
   left_Medium_Damage: []
   right_Medium_Damage: []
+--- !u!114 &4275671341562981952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024597560684289293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 056851d9065905444977cd1c69ba1441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.AICharacterCombatManager
+  ShowTopMostFoldoutHeaderGroup: 1
+  lastAttackAnimationPerformed: 
+  currentTarget: {fileID: 0}
+  currentAttackType: 0
+  lockOnTransform: {fileID: 6053043919739602885}
+  detectionRadius: 15
+  minimumDetectionAngle: -35
+  maximumDetectionAngle: 35
 --- !u!1 &3024137107734351492
 GameObject:
   m_ObjectHideFlags: 0
