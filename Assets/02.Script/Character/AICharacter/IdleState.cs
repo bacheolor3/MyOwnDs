@@ -10,15 +10,12 @@ namespace TSG
 
             if(aiCharacter.aiCharacterCombatManager.currentTarget != null)
             {
-                // 캐릭터 추적 상태로 전환 (상태를 추적 상태로 변환)
-                Debug.Log("WE HAVE A TARGET");
-                return this;
+                return SwitchState(aiCharacter, aiCharacter.pursueTarget);                
             }
             else
             {
                 // 이 상태로 다시 돌아오고, 타겟을 다시 수색 (타겟을 찾을 때까지 상태를 이 형태로 고정)
-                aiCharacter.aiCharacterCombatManager.FindATargetViaLineOfSight(aiCharacter);
-                Debug.Log("SEARCHING FOR TARGET");
+                aiCharacter.aiCharacterCombatManager.FindATargetViaLineOfSight(aiCharacter);                
                 return this;
             }
         }

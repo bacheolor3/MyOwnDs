@@ -15,5 +15,16 @@ namespace TSG
             // 플레이어를 못 찾았다면, 가만히 있는(IDLE)상태로 전환
             return this;
         }
+
+        protected virtual AIState SwitchState(AICharacterManager aICharacter, AIState newState)
+        {
+            ResetStateFlags(aICharacter);
+            return newState;
+        }
+
+        protected virtual void ResetStateFlags(AICharacterManager aICharacter)
+        {
+            // 모든 상태 전환용 수치를 리셋해서 공백으로 돌려놓는다
+        }
     }    
 }

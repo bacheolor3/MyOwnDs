@@ -1,17 +1,39 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace TSG
 {
     public class AICharacterManager : CharacterManager
     {
-        public AICharacterCombatManager aiCharacterCombatManager;
+        [HideInInspector] public AICharacterNetworkManager aiCharacterNetworkManager;
+        [HideInInspector] public AICharacterCombatManager aiCharacterCombatManager;
+        [HideInInspector] public AICharacterLocomotionManager aiCharacterLocomotionManager;
+        [Header("Navmesh Agent")]
+        public NavMeshAgent navmeshAgent;
+
         [Header("현재 상태")]
         [SerializeField] AIState currentState;
+
+        [Header("상태")]
+        public IdleState idle;
+        public PursueTargetState pursueTarget;
+        // 전투 상태
+        // 공격
 
         protected override void Awake()
         {
             base.Awake();
             aiCharacterCombatManager = GetComponent<AICharacterCombatManager>();
+            aiCharacterNetworkManager = GetComponent<AICharacterNetworkManager>();
+            aiCharacterLocomotionManager = GetComponent<AICharacterLocomotionManager>();
+
+            navmeshAgent = GetComponentInChildren<NavMeshAgent>();
+
+            // 원본이 변하지 않기 위해 스크립트 가능한 오브젝트를 복사해서 사용
+            idle = Instantiate(idle);
+            pursueTarget = Instantiate(pursueTarget);
+
+            currentState = idle;
         }
 
         protected override void FixedUpdate()
@@ -24,15 +46,34 @@ namespace TSG
         // 첫번째 옵션
         private void ProcessStateMachine()
         {
-            AIState nextState = null;
+            AIState nextState = currentState?.Tick(this);
+
             if(currentState != null)
             {
-                nextState = currentState.Tick(this);
+                currentState = nextState;
             }
 
-            if(nextState != null)
+            // position/rotattion은 상태 머신이 틱 상태일때에만 리셋되어야 함
+            navmeshAgent.transform.localPosition = Vector3.zero;
+            navmeshAgent.transform.localRotation = Quaternion.identity;
+
+            if(navmeshAgent.enabled)
             {
-                currentState = nextState;
+                Vector3 agentDestination = navmeshAgent.destination;
+                float remainingDistance = Vector3.Distance(agentDestination, transform.position);
+
+                if(remainingDistance > navmeshAgent.stoppingDistance)
+                {
+                    aiCharacterNetworkManager.isMoving.Value = true;
+                }
+                else
+                {
+                    aiCharacterNetworkManager.isMoving.Value = false;
+                }
+            }
+            else
+            {
+                aiCharacterNetworkManager.isMoving.Value = false;
             }
         }
 
