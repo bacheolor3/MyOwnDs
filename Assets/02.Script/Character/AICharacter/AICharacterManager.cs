@@ -57,6 +57,12 @@ namespace TSG
             navmeshAgent.transform.localPosition = Vector3.zero;
             navmeshAgent.transform.localRotation = Quaternion.identity;
 
+            if(aiCharacterCombatManager.currentTarget != null)
+            {
+                aiCharacterCombatManager.targetsDirection = aiCharacterCombatManager.currentTarget.transform.position - transform.position;
+                aiCharacterCombatManager.viewableAngle = WorldUtilityManager.Instance.GetAngleOfTarget(transform, aiCharacterCombatManager.targetsDirection);
+            }
+
             if(navmeshAgent.enabled)
             {
                 Vector3 agentDestination = navmeshAgent.destination;

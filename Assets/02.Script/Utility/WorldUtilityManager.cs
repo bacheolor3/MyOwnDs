@@ -57,5 +57,16 @@ namespace TSG
 
             return false;
         }
+    
+        public float GetAngleOfTarget(Transform characterTransform, Vector3 targetsDirection)
+        {
+            targetsDirection.y = 0;
+            float viewableAngle = Vector3.Angle(characterTransform.forward, targetsDirection);
+            Vector3 cross = Vector3.Cross(characterTransform.forward, targetsDirection);
+
+            if(cross.y < 0) viewableAngle = -viewableAngle;
+
+            return viewableAngle;
+        }
     }    
 }

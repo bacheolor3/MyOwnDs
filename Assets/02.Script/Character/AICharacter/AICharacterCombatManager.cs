@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
@@ -7,7 +8,11 @@ namespace TSG
 {
     public class AICharacterCombatManager : CharacterCombatManager
     {
-        [Header("Detection")]
+        [Header("타겟 관련 정보")]
+        public float viewableAngle;
+        public UnityEngine.Vector3 targetsDirection;
+
+        [Header("감지 거리")]
         [SerializeField] float detectionRadius = 15;
         [SerializeField] float minimumDetectionAngle = -35;
         [SerializeField] float maximumDetectionAngle = 35;
@@ -61,9 +66,44 @@ namespace TSG
                         else
                         {
                             aiCharacter.characterCombatManager.SetTarget(targetCharacter);
+                            PivotTowardsTarget(aiCharacter);
                         }
                     }
                 }
+            }
+        }
+    
+        private void PivotTowardsTarget(AICharacterManager aICharacter)
+        {
+            // 타겟을 보는 각도에 따라 현재 어떤 애니메이션을 재생할지 결정
+            if (aICharacter.isPerformingAction)
+            {
+                return;
+            }
+
+            if(viewableAngle >= 20 && viewableAngle <= 60)
+            {
+                aICharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_R_45", true);
+            }
+            else if(viewableAngle <= -20 && viewableAngle >= -60)
+            {
+                aICharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_L_45", true);
+            }
+            else if(viewableAngle >= 61 && viewableAngle <= 110)
+            {
+                aICharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_R_90", true);
+            }
+            else if(viewableAngle <= -61 && viewableAngle >= -110)
+            {
+                aICharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_R_90", true);
+            }
+            else if(viewableAngle >= 146 && viewableAngle <= 180)
+            {
+                aICharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_R_180", true);
+            }
+            else if(viewableAngle <= -146 && viewableAngle >= -180)
+            {
+                aICharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_L_180", true);
             }
         }
     }    
