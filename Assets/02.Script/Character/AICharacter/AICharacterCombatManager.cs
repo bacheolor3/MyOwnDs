@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+
 
 namespace TSG
 {
@@ -14,8 +14,8 @@ namespace TSG
 
         [Header("감지 거리")]
         [SerializeField] float detectionRadius = 15;
-        [SerializeField] float minimumDetectionAngle = -35;
-        [SerializeField] float maximumDetectionAngle = 35;
+        public float minimumFOV = -35;
+        public float maximumFOV = 35;
         public void FindATargetViaLineOfSight(AICharacterManager aiCharacter)
         {
             if(currentTarget != null)
@@ -49,9 +49,9 @@ namespace TSG
                 {
                     // 만약 잠재적인 타겟이 발견된다면, 그 타겟이 앞에 있어야 함
                     Vector3 targetsDirection = targetCharacter.transform.position - aiCharacter.transform.position;
-                    float viewableAngle = Vector3.Angle(targetsDirection, aiCharacter.transform.forward);
+                    float angleOfPotentialTarget = Vector3.Angle(targetsDirection, aiCharacter.transform.forward);
 
-                    if(viewableAngle > minimumDetectionAngle && viewableAngle < maximumDetectionAngle)
+                    if(angleOfPotentialTarget > minimumFOV && angleOfPotentialTarget < maximumFOV)
                     {
                         // 마지막으로 환경 블록들 확인
                         if(Physics.Linecast(
@@ -59,12 +59,14 @@ namespace TSG
                             targetCharacter.characterCombatManager.lockOnTransform.position, 
                             WorldUtilityManager.Instance.GetEnviroLayers()))
                         {
-                            Debug.Log($"현재 각도: {viewableAngle} / 제한 범위: {minimumDetectionAngle} ~ {maximumDetectionAngle}");
+                            Debug.Log($"현재 각도: {angleOfPotentialTarget} / 제한 범위: {minimumFOV} ~ {maximumFOV}");
                             Debug.DrawLine(aiCharacter.characterCombatManager.lockOnTransform.position, targetCharacter.characterCombatManager.lockOnTransform.position);
                             Debug.Log("BLOCKED");
                         }
                         else
                         {
+                            targetsDirection = targetCharacter.transform.position - transform.position;
+                            viewableAngle = WorldUtilityManager.Instance.GetAngleOfTarget(transform, targetsDirection);
                             aiCharacter.characterCombatManager.SetTarget(targetCharacter);
                             PivotTowardsTarget(aiCharacter);
                         }
@@ -73,7 +75,7 @@ namespace TSG
             }
         }
     
-        private void PivotTowardsTarget(AICharacterManager aICharacter)
+        public void PivotTowardsTarget(AICharacterManager aICharacter)
         {
             // 타겟을 보는 각도에 따라 현재 어떤 애니메이션을 재생할지 결정
             if (aICharacter.isPerformingAction)
@@ -95,7 +97,7 @@ namespace TSG
             }
             else if(viewableAngle <= -61 && viewableAngle >= -110)
             {
-                aICharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_R_90", true);
+                aICharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_L_90", true);
             }
             else if(viewableAngle >= 146 && viewableAngle <= 180)
             {

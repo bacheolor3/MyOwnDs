@@ -40,7 +40,10 @@ namespace TSG
         {
             base.FixedUpdate();
 
-            ProcessStateMachine();
+            if (IsOwner)
+            {
+                ProcessStateMachine();
+            }
         }
 
         // 첫번째 옵션

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8432698178461367112}
   - component: {fileID: -5711523195693972374}
   - component: {fileID: -6314704900826499606}
+  - component: {fileID: 4027965101851598647}
   - component: {fileID: 4983099805538698299}
   - component: {fileID: -2750526007468227274}
   - component: {fileID: -6108718094430883360}
@@ -22,7 +23,6 @@ GameObject:
   - component: {fileID: 2639766134645905032}
   - component: {fileID: 6295231852945341974}
   - component: {fileID: 8892202613630187629}
-  - component: {fileID: 4519372497567051172}
   - component: {fileID: 6382177642696070578}
   - component: {fileID: -5722684104371046686}
   m_Layer: 7
@@ -57,8 +57,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1024597560684289293}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: bc2e5b2fd79252541bc04b22a96b4860, type: 2}
-  m_Controller: {fileID: 9100000, guid: b24e17f24bd01734a8b75ec45b1fb398, type: 2}
+  m_Avatar: {fileID: 9000000, guid: facedc965d4e2ef4db4c5a872fdb290b, type: 3}
+  m_Controller: {fileID: 9100000, guid: 2ddcc863fc8281e4b8153669c846ea2a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -181,6 +181,31 @@ MonoBehaviour:
   currentState: {fileID: 11400000, guid: 9c5cd41994292e2439579e51b200308c, type: 2}
   idle: {fileID: 11400000, guid: 9c5cd41994292e2439579e51b200308c, type: 2}
   pursueTarget: {fileID: 11400000, guid: df546467655388243902643af534b7f7, type: 2}
+--- !u!114 &4027965101851598647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024597560684289293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5838e9b185531249b1fd7c501715514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.AICharacterAnimatorManager
+  lastDamageAnimationPlayed: 
+  hit_Forward_Medium_01: Hit_Forward_Medium_01
+  hit_Forward_Medium_02: Hit_Forward_Medium_02
+  hit_Backward_Medium_01: Hit_Backward_Medium_01
+  hit_Backward_Medium_02: Hit_Backward_Medium_02
+  hit_Left_Medium_01: Hit_Left_Medium_01
+  hit_Left_Medium_02: Hit_Left_Medium_02
+  hit_Right_Medium_01: Hit_Right_Medium_01
+  hit_Right_Medium_02: Hit_Right_Medium_02
+  forward_Medium_Damage: []
+  backward_Medium_Damage: []
+  left_Medium_Damage: []
+  right_Medium_Damage: []
 --- !u!114 &4983099805538698299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,31 +439,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e02c447acae58d242949abf3c763dfe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TSG.CharacterSoundFXManager
---- !u!114 &4519372497567051172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1024597560684289293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e23df82761de6414c9f5e2bfb4e54e50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TSG.CharacterAnimatorManager
-  lastDamageAnimationPlayed: 
-  hit_Forward_Medium_01: Hit_Forward_Medium_01
-  hit_Forward_Medium_02: Hit_Forward_Medium_02
-  hit_Backward_Medium_01: Hit_Backward_Medium_01
-  hit_Backward_Medium_02: Hit_Backward_Medium_02
-  hit_Left_Medium_01: Hit_Left_Medium_01
-  hit_Left_Medium_02: Hit_Left_Medium_02
-  hit_Right_Medium_01: Hit_Right_Medium_01
-  hit_Right_Medium_02: Hit_Right_Medium_02
-  forward_Medium_Damage: []
-  backward_Medium_Damage: []
-  left_Medium_Damage: []
-  right_Medium_Damage: []
 --- !u!114 &6382177642696070578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,9 +456,11 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 6053043919739602885}
+  viewableAngle: 0
+  targetsDirection: {x: 0, y: 0, z: 0}
   detectionRadius: 15
-  minimumDetectionAngle: -35
-  maximumDetectionAngle: 35
+  minimumFOV: -35
+  maximumFOV: 35
 --- !u!114 &-5722684104371046686
 MonoBehaviour:
   m_ObjectHideFlags: 0

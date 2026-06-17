@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 2639766134645905032}
   - component: {fileID: 6295231852945341974}
   - component: {fileID: 8892202613630187629}
-  - component: {fileID: 4519372497567051172}
   - component: {fileID: 4275671341562981952}
   - component: {fileID: -5659055265273812394}
+  - component: {fileID: -7233407776460674856}
   m_Layer: 7
   m_Name: Player_Dummy_2
   m_TagString: Untagged
@@ -57,8 +57,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1024597560684289293}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: bc2e5b2fd79252541bc04b22a96b4860, type: 2}
-  m_Controller: {fileID: 9100000, guid: b24e17f24bd01734a8b75ec45b1fb398, type: 2}
+  m_Avatar: {fileID: 9000000, guid: facedc965d4e2ef4db4c5a872fdb290b, type: 3}
+  m_Controller: {fileID: 9100000, guid: 2ddcc863fc8281e4b8153669c846ea2a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -414,31 +414,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e02c447acae58d242949abf3c763dfe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TSG.CharacterSoundFXManager
---- !u!114 &4519372497567051172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1024597560684289293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e23df82761de6414c9f5e2bfb4e54e50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TSG.CharacterAnimatorManager
-  lastDamageAnimationPlayed: 
-  hit_Forward_Medium_01: Hit_Forward_Medium_01
-  hit_Forward_Medium_02: Hit_Forward_Medium_02
-  hit_Backward_Medium_01: Hit_Backward_Medium_01
-  hit_Backward_Medium_02: Hit_Backward_Medium_02
-  hit_Left_Medium_01: Hit_Left_Medium_01
-  hit_Left_Medium_02: Hit_Left_Medium_02
-  hit_Right_Medium_01: Hit_Right_Medium_01
-  hit_Right_Medium_02: Hit_Right_Medium_02
-  forward_Medium_Damage: []
-  backward_Medium_Damage: []
-  left_Medium_Damage: []
-  right_Medium_Damage: []
 --- !u!114 &4275671341562981952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,9 +431,11 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 6053043919739602885}
+  viewableAngle: 0
+  targetsDirection: {x: 0, y: 0, z: 0}
   detectionRadius: 15
-  minimumDetectionAngle: -35
-  maximumDetectionAngle: 35
+  minimumFOV: -35
+  maximumFOV: 35
 --- !u!114 &-5659055265273812394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,6 +457,31 @@ MonoBehaviour:
   groundedYVelocity: -20
   fallStartYVelocity: -5
   isRolling: 0
+--- !u!114 &-7233407776460674856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024597560684289293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5838e9b185531249b1fd7c501715514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.AICharacterAnimatorManager
+  lastDamageAnimationPlayed: 
+  hit_Forward_Medium_01: Hit_Forward_Medium_01
+  hit_Forward_Medium_02: Hit_Forward_Medium_02
+  hit_Backward_Medium_01: Hit_Backward_Medium_01
+  hit_Backward_Medium_02: Hit_Backward_Medium_02
+  hit_Left_Medium_01: Hit_Left_Medium_01
+  hit_Left_Medium_02: Hit_Left_Medium_02
+  hit_Right_Medium_01: Hit_Right_Medium_01
+  hit_Right_Medium_02: Hit_Right_Medium_02
+  forward_Medium_Damage: []
+  backward_Medium_Damage: []
+  left_Medium_Damage: []
+  right_Medium_Damage: []
 --- !u!1 &3024137107734351492
 GameObject:
   m_ObjectHideFlags: 0

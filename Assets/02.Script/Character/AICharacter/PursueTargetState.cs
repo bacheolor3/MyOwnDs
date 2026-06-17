@@ -26,6 +26,13 @@ namespace TSG
             {
                 aICharacter.navmeshAgent.enabled = true;
             }
+
+            // 만약 타겟이 캐릭터의 시야에서 벗어났다면 그들을 마주하게 변경
+            if(aICharacter.aiCharacterCombatManager.viewableAngle < aICharacter.aiCharacterCombatManager.minimumFOV 
+            || aICharacter.aiCharacterCombatManager.viewableAngle > aICharacter.aiCharacterCombatManager.maximumFOV)
+            {
+                aICharacter.aiCharacterCombatManager.PivotTowardsTarget(aICharacter);
+            }
             
             aICharacter.aiCharacterLocomotionManager.RotateTowardsAgent(aICharacter);
 
