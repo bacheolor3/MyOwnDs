@@ -8,7 +8,7 @@ namespace TSG
         {
             if (aICharacter.aiCharacterNetworkManager.isMoving.Value)
             {
-                aICharacter.transform.rotation = aICharacter.navmeshAgent.transform.rotation;
+                aICharacter.transform.rotation = aICharacter.navMeshAgent.transform.rotation;
             }
         }
     }    

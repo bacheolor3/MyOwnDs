@@ -9,6 +9,7 @@ namespace TSG
     public class AICharacterCombatManager : CharacterCombatManager
     {
         [Header("타겟 관련 정보")]
+        public float distanceFromTarget;
         public float viewableAngle;
         public UnityEngine.Vector3 targetsDirection;
 

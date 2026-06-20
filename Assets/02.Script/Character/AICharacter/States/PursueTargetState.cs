@@ -22,9 +22,9 @@ namespace TSG
             }
 
             // Navmesh Agent가 활성화 되었는지 확인, 아니라면 활성화 되지 않음
-            if (!aICharacter.navmeshAgent.enabled)
+            if (!aICharacter.navMeshAgent.enabled)
             {
-                aICharacter.navmeshAgent.enabled = true;
+                aICharacter.navMeshAgent.enabled = true;
             }
 
             // 만약 타겟이 캐릭터의 시야에서 벗어났다면 그들을 마주하게 변경
@@ -55,8 +55,8 @@ namespace TSG
             // 강의에선 이 방식을 사용한다 함. 강사의 경험 상, 지형이나 길이 이상하면 첫번째 방식은 너무 멍청해진다고 함
             // 다만 둘 다 사용해보고 본인에게 맞는 것을 고르라 하긴 했음
             NavMeshPath path = new NavMeshPath();
-            aICharacter.navmeshAgent.CalculatePath(aICharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
-            aICharacter.navmeshAgent.SetPath(path);
+            aICharacter.navMeshAgent.CalculatePath(aICharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
+            aICharacter.navMeshAgent.SetPath(path);
 
             return this;
         } 
