@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 6382177642696070578}
   - component: {fileID: -5722684104371046686}
   m_Layer: 7
-  m_Name: Player_Dummy_1
+  m_Name: Enemy_Dummy_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,10 +177,12 @@ MonoBehaviour:
   aiCharacterNetworkManager: {fileID: 0}
   aiCharacterCombatManager: {fileID: 0}
   aiCharacterLocomotionManager: {fileID: 0}
-  navmeshAgent: {fileID: 0}
+  navMeshAgent: {fileID: 0}
   currentState: {fileID: 11400000, guid: 9c5cd41994292e2439579e51b200308c, type: 2}
   idle: {fileID: 11400000, guid: 9c5cd41994292e2439579e51b200308c, type: 2}
   pursueTarget: {fileID: 11400000, guid: df546467655388243902643af534b7f7, type: 2}
+  combatStance: {fileID: 11400000, guid: b26383a6925f8314cab609a071e3977e, type: 2}
+  attack: {fileID: 11400000, guid: 60c546ba0c9fa134cafc081a3963eb15, type: 2}
 --- !u!114 &4027965101851598647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,11 +458,14 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 6053043919739602885}
+  actionRecoveryTimer: 0
+  distanceFromTarget: 0
   viewableAngle: 0
   targetsDirection: {x: 0, y: 0, z: 0}
   detectionRadius: 15
   minimumFOV: -35
   maximumFOV: 35
+  attackRotationSpeed: 25
 --- !u!114 &-5722684104371046686
 MonoBehaviour:
   m_ObjectHideFlags: 0

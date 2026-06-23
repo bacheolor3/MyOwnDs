@@ -17,6 +17,9 @@ namespace TSG
         [Header("상태")]
         public IdleState idle;
         public PursueTargetState pursueTarget;
+        public CombatStanceState combatStance;
+        public AttackState attack;
+        
         // 전투 상태
         // 공격
 
@@ -34,6 +37,13 @@ namespace TSG
             pursueTarget = Instantiate(pursueTarget);
 
             currentState = idle;
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            aiCharacterCombatManager.HandleActionRecovery(this);
         }
 
         protected override void FixedUpdate()

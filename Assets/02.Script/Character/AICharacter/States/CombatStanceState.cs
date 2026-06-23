@@ -33,58 +33,58 @@ namespace TSG
         [SerializeField] protected bool hasRolledForComboChance = false;      // 콤보 어택 확률 계산을 했나 안했나 체크용
 
         [Header("전투 상태 전환 거리")]
-        [SerializeField] protected float maximumEngagementDistance = 5;     // 추적 상태에 들어가기 위한 최대 거리
+        [SerializeField] public float maximumEngagementDistance = 5;     // 추적 상태에 들어가기 위한 최대 거리
 
-        public override AIState Tick(AICharacterManager aICharacter)
+        public override AIState Tick(AICharacterManager aiCharacter)
         {
-            if (aICharacter.isPerformingAction)
+            if (aiCharacter.isPerformingAction)
             {
                 return this;
             }
 
-            if (!aICharacter.navMeshAgent.enabled)
+            if (!aiCharacter.navMeshAgent.enabled)
             {
-                aICharacter.navMeshAgent.enabled = true;
+                aiCharacter.navMeshAgent.enabled = true;
             }
 
+
             // 만약 AI 캐릭터가 타겟을 향해 AI 캐릭터의 시야 밖에서부터 얼굴을 맞대며 돌아서길 바란다면 이걸 포함하도록
-            if (!aICharacter.aiCharacterNetworkManager.isMoving.Value)
+            if (!aiCharacter.aiCharacterNetworkManager.isMoving.Value)
             {
-                if(aICharacter.aiCharacterCombatManager.viewableAngle <- 30 || aICharacter.aiCharacterCombatManager.viewableAngle > 30)
+                if(aiCharacter.aiCharacterCombatManager.viewableAngle <- 30 || aiCharacter.aiCharacterCombatManager.viewableAngle > 30)
                 {
-                    aICharacter.aiCharacterCombatManager.PivotTowardsTarget(aICharacter);
+                    aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
                 }
             }
 
-            // 타겟을 향해 얼굴을 돌리기
+            aiCharacter.aiCharacterCombatManager.RotateTowardsAgent(aiCharacter);
 
             // 만약 타겟이 더는 존재하지 않는다면, Idle상태로 전환
-            if(aICharacter.aiCharacterCombatManager.currentTarget == null)
+            if(aiCharacter.aiCharacterCombatManager.currentTarget == null)
             {
-                return SwitchState(aICharacter, aICharacter.idle);
+                return SwitchState(aiCharacter, aiCharacter.idle);
             }
 
             // 만약 가지고 있는 공격이 없다면, 하나 가져올 것
             if (!hasAttack)
             {
-                GetNewAttack(aICharacter);
+                GetNewAttack(aiCharacter);
             }
             else
             {
-                // 리커버리 타이머 확인
-                // 공격을 공격 상태로 전달
+                aiCharacter.attack.currentAttack = choosenAttack;
                 // 콤보 찬스를 위한 랜덤 체크
-                // 상태 전환
+                return SwitchState(aiCharacter, aiCharacter.attack);
             }
 
-            if(aICharacter.aiCharacterCombatManager.distanceFromTarget > maximumEngagementDistance)
+            if(aiCharacter.aiCharacterCombatManager.distanceFromTarget > maximumEngagementDistance)
             {
-                return SwitchState(aICharacter, aICharacter.pursueTarget);
+                return SwitchState(aiCharacter, aiCharacter.pursueTarget);
             }
 
             NavMeshPath path = new NavMeshPath();
-            aICharacter.navMeshAgent.CalculatePath(aICharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
-            aICharacter.navMeshAgent.SetPath(path);
+            aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
+            aiCharacter.navMeshAgent.SetPath(path);
 
             return this;
         }
@@ -93,7 +93,7 @@ namespace TSG
         {
             potentialAttacks = new List<AICharacterAttackAction>();
 
-            foreach(var potentialAttack in potentialAttacks)
+            foreach(var potentialAttack in aICharacterAttacks)
             {
                 // 만약 이 공격을 하기에 너무 가깝다면, 다음 공격으로 체크
                 if(potentialAttack.minimumAttackDistance > aICharacter.aiCharacterCombatManager.distanceFromTarget)
@@ -146,6 +146,7 @@ namespace TSG
                     choosenAttack = attack;
                     previousAttack = choosenAttack;
                     hasAttack = true;
+                    return;
                 }
             }
 

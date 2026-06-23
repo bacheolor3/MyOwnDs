@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations;
 
 
 namespace TSG
@@ -7,36 +8,46 @@ namespace TSG
     [CreateAssetMenu(menuName = "A.I/States/Pursue Target")]
     public class PursueTargetState : AIState
     {
-        public override AIState Tick(AICharacterManager aICharacter)
+        public override AIState Tick(AICharacterManager aiCharacter)
         {
             // 액션을 할지 말지 확인(만약 한다면 액션 끝날때까지 아무것도 안하기)
-            if (aICharacter.isPerformingAction)
+            if (aiCharacter.isPerformingAction)
             {
                 return this;
             }
             
             // 타겟이 Null인지 아닌지 확인. 만약 타겟이 없다면, Idle상태로 돌아가기
-            if(aICharacter.aiCharacterCombatManager.currentTarget == null)
+            if(aiCharacter.aiCharacterCombatManager.currentTarget == null)
             {
-                return SwitchState(aICharacter, aICharacter.idle);
+                return SwitchState(aiCharacter, aiCharacter.idle);
             }
 
             // Navmesh Agent가 활성화 되었는지 확인, 아니라면 활성화 되지 않음
-            if (!aICharacter.navMeshAgent.enabled)
+            if (!aiCharacter.navMeshAgent.enabled)
             {
-                aICharacter.navMeshAgent.enabled = true;
+                aiCharacter.navMeshAgent.enabled = true;
             }
 
             // 만약 타겟이 캐릭터의 시야에서 벗어났다면 그들을 마주하게 변경
-            if(aICharacter.aiCharacterCombatManager.viewableAngle < aICharacter.aiCharacterCombatManager.minimumFOV 
-            || aICharacter.aiCharacterCombatManager.viewableAngle > aICharacter.aiCharacterCombatManager.maximumFOV)
+            if(aiCharacter.aiCharacterCombatManager.viewableAngle < aiCharacter.aiCharacterCombatManager.minimumFOV 
+            || aiCharacter.aiCharacterCombatManager.viewableAngle > aiCharacter.aiCharacterCombatManager.maximumFOV)
             {
-                aICharacter.aiCharacterCombatManager.PivotTowardsTarget(aICharacter);
+                aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
             }
             
-            aICharacter.aiCharacterLocomotionManager.RotateTowardsAgent(aICharacter);
+            aiCharacter.aiCharacterLocomotionManager.RotateTowardsAgent(aiCharacter);
 
-            // 만약 타겟과의 거리가 전투가 가능한 거리라면 추적 상태에서 전투 상태로 전환
+            // 추적 상태에서 공격 상태로 전환하는 첫번째 방법
+            // if(aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.combatStance.maximumEngagementDistance)
+            // {
+            //     return SwitchState(aiCharacter, aiCharacter.combatStance);
+            // }
+
+            // 추적 상태에서 공격 상태로 전환하는 두번째 방법
+            if(aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.navMeshAgent.stoppingDistance)
+            {
+                return SwitchState(aiCharacter, aiCharacter.combatStance);
+            }
 
             // 만약 타겟이 닿을 수 없는 거리고, 멀리 떨어진다면, 원래 자리로 돌아가기
 
@@ -55,8 +66,8 @@ namespace TSG
             // 강의에선 이 방식을 사용한다 함. 강사의 경험 상, 지형이나 길이 이상하면 첫번째 방식은 너무 멍청해진다고 함
             // 다만 둘 다 사용해보고 본인에게 맞는 것을 고르라 하긴 했음
             NavMeshPath path = new NavMeshPath();
-            aICharacter.navMeshAgent.CalculatePath(aICharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
-            aICharacter.navMeshAgent.SetPath(path);
+            aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
+            aiCharacter.navMeshAgent.SetPath(path);
 
             return this;
         } 
