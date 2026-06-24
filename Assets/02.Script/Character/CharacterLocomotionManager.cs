@@ -62,6 +62,14 @@ namespace TSG
             character.isGrounded = Physics.CheckSphere(character.transform.position, groundCheckSphereRadius, groundLayer);
         }
 
+        // 씬 로딩/세이브 로딩으로 위치를 강제로 옮길 때, 그동안 쌓인 낙하 속도를 제거하기 위해 사용
+        public void ResetVelocity()
+        {
+            yVelocity = Vector3.zero;
+            inAirTimer = 0;
+            fallingVelocityHasBeenSet = false;
+        }
+
         // 씬에서 바닥 확인용 구체를 그려줌
         protected void OnDrawGizmosSelected()
         {

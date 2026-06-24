@@ -22,7 +22,7 @@ namespace TSG
         public float maximumFOV = 35;
 
         [Header("공격 회전 속도")]
-        public float attackRotationSpeed = 25;
+        public float attackRotationSpeed = 60;
 
         public void FindATargetViaLineOfSight(AICharacterManager aiCharacter)
         {

@@ -348,9 +348,14 @@ namespace TSG
             // 다른 레벨마다 다른 신을 불러오고 싶다면 이걸 쓸 것
             // AsyncOperation loadOperation = SceneManager.LoadSceneAsync(currentCharacterData.sceneIndex);
 
-            player.LoadGameDataFromCurrentCharacterData(ref currentCharacterData);
+            // 씬(바닥/지형 콜라이더 포함)이 완전히 로드되기 전에 위치를 복원하면,
+            // 그 사이에 중력이 적용되어 캐릭터가 바닥을 뚫고 떨어질 수 있음
+            while (!loadOperation.isDone)
+            {
+                yield return null;
+            }
 
-            yield return null;
+            player.LoadGameDataFromCurrentCharacterData(ref currentCharacterData);
         }
 
         // 다수의 씬을 설정하고 싶다면 쓸 것. 새 캐릭터에겐 현시점 씬의 인덱스가 없다.

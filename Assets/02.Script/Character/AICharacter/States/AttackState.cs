@@ -29,6 +29,7 @@ namespace TSG
                 return SwitchState(aiCharacter, aiCharacter.idle);
             }
             // 공격 중 타겟을 향해 회전
+            aiCharacter.aiCharacterCombatManager.RotateTowardsTargetWhilstAttacking(aiCharacter);
 
             aiCharacter.characterAnimatorManager.UpdateAnimatorMovementParameters(0, 0, false);
 
