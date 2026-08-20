@@ -177,10 +177,12 @@ MonoBehaviour:
   aiCharacterNetworkManager: {fileID: 0}
   aiCharacterCombatManager: {fileID: 0}
   aiCharacterLocomotionManager: {fileID: 0}
-  navmeshAgent: {fileID: 0}
+  navMeshAgent: {fileID: 0}
   currentState: {fileID: 11400000, guid: 9c5cd41994292e2439579e51b200308c, type: 2}
   idle: {fileID: 11400000, guid: 9c5cd41994292e2439579e51b200308c, type: 2}
   pursueTarget: {fileID: 11400000, guid: df546467655388243902643af534b7f7, type: 2}
+  combatStance: {fileID: 0}
+  attack: {fileID: 0}
 --- !u!114 &4983099805538698299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,11 +433,14 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 6053043919739602885}
+  actionRecoveryTimer: 0
+  distanceFromTarget: 0
   viewableAngle: 0
   targetsDirection: {x: 0, y: 0, z: 0}
   detectionRadius: 15
   minimumFOV: -35
   maximumFOV: 35
+  attackRotationSpeed: 60
 --- !u!114 &-5659055265273812394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,6 +496,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6053043919739602885}
+  - component: {fileID: 2546534334484376032}
   m_Layer: 8
   m_Name: Lock On Target
   m_TagString: Untagged
@@ -513,6 +519,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4125097048257635459}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2546534334484376032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3024137107734351492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ecf2e51e0b6aa74bac4427d25bd70cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSG.LockOnTransform
 --- !u!1 &7526648224303286931
 GameObject:
   m_ObjectHideFlags: 0

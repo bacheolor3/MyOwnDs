@@ -23,7 +23,7 @@ namespace TSG
                 return;
             }
 
-            if (!playerPerformingAction.isGrounded)
+            if (!playerPerformingAction.characterLocomotionManager.isGrounded)
             {
                 return;
             }

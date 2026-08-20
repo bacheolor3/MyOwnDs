@@ -193,9 +193,9 @@ namespace TSG
                 // 재생 효과 재생
                 playerAnimatorManager.PlayTargetActionAnimation("Idle", false);
                 
-                applyRootMotion = false;
-                canMove = true;
-                canRotate = true;
+                playerLocomotionManager.applyRootMotion = false;
+                playerLocomotionManager.canMove = true;
+                playerLocomotionManager.canRotate = true;
             }
         }
 

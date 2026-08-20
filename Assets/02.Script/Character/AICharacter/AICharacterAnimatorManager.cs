@@ -19,7 +19,7 @@ namespace TSG
             // 호스트
             if (aICharacter.IsOwner)
             {
-                if (!aICharacter.isGrounded)
+                if (!aICharacter.characterLocomotionManager.isGrounded)
                 {
                     return;
                 }
@@ -32,7 +32,7 @@ namespace TSG
             // 클라이언트
             else
             {
-                if (!aICharacter.isGrounded)
+                if (!aICharacter.aiCharacterLocomotionManager.isGrounded)
                 {
                     return;
                 }

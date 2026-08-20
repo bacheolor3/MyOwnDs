@@ -91,7 +91,7 @@ namespace TSG
         {
             GetMovementValues();
 
-            if (!player.canMove)
+            if (!player.characterLocomotionManager.canMove)
             {
                 return;
             }
@@ -131,7 +131,7 @@ namespace TSG
 
         private void HandleFreeFallMoveMent()
         {
-            if (!player.isGrounded)
+            if (!player.characterLocomotionManager.isGrounded)
             {
                 Vector3 freeFallDirection;
 
@@ -150,7 +150,7 @@ namespace TSG
                 return;
             }
 
-            if (!player.canRotate)
+            if (!player.characterLocomotionManager.canRotate)
             {
                 return;
             }
@@ -300,7 +300,7 @@ namespace TSG
             }
 
             // 만약 땅에 있는 게 아니라면, 점프를 하게 허가하지 않음
-            if (!player.isGrounded)
+            if (!player.characterLocomotionManager.isGrounded)
             {
                 return;
             }

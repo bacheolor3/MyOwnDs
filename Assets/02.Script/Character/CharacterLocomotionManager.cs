@@ -18,6 +18,10 @@ namespace TSG
 
         [Header("플래그들")]
         public bool isRolling = false;
+        public bool canRotate = true;
+        public bool canMove = true;
+        public bool isGrounded = true;
+        public bool applyRootMotion = false;    
         
         protected virtual void Awake()
         {
@@ -28,7 +32,7 @@ namespace TSG
         {
             HandleGroundCheck();
 
-            if (character.isGrounded)
+            if (character.characterLocomotionManager.isGrounded)
             {
                 // 만약 점프를 시도하지 않거나 움직이는 중이라면
                 if(yVelocity.y < 0)
@@ -59,7 +63,7 @@ namespace TSG
 
         protected void HandleGroundCheck()
         {
-            character.isGrounded = Physics.CheckSphere(character.transform.position, groundCheckSphereRadius, groundLayer);
+            character.characterLocomotionManager.isGrounded = Physics.CheckSphere(character.transform.position, groundCheckSphereRadius, groundLayer);
         }
 
         // 씬 로딩/세이브 로딩으로 위치를 강제로 옮길 때, 그동안 쌓인 낙하 속도를 제거하기 위해 사용
@@ -78,6 +82,16 @@ namespace TSG
                 return;
             }
             Gizmos.DrawSphere(character.transform.position, groundCheckSphereRadius);
+        }
+
+        public void EnableCanRotate()
+        {
+            canRotate = true;
+        }
+
+        public void DisableCanRotate()
+        {
+            canRotate = false;
         }
     }
 }

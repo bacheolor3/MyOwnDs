@@ -26,11 +26,7 @@ namespace TSG
 
         [Header("기준점")]
         public bool isPerformingAction = false;
-        
-        public bool isGrounded = true;
-        public bool applyRootMotion = false;
-        public bool canRotate = true;
-        public bool canMove = true;
+           
 
         protected virtual void Awake()
         {
@@ -54,7 +50,7 @@ namespace TSG
 
         protected virtual void Update()
         {
-            animator.SetBool("isGrounded", isGrounded);
+            animator.SetBool("isGrounded", characterLocomotionManager.isGrounded);
             if (IsOwner)
             {
                 // 만약 캐릭터가 우리쪽에서 컨트롤 되고 있다면, 그러면 그 물체의 네트워크 포지션을  우리의 포지션으로 동일시한다

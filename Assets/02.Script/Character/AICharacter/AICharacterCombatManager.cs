@@ -24,6 +24,13 @@ namespace TSG
         [Header("공격 회전 속도")]
         public float attackRotationSpeed = 60;
 
+        protected override void Awake()
+        {
+            base.Awake();
+
+            lockOnTransform = GetComponentInChildren<LockOnTransform>().transform;
+        }
+
         public void FindATargetViaLineOfSight(AICharacterManager aiCharacter)
         {
             if(currentTarget != null)
@@ -130,7 +137,7 @@ namespace TSG
                 return;
             }
 
-            if (aiCharacter.canRotate)
+            if (aiCharacter.characterLocomotionManager.canRotate)
             {
                 return;
             }

@@ -44,15 +44,15 @@ namespace TSG
                 }
             }
 
+            if (aiCharacter.isPerformingAction)
+            {
+                return this;
+            }
+
             if (!hasPerformedAttack)
             {
                 // 만약 액션 회복 타이머가 안 지났다면, 다음 공격 하기 전에 다 채워질때까지 기다릴 것
                 if(aiCharacter.aiCharacterCombatManager.actionRecoveryTimer > 0)
-                {
-                    return this;
-                }
-
-                if (aiCharacter.isPerformingAction)
                 {
                     return this;
                 }
